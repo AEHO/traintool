@@ -25,7 +25,7 @@ exercisesLink
 * key_exercise_0
 * key_exercise_1
 * type # descanso, super-série...
-* time #p/ o descanso
+* rest_time
 * comment
 
 day_workout #Links a day to a workout
