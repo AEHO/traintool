@@ -4,40 +4,42 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from api.models import Exercicio
+from api.models import Exercise
 
 @endpoints.api(name="gupapi",version="v1")
 class GupApi(remote.Service):
     """ GymUP Open API """
 
-    @Exercicio.method(response_fields=('id',),
-                    path='exercicio',
+    @Exercise.method(response_fields=('id',),
+                    path='exercise',
                     http_method='PUT',
-                    name='exercicio.put')
-    def ExercicioPut(self,exercicio):
-        exercicio.put()
-        return exercicio
+                    name='exercise.put')
+    def ExercisePut(self,exercise):
+        exercise.put()
+        return Exercise
 
-    @Exercicio.method(request_fields=('id',),
-                    path="exercicio",
+    @Exercise.method(request_fields=('id',),
+                    path="exercise",
                     http_method="DELETE",
-                    name="exercicio.delete")
-    def ExercicioDelete(self,exercicio):
-        if not exercicio.from_datastore:
-            raise endpoints.NotFoundException('Exercicio nao encontrado')
-        return exercicio
+                    name="exercise.delete")
+    def ExerciseDelete(self,exercise):
+        if not exercise.from_datastore:
+            raise endpoints.NotFoundException('Exercise nao encontrado')
+        return exercise
 
-    @Exercicio.method(request_fields=('id',),
-                    path="exercicio",
+    @Exercise.method(request_fields=('id',),
+                    path="exercise",
                     http_method="GET",
-                    name="exercicio.get")
-    def ExercicioGet(self,exercicio):
-        if not exercicio.from_datastore:
-            raise endpoints.NotFoundException('Exercicio nao encontrado')
-        return exercicio
+                    name="exercise.get")
+    def ExerciseGet(self,exercise):
+        if not exercise.from_datastore:
+            raise endpoints.NotFoundException('exercise nao encontrado')
+        return exercise
 
-    @Exercicio.query_method(query_fields=('limit','order','pageToken',),
-                            path='exercicios',
-                            name='exercicios.list')
-    def ExerciciosList(self,query):
+    @Exercise.query_method(query_fields=('limit','order','pageToken',),
+                            path='exercises',
+                            name='exercises.list')
+    def ExercisesList(self,query):
         return query
+
+    
