@@ -1,27 +1,39 @@
 from google.appengine.ext import ndb
 from endpoints_proto_datastore.ndb import EndpointsModel
+from endpoints_proto_datastore.ndb import EndpointsAliasProperty
 
 
 class Workout(EndpointsModel):
     _message_fields_schema = (
-        'id','name','objective','description')
+        'id','name','objective','description',)
 
     name        = ndb.StringProperty(indexed=True)
     objective   = ndb.StringProperty(indexed=True)
     description = ndb.StringProperty(indexed=False)
 
 
-class Day(EndpointsModel):
-    name            = ndb.StringProperty(indexed=True)
-    description     = ndb.StringProperty(indexed=False)
-    proper_time     = ndb.IntegerProperty(indexed=False)
-
-
 class Exercise(EndpointsModel):
+    _message_fields_schema = (
+        "id","name","body_part","equipament","execution",)
+
     name            = ndb.StringProperty(indexed=True)
     body_part       = ndb.StringProperty(indexed=True)
     equipament      = ndb.StringProperty(indexed=True)
     execution       = ndb.StringProperty(indexed=False)
+
+
+class Day(EndpointsModel):
+    _message_fields_schema = (
+        "id","name","description","proper_time","exercises")
+
+    exercises_keys  = ndb.KeyProperty(kind=Exercise, repeated=True)
+    name            = ndb.StringProperty(indexed=True)
+    description     = ndb.StringProperty(indexed=False)
+    proper_time     = ndb.IntegerProperty(indexed=False)
+
+    @EndpointsAliasProperty(repeated=True, property_type=Exercise.ProtoModel())
+    def exercises(self):
+        return ndb.get_multi(self.exercises_keys)
 
 
 class ExercisesLink(EndpointsModel):

@@ -226,7 +226,8 @@ class _EndpointsQueryInfo(object):
 
       # Only filter for non-null values
       if current_value is not None:
-        self._AddFilter(prop == current_value)
+        if current_value:
+          self._AddFilter(prop == current_value)
 
   def SetQuery(self):
     """Sets the final query on the query info object.
