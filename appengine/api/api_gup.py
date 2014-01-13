@@ -4,7 +4,7 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from api.models import Exercise
+from api.models import Exercise,Day
 
 @endpoints.api(name="gupapi",version="v1")
 class GupApi(remote.Service):
@@ -42,4 +42,11 @@ class GupApi(remote.Service):
     def ExercisesList(self,query):
         return query
 
-    
+
+    @Day.query_method(query_fields=("limit","pageToken",),
+                    path="days",
+                    name="days.list")
+    def DaysList(self,query):
+        return query
+
+
