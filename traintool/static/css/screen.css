@@ -1,0 +1,60 @@
+/* Welcome to Compass. In this file you should write your main styles. (or centralize your imports) Import this file using the following HTML or equivalent: <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 8, ../sass/screen.scss */
+.navbar-wrapper { position: absolute; top: 0; left: 0; right: 0; z-index: 20; }
+/* line 15, ../sass/screen.scss */
+.navbar-wrapper .container { padding-left: 0; padding-right: 0; }
+/* line 20, ../sass/screen.scss */
+.navbar-wrapper .navbar { padding-left: -15px; padding-right: -15px; }
+
+/* line 26, ../sass/screen.scss */
+.navbar-default { background-color: #edf7ff; border-color: #0083ea; }
+/* line 29, ../sass/screen.scss */
+.navbar-default .navbar-brand { color: #0083ea; font-weight: 400; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+/* line 35, ../sass/screen.scss */
+.navbar-default .navbar-brand:hover { color: #87caff; text-shadow: 1px 1px rgba(255, 255, 255, 0.2); }
+
+/* line 41, ../sass/screen.scss */
+.navbar-default .navbar-nav > li a { color: #586e75; text-shadow: 1px 1px rgba(255, 255, 255, 0.2); }
+/* line 45, ../sass/screen.scss */
+.navbar-default .navbar-nav > li a:hover { color: #002b36; }
+/* line 49, ../sass/screen.scss */
+.navbar-default .navbar-nav > li a:active { color: #586e75; }
+/* line 53, ../sass/screen.scss */
+.navbar-default .navbar-nav > li a:visited { color: #586e75; }
+
+/* line 58, ../sass/screen.scss */
+.carousel { height: auto; margin-bottom: 60px; }
+/* line 62, ../sass/screen.scss */
+.carousel .item { background-color: #254966; height: 100%; }
+/* line 65, ../sass/screen.scss */
+.carousel .item .img { position: absolute; top: 0; left: 0; min-width: 100%; height: 500px; }
+
+/* line 75, ../sass/screen.scss */
+.carolsel-caption { z-index: 10; }
+
+/* line 79, ../sass/screen.scss */
+.btn-primary { background-color: #0083ea; color: #fdf6e3; width: 150px; text-shadow: 1px 2px rgba(255, 255, 255, 0.2); -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -ms-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; border: none; }
+
+/* line 88, ../sass/screen.scss */
+.btn-primary:hover { background-color: #254966; width: 200px; text-shadow: 1px 2px rgba(0, 0, 0, 0.2); }
+
+/* line 94, ../sass/screen.scss */
+.big { font-size: 1.5em !important; }
+
+/* line 98, ../sass/screen.scss */
+.panel-primary { border: none; }
+/* line 99, ../sass/screen.scss */
+.panel-primary .panel-heading { background-color: #0083ea; border: 1px solid #0083ea; }
+
+@media (min-width: 768px) { /* line 107, ../sass/screen.scss */
+  .navbar-wrapper { margin-top: 20px; }
+  /* line 110, ../sass/screen.scss */
+  .navbar-wrapper .container { padding-right: 15px; padding-left: 15px; }
+  /* line 115, ../sass/screen.scss */
+  .navbar-wrapper .navbar { padding-left: 0; padding-right: 0; -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; }
+  /* line 122, ../sass/screen.scss */
+  .navbar-nav.navbar-right:last-child { margin-right: 15px; }
+  /* line 126, ../sass/screen.scss */
+  .navbar-form { padding-right: 30px; }
+  /* line 130, ../sass/screen.scss */
+  .carousel-caption p { margin-bottom: 20px; font-size: 2em; line-height: 1.4; } }

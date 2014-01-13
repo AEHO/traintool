@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcompass'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -85,3 +86,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#Static files dirs
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+#Template dirs
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, "templates"),)
+
+
+#Compass configs
+COMPASS_INPUT = os.path.join(BASE_DIR, 'static/sass')
+COMPASS_OUTPUT = os.path.join(BASE_DIR, 'static/css')
+COMPASS_STYLE = 'compact'
