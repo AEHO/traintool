@@ -2,6 +2,12 @@ from google.appengine.ext import ndb
 from endpoints_proto_datastore.ndb import EndpointsModel
 from endpoints_proto_datastore.ndb import EndpointsAliasProperty
 
+class MyModel(EndpointsModel):
+    attr1 = ndb.StringProperty()
+    attr2 = ndb.StringProperty()
+    created = ndb.DateTimeProperty(auto_now_add=True)
+    owner = ndb.UserProperty()
+
 
 class Workout(EndpointsModel):
     _message_fields_schema = (

@@ -4,11 +4,32 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from api.models import Exercise,Day
+from api.models import Exercise, Day, MyModel
 
-@endpoints.api(name="gupapi",version="v1")
+@endpoints.api(name="gupapi",version="v1", description="GymUP Open Api",
+            allowed_client_ids=[endpoints.API_EXPLORER_CLIENT_ID],
+            audiences=[endpoints.API_EXPLORER_CLIENT_ID])
 class GupApi(remote.Service):
     """ GymUP Open API """
+
+    @MyModel.method(user_required=True,
+                    path='mymodel',
+                    http_method='POST',
+                    name='mymodel.insert')
+    def MyModelInsert(self,my_model):
+        my_model.owner = endpoints.get_current_user()
+        my_model.put()
+        return my_model
+
+    @MyModel.query_method(user_required=True,
+                        path="mymodels",
+                        http_method='GET',
+                        name='mymodels.list')
+    def MyModelList(self,query):
+        # return query.filter(MyModel.owner == endpoints.get_current_user())
+        return query
+
+
 
     @Exercise.method(response_fields=('id',),
                     path='exercise',

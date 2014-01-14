@@ -10,7 +10,7 @@ from api.api_gup import GupApi
 
 api_application = endpoints.api_server([
     GupApi,
-]) 
+], restricted=False) 
 
 application = webapp2.WSGIApplication([
     ('/',index.views.IndexPage),

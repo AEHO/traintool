@@ -25,3 +25,6 @@ Structure Explained
 ``` 
 
 
+Considerations
+---
+- The creator choosed to use webapp2 because we'll don't need other huge features that django could provide to us. As we just need a handler with a few tools out of the box, webapp2 fits perfectly. For other cases django might fit better for the development.
