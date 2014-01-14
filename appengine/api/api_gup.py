@@ -4,7 +4,10 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from api.models import Exercise, Day, MyModel
+from api.models import MyModel
+from api.models import Exercise, ExerciseDay, ExercisesLink
+from api.models import Day
+from api.models import Workout
 
 @endpoints.api(name="gupapi",version="v1", description="GymUP Open Api",
             allowed_client_ids=[endpoints.API_EXPLORER_CLIENT_ID],
@@ -26,48 +29,53 @@ class GupApi(remote.Service):
                         http_method='GET',
                         name='mymodels.list')
     def MyModelList(self,query):
-        # return query.filter(MyModel.owner == endpoints.get_current_user())
         return query
 
+    #TESTING THE AUTH ABOVE
 
 
-    @Exercise.method(response_fields=('id',),
-                    path='exercise',
-                    http_method='PUT',
-                    name='exercise.put')
-    def ExercisePut(self,exercise):
-        exercise.put()
-        return Exercise
+    @Exercise.query_method(query_fields=('limit','order','pageToken',),
+                            path='exercises',
+                            http_method="GET",
+                            name='exercises.list')
+    def ExercisesList(self,query):
+        """ Queries the entire DB for retrieving the Exercises """
+        return query
 
-    @Exercise.method(request_fields=('id',),
-                    path="exercise",
-                    http_method="DELETE",
-                    name="exercise.delete")
-    def ExerciseDelete(self,exercise):
-        if not exercise.from_datastore:
-            raise endpoints.NotFoundException('Exercise nao encontrado')
-        return exercise
 
     @Exercise.method(request_fields=('id',),
                     path="exercise",
                     http_method="GET",
                     name="exercise.get")
     def ExerciseGet(self,exercise):
+        """ Queries the DB for an Exercise with the given ID. """
         if not exercise.from_datastore:
-            raise endpoints.NotFoundException('exercise nao encontrado')
+            raise endpoints.NotFoundException('exercise not found')
         return exercise
 
-    @Exercise.query_method(query_fields=('limit','order','pageToken',),
-                            path='exercises',
-                            name='exercises.list')
-    def ExercisesList(self,query):
-        return query
+
+    @Exercise.method(response_fields=('id',),
+                    path='exercise',
+                    http_method='POST',
+                    name='exercise.post')
+    def ExercisePost(self,exercise):
+        """ Updates or Creates an Exercise in the Db """
+        exercise.put()
+        return Exercise
 
 
-    @Day.query_method(query_fields=("limit","pageToken",),
-                    path="days",
-                    name="days.list")
-    def DaysList(self,query):
-        return query
-
+    @Exercise.method(request_fields=('id',),
+                    path="exercise",
+                    http_method="DELETE",
+                    name="exercise.delete")
+    def ExerciseDelete(self,exercise):
+        """ Deletes an Exercise from the Db if the ID matches one. """
+        if not exercise.from_datastore:
+            raise endpoints.NotFoundException('exercise not found')
+        try:
+            exercise.key.delete()
+        except:
+            raise endpoints.NotFoundException('exercise found but an error '+ 
+                'an error happened while deleting')
+        return exercise
 
