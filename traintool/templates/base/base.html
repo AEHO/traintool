@@ -1,1 +1,32 @@
-base.html
+{% load staticfiles %}
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>
+  {% block title %}{%endblock%}
+  </title>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{%static 'css/screen.css'%}" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="{%static 'css/print.css'%}" media="print" rel="stylesheet" type="text/css" />
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400' rel='stylesheet' type='text/css'>
+  <!--[if IE]>
+      <link href="{%static 'css/ie.css'%}" media="screen, projection" rel="stylesheet" type="text/css" />
+  <![endif]-->
+  {%block extrahead%}
+  {%endblock%}
+</head>
+<body >
+  {%block content%}
+  {%endblock%}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  {%block scripts%}
+  {%endblock%}
+</body>
+</html>

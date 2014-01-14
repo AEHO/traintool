@@ -1,0 +1,5 @@
+Django==1.6.1
+argparse==1.2.1
+django-compass2==0.2
+django-environ==0.2.1
+wsgiref==0.1.2
