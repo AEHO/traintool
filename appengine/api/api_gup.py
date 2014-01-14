@@ -71,10 +71,11 @@ class GupApi(remote.Service):
     def ExerciseDelete(self,exercise):
         """ Deletes an Exercise from the Db if the ID matches one. """
         if not exercise.from_datastore:
-            raise endpoints.NotFoundException('Exercise nao encontrado')
+            raise endpoints.NotFoundException('exercise not found')
         try:
             exercise.key.delete()
         except:
-            raise endpoints.NotFoundException('Exercise nao encontrado')
+            raise endpoints.NotFoundException('exercise found but an error '+ 
+                'an error happened while deleting')
         return exercise
 
