@@ -4,7 +4,6 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from api.models import MyModel
 from api.models import Exercise, ExerciseDay, ExercisesLink
 from api.models import Day
 from api.models import Workout
@@ -15,26 +14,7 @@ from api.models import Workout
 class GupApi(remote.Service):
     """ GymUP Open API """
 
-    @MyModel.method(user_required=True,
-                    path='mymodel',
-                    http_method='POST',
-                    name='mymodel.insert')
-    def MyModelInsert(self,my_model):
-        my_model.owner = endpoints.get_current_user()
-        my_model.put()
-        return my_model
-
-    @MyModel.query_method(user_required=True,
-                        path="mymodels",
-                        http_method='GET',
-                        name='mymodels.list')
-    def MyModelList(self,query):
-        return query
-
-    #TESTING THE AUTH ABOVE
-
-
-    @Exercise.query_method(query_fields=('limit','order','pageToken',),
+    @Exercise.query_method(query_fields=('limit','pageToken',),
                             path='exercises',
                             http_method="GET",
                             name='exercises.list')
@@ -54,28 +34,57 @@ class GupApi(remote.Service):
         return exercise
 
 
-    @Exercise.method(response_fields=('id',),
+    @Exercise.method(user_required=True,
+                    response_fields=('id',),
                     path='exercise',
                     http_method='POST',
                     name='exercise.post')
     def ExercisePost(self,exercise):
         """ Updates or Creates an Exercise in the Db """
+        exercise.owner = endpoints.get_current_user()
         exercise.put()
-        return Exercise
+        return exercise
 
 
-    @Exercise.method(request_fields=('id',),
+    @Exercise.method(user_required=True,
+                    request_fields=('id',),
                     path="exercise",
                     http_method="DELETE",
                     name="exercise.delete")
     def ExerciseDelete(self,exercise):
         """ Deletes an Exercise from the Db if the ID matches one. """
         if not exercise.from_datastore:
-            raise endpoints.NotFoundException('exercise not found')
+            raise endpoints.NotFoundException('Exercise not found')
+        if not exercise.owner == endpoints.get_current_user():
+            raise endpoints.UnauthorizedException("Not authorized")
         try:
             exercise.key.delete()
         except:
             raise endpoints.NotFoundException('exercise found but an error '+ 
                 'an error happened while deleting')
         return exercise
+
+    @ExerciseDay.method(user_required=True,
+                        path="exerciseday",
+                        http_method='POST',
+                        name='exerciseday.post')
+    def ExerciseDayPost(self, exerciseday):
+        exerciseday.put()
+        return exerciseday
+
+    @ExerciseDay.method(request_fields=('id',),
+                        path='exerciseday',
+                        http_method='GET',
+                        name='exerciseday.get')
+    def ExerciseDayGet(self, exerciseday):
+        if not exerciseday.from_datastore:
+            raise endpoints.NotFoundException('ExerciseDay not found')
+        return exerciseday
+
+    @ExerciseDay.query_method(query_fields=('limit','pageToken',),
+                            path="exercisedays",
+                            http_method='GET',
+                            name='exercisedays.list')
+    def ExerciseDaysList(self, query):
+        return query
 

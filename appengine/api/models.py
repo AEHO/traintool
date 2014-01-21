@@ -2,15 +2,10 @@ from google.appengine.ext import ndb
 from endpoints_proto_datastore.ndb import EndpointsModel
 from endpoints_proto_datastore.ndb import EndpointsAliasProperty
 
-class MyModel(EndpointsModel):
-    attr1 = ndb.StringProperty()
-    attr2 = ndb.StringProperty()
-    created = ndb.DateTimeProperty(auto_now_add=True)
-    owner = ndb.UserProperty()
-
 
 class Exercise(EndpointsModel):
     """ Represents the exercise per-se workout-independent """
+    
     _message_fields_schema = (
         'id', 'name', 'body_part', 'equipament', 'execution','created',
         'owner',)
@@ -34,11 +29,16 @@ class ExerciseDay(EndpointsModel):
             comment -- comment specific to the exercise on a workout
     """
 
-    exercise_key = ndb.KeyProperty(kind=Exercise,indexed=True)
+    id_exercise = ndb.IntegerProperty(indexed=True)
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
     comment = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
     owner = ndb.UserProperty()
+
+    @EndpointsAliasProperty(repeated=False,
+                            property_type=Exercise.ProtoModel())
+    def exercise(self):
+        return ndb.Key('Exercise', self.id_exercise).get()
 
 
 class ExercisesLink(EndpointsModel):
@@ -53,7 +53,7 @@ class ExercisesLink(EndpointsModel):
                 workout.
     """
 
-    exercises_days_keys = ndb.KeyProperty(kind=ExerciseDay,repeated=True)
+    exercises_days_ids = ndb.IntegerProperty(repeated=True)
     rest_times = ndb.IntegerProperty(indexed=False, repeated=True)
     link_type = ndb.StringProperty(indexed=True)
     comment = ndb.StringProperty(indexed=False)
