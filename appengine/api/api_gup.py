@@ -60,8 +60,8 @@ class GupApi(remote.Service):
         try:
             exercise.key.delete()
         except:
-            raise endpoints.NotFoundException('exercise found but an error '+ 
-                'an error happened while deleting')
+            raise endpoints.InternalServerErrorException(
+                'exercise found but an error happened while deleting')
         return exercise
 
     @ExerciseDay.method(user_required=True,
@@ -69,6 +69,7 @@ class GupApi(remote.Service):
                         http_method='POST',
                         name='exerciseday.post')
     def ExerciseDayPost(self, exerciseday):
+        exerciseday.owner = endpoints.get_current_user()
         exerciseday.put()
         return exerciseday
 
@@ -88,3 +89,19 @@ class GupApi(remote.Service):
     def ExerciseDaysList(self, query):
         return query
 
+    @ExerciseDay.method(user_required=True,
+                        request_fields=('id',),
+                        path='exerciseday',
+                        http_method='DELETE',
+                        name='exerciseday.delete')
+    def ExerciseDayDelete(self, exerciseday):
+        if not exerciseday.from_datastore:
+            raise endpoints.NotFoundException('ExerciseDay not found')
+        if not exerciseday.owner == endpoints.get_current_user():
+            raise endpoints.UnauthorizedException("Not authorized")
+        try:
+            exerciseday.key.delete()
+        except:
+            raise endpoints.InternalServerErrorException(
+                'Something unexpected happened while deleting')
+        return exercise

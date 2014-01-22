@@ -29,7 +29,7 @@ class ExerciseDay(EndpointsModel):
             comment -- comment specific to the exercise on a workout
     """
 
-    id_exercise = ndb.IntegerProperty(indexed=True)
+    id_exercise = ndb.StringProperty(indexed=True)
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
     comment = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
@@ -38,7 +38,7 @@ class ExerciseDay(EndpointsModel):
     @EndpointsAliasProperty(repeated=False,
                             property_type=Exercise.ProtoModel())
     def exercise(self):
-        return ndb.Key('Exercise', self.id_exercise).get()
+        return ndb.Key('Exercise', int(self.id_exercise)).get()
 
 
 class ExercisesLink(EndpointsModel):

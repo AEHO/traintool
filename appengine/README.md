@@ -19,10 +19,28 @@ Structure Explained
     /static         -- js/css
     /templates      -- html files
     /utils          -- tools
+    /tests          -- test files
     app.yaml        -- GAE config
     main.py         -- routing
     settings.py     -- global config
+    setup.sh        -- responsible for preparing the dev. environment
+    requirements.txt  --  packages required
 ``` 
+
+
+Preparing the Development environment
+---
+1.  Run the shell script
+
+```
+$ ./setup.sh
+```
+
+2.  Activate the virtualenv environment
+
+```
+$ source .env/bin/activate
+```
 
 
 Considerations
