@@ -39,9 +39,19 @@ $ ./setup.sh
 $ source .env/bin/activate
 ```
 
+3. Run the tests
+
+```
+$ nosetests --with-doctest --verbose
+```  
+
+
+
 External Dependency
 ---
 This project relies on [endpointer-proto-datastore](https://github.com/GoogleCloudPlatform/endpoints-proto-datastore)(Apache 2.0 License), which extends the functionality provided by ndb.Model to not being needed to create ProtoRPC request objects.
+
+It also uses the skeleton on [testable_appengine](https://github.com/rbanffy/testable_appengine)
 
 
 Considerations
