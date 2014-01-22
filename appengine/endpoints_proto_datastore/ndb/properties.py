@@ -24,15 +24,15 @@ Defined here:
 
 import datetime
 import warnings
+import endpoints
 warnings.simplefilter('default')  # To allow DeprecationWarning
 
 from . import utils as ndb_utils
 from .. import utils
 
 from protorpc import messages
-
-from google.appengine.ext import endpoints
 from google.appengine.ext import ndb
+
 
 
 __all__ = [
