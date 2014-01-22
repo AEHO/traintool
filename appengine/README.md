@@ -15,9 +15,6 @@ Structure Explained
                                   to convert from ndb.Model to
                                   ProtoRPC messages object.
     /index          -- landing page
-    /media          -- static non-js/css
-    /static         -- js/css
-    /templates      -- html files
     /utils          -- tools
     /tests          -- test files
     app.yaml        -- GAE config
@@ -41,6 +38,10 @@ $ ./setup.sh
 ```
 $ source .env/bin/activate
 ```
+
+External Dependency
+---
+This project relies on [endpointer-proto-datastore](https://github.com/GoogleCloudPlatform/endpoints-proto-datastore)(Apache 2.0 License), which extends the functionality provided by ndb.Model to not being needed to create ProtoRPC request objects.
 
 
 Considerations
