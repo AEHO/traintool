@@ -34,14 +34,14 @@ class GupApi(remote.Service):
         return exercise
 
 
-    @Exercise.method(user_required=True,
-                    response_fields=('id',),
+    @Exercise.method(response_fields=('id',),
                     path='exercise',
                     http_method='POST',
                     name='exercise.post')
     def ExercisePost(self,exercise):
         """ Updates or Creates an Exercise in the Db """
-        exercise.owner = endpoints.get_current_user()
+        if endpoints.get_current_user():
+            exercise.owner = endpoints.get_current_user()
         exercise.put()
         return exercise
 
