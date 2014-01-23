@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-<html>
+<html class="no-js" lang="pt-br">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,14 +18,22 @@
   <!--[if IE]>
       <link href="{%static 'css/ie.css'%}" media="screen, projection" rel="stylesheet" type="text/css" />
   <![endif]-->
+  <script src="{%static 'js/modernizr.custom.49644.js'%}"></script>
   {%block extrahead%}
   {%endblock%}
 </head>
-<body >
+<body>
   {%block content%}
   {%endblock%}
+  <footer>
+    <div class="footer container">
+      <p class="text-right">&copy; <a href="http://www.aeho.com.br" target="_blank">Aeho 2014</a></p>
+    </div>
+  </footer>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <script src="{%static 'js/list.min.js'%}"></script>
+  <script src="{%static 'js/base.js'%}"></script>
   {%block scripts%}
   {%endblock%}
 </body>

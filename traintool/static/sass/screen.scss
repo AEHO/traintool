@@ -5,6 +5,11 @@
 
 @import "modules/_all.scss";
 
+body{
+	height:100%;
+	padding-top:60px;
+}
+
 body,
 input,
 button,
@@ -21,6 +26,65 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     font-weight: 600;
 }
 
+.col-xs-1,
+.col-xs-2,
+.col-xs-3,
+.col-xs-4,
+.col-xs-5,
+.col-xs-6,
+.col-xs-7,
+.col-xs-8,
+.col-xs-9,
+.col-xs-10,
+.col-xs-11,
+.col-xs-12,
+.col-sm-1,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-lg-1,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12 {
+  @include transition(all, 0.3s, ease-in-out);
+}
+
+.padding-bottom{
+	padding-bottom:15px;
+}
+
+.col-lg-0{
+	width: 0;
+    margin-left: 0;
+}
 
 .navbar-wrapper{
 	position: absolute;
@@ -54,6 +118,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 		text-shadow: 1px 1px rgba(255,255,255, 0.2);
 	}
 }
+
 .navbar-default .navbar-nav>li{
 	a{
 		color: $fontBase01;
@@ -102,8 +167,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 }
 
 .btn-primary:hover{
-	background-color:$base3;
-	width:200px;
+	background-color:$base1;
+	width:170px;
 	text-shadow: 1px 2px rgba(0,0,0,0.2);
 }
 
@@ -116,7 +181,63 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 		background-color: $base0;
 		border: 1px solid $base0;
 	}
-	border: none;
+	border:none;
+}
+
+.open-panel{
+	padding:0px;
+	border:none;
+
+	.panel{
+		margin: 0px;
+		margin-bottom:1px;
+		border: 1px solid $base0;
+	}
+}
+
+.panel-title{
+	.label-primary{
+		color:$base0;
+		background-color: $base1;
+		padding: 0.4em 0.6em 0.4em;
+	}
+}
+
+.label{
+	margin-bottom:50px;
+}
+
+.withFooter{
+	padding-bottom: 0px !important;
+}
+
+.list-group-item:nth-child(4n+2){
+	background-color: lighten($base1, 15%);
+}
+
+.list-group-item.clickable{
+	@include transition(all, 0.3s, ease-in-out);
+	cursor:pointer;
+}
+
+.list-group-item.clickable:hover {
+	background-color: $base1;
+}
+
+.list-group-item.clickable:active{
+	background-color: $base0;
+}
+
+.btnFooter{
+	display: block;
+	overflow:hidden;
+	@include transition(all, 0.3s, ease);
+	background-color: $base4;
+	color:$fontBase3;
+}
+
+.btnFooter:hover{
+	background-color: $base3;
 }
 
 @media (min-width: 768px) {
@@ -151,5 +272,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 
 	.main-container{
 		height: 100%;
+	}
+
+	.btnFooter{
+		max-height: 0px;
+	}
+
+	.withFooter:hover .btnFooter{
+		max-height:50px;
 	}
 }

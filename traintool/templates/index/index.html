@@ -5,8 +5,8 @@
 {%block extrahead%}
 <style>
   body{
-    height:100%;
     background:url("{%static 'img/pattern.png'%}") repeat;
+    padding-top:0px;
   }
 </style>
 {%endblock%}
@@ -23,13 +23,13 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="">GymUp</a>
+            <a class="navbar-brand" href="/">GymUp</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse navbar-ex1-collapse" id="menu">
             <ul class="nav navbar-nav">
-              <li><a href="" id="index_nav_btn"><i class="fa fa-home"></i> Home</a></li>
+              <li><a href="/" id="index_nav_btn"><i class="fa fa-home"></i> Home</a></li>
               <li><a href="" id="index_nav_btn"><i class="fa fa-compass"></i> Explorar</a></li>
             </ul>
             <form class="navbar-form navbar-right hide" role="login" id="login_nav_form">
@@ -170,13 +170,5 @@
       </div>
     </div>
   </article>
-  <footer>
-    <div class="footer">
-      <p class="text-right">&copy; <a href="http://www.aeho.com.br" target="_black">Aeho 2014</a></p>
-    </div>
-  </footer>
 </div>
-{%endblock%}
-{%block scripts%}
-  <script src="{%static 'js/index.js'%}"></script>
 {%endblock%}

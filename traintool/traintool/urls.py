@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     # url(r'^$', 'traintool.views.home', name='home'),
     url(r'^$', 'index.views.index', name="index"),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^maker/', include('trainMaker.urls')),
 )
