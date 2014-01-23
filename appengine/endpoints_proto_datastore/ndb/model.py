@@ -8,6 +8,7 @@ used to simplify endpoints API methods so that only entities need be used rather
 than converting between ProtoRPC messages and entities and then back again.
 """
 
+import endpoints
 import functools
 import itertools
 try:
@@ -24,7 +25,6 @@ from protorpc import messages
 
 from google.appengine.api import datastore_types
 from google.appengine.datastore import datastore_query
-from google.appengine.ext import endpoints
 from google.appengine.ext import ndb
 
 
