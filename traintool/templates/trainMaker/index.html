@@ -60,185 +60,151 @@
 <article>
   <div class="container">
     <div class="row">
+      <div class='col-lg-12'>
+        <h2>Definição dos treinos</h2>
+      </div>
+      <div class="col-lg-3">
+        <label>Nome</label>
+        <input id="nome-treino-{{treino.uid}}" type="text" class="form-control" value="{{treino.nome}}"></input>
+      </div>
+      <div class="col-lg-5">
+        <label>Descrição</label>
+        <textarea id="detalhes-treino-{{treino.uid}}" rows="1" type="text" class="form-control">{{treino.detalhes}}</textarea>
+      </div>
+      <div class="col-lg-4 text-center">
+        
+      </div>
       <div class="col-lg-12" id="daysDiv">
+        <h2>Dias de Treino</h2>
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#">Peito/Tríceps - Dia A</a></li>
-          <li><a href="#">Costas/Bíceps - Dia B</a></li>
-          <li><a href="#">Ombro/Perna - Dia C</a></li>
-          <li><button class="btn btn-primary">Novo dia de treino</button></li>
+          {%for dia in treino.dias%}
+            <li class={%if forloop.first%}"active"{%endif%}><a href="#dia_{{dia.uid}}" data-toggle="tab">{{dia.nome}}</a></li>
+          {%endfor%}
+          <li><a class="btn btn-primary" id="new_day_btn">Novo dia de treino</a></li>
         </ul>
-        <ul class="list-group">
-          <li class="list-group-item text-center">
-            <button class="btn btn-primary" id="addExercicio">Adicionar Exercício</button>
-          </li>
-          <li class="list-group-item clickable"><h4>Supino Reto <small>10 X 10 X 10</small></h4></li>
-          <li class="list-group-item clickable open-panel">
-            <div class="panel panel-primary">
-               <div class="panel-body">
+        <div class="tab-content">
+          {%for dia in treino.dias%}
+          <div class="tab-pane active" id="dia_{{dia.uid}}">
+            <ul class="list-group">
+              <li class="list-group-item">
                 <div class="row">
-                  <div class="col-lg-3">
-                    <form role="form">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Nome</label>
-                        <p class="form-control-static">Supino Reto</p>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Descrição</label>
-                        <p class="form-control-static">Aqui ficará a descrição do exercício, execução e dicas para melhor rendimento,
-                        imagens e gifs seriam bem-vindos.</p>
-                      </div>
-                    </form>
+                  <div class="col-lg-3">  
+                    <label>Nome</label>
+                    <input id="nome-dia-{{dia.uid}}" class="form-control day_editable_fields" value="{{dia.nome}}"></input>
                   </div>
-                  <div class="col-lg-9">
-                      <div class="form-group">
+                  <div class="col-lg-5">
+                    <label>Comentário</label>
+                    <textarea id="comentario-dia-{{dia.uid}}" class="form-control day_editable_fields" rows="1">{{dia.detalhes}}</textarea>
+                  </div>
+                </div>
+              </li>
+              {%for object in dia.objects%}
+                {%if object.objectType == 'exercicio'%}
+                  <li class="list-group-item clickable"><h4>{{object.nome}} <small>{{object.series}}</small></h4></li>
+                  <li class="list-group-item clickable open-panel">
+                    <div class="panel panel-primary">
+                       <div class="panel-body">
                         <div class="row">
-                          <div class="col-lg-12 padding-bottom">
-                            <label for="exampleInputEmail1">Séries</label><br>
-                            <span class="label label-primary">10 X 10 X 10</span>
+                          <div class="col-lg-3">
+                            <label for="exampleInputEmail1">Nome</label>
+                            <p class="form-control-static">{{object.nome}}</p>
                           </div>
-                          <div class="col-lg-2">
-                            <input type="integer" class="form-control input-sm" placeholder="Repetições">
+                          <div class="col-lg-5">
+                            <label for="exampleInputEmail1">Descrição</label>
+                            <p class="form-control-static">{{object.descricao}}</p>
                           </div>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-default">+ série</button>
-                            <button type="button" class="btn btn-danger">- série</button>
+                          <div class="col-lg-3">
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-lg-12 padding-bottom">
+                                    <label for="exampleInputEmail1">Séries</label><br>
+                                    <span class="label label-primary">{{object.series}}</span>
+                                    <div class="btn-group">
+                                      <button type="button" class="btn btn-default">+ série</button>
+                                      <button type="button" class="btn btn-danger">- série</button>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-5">
+                                    <input type="integer" class="form-control input-sm" placeholder="Repetições">
+                                  </div>
+                                </div>
+                              </div>
                           </div>
                         </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
                       </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item clickable"><h5>Descanço de 30 segundos</h5></li>
-          <li class="list-group-item clickable open-panel">
-            <div class="panel panel-primary">
-               <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-3">
-                    <label for="exampleInputEmail1">Tipo</label><br>
-                    <select class="form-control">
-                      <option>Descanso</option>
-                      <option>Supersérie</option>
-                    </select>
-                  </div>
-                  <div class="descanso_fields">
-                    <div class="col-lg-3">
-                      <label for="exampleInputEmail1">Descanso</label><br>
-                      <form role="form">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Descanso">
-                          <span class="input-group-addon">Segundos</span>
+                    </div>
+                  </li>
+                {%elif object.objectType == 'relacao'%}
+                  {%if object.relactionType == 'descanso'%}
+                    <li class="list-group-item clickable"><h5>Descanço de {{object.time}} segundos</h5></li>
+                    <li class="list-group-item clickable open-panel">
+                      <div class="panel panel-primary">
+                         <div class="panel-body">
+                          <div class="row">
+                            <div class="col-lg-3">
+                              <label for="exampleInputEmail1">Tipo</label><br>
+                              <select class="form-control">
+                                <option selected="selected">Descanso</option>
+                                <option>Supersérie</option>
+                              </select>
+                            </div>
+                            <div class="descanso_fields">
+                              <div class="col-lg-3">
+                                <label for="exampleInputEmail1">Descanso</label><br>
+                                <form role="form">
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Descanso" value="{{object.time}}">
+                                    <span class="input-group-addon">Segundos</span>
+                                  </div>
+                                </form>
+                              </div>
+                              <div class="col-lg-6">
+                                <label for="exampleInputEmail1">Comentário</label><br>
+                                <form role="form">
+                                    <input type="text" class="form-control" placeholder="Breve comentário">
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </form>
-                    </div>
-                    <div class="col-lg-6">
-                      <label for="exampleInputEmail1">Comentário</label><br>
-                      <form role="form">
-                          <input type="text" class="form-control" placeholder="Breve comentário">
-                      </form>
-                    </div>
-                  </div>
+                      </div>
+                    </li>
+                  {%elif object.relactionType == 'superserie'%}
+                    <li class="list-group-item clickable"><h5>Super Série</h5></li>
+                    <li class="list-group-item clickable open-panel">
+                      <div class="panel panel-primary">
+                         <div class="panel-body">
+                          <div class="row">
+                            <div class="col-lg-3">
+                              <label for="exampleInputEmail1">Tipo</label><br>
+                              <select class="form-control">
+                                <option>Descanso</option>
+                                <option selected="selected">Supersérie</option>
+                              </select>
+                            </div>
+                            <div class="superserie_fields">
+                              <div class="col-lg-6">
+                                <label for="exampleInputEmail1">Comentário</label><br>
+                                <form role="form">
+                                    <input type="text" class="form-control" placeholder="Breve comentário">
+                                </form>
+                              </div>
+                            </div>
 
-                  <div class="superserie_fields">
-                    <div class="col-lg-6">
-                      <label for="exampleInputEmail1">Comentário</label><br>
-                      <form role="form">
-                          <input type="text" class="form-control" placeholder="Breve comentário">
-                      </form>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item clickable"><h4>Supino Inclinado <small>10 X 10 X 10</small></h4></li>
-          <li class="list-group-item clickable open-panel">
-            <div class="panel panel-primary">
-               <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-3">
-                    <form role="form">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Nome</label>
-                        <p class="form-control-static">Supino Reto</p>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Descrição</label>
-                        <p class="form-control-static">Aqui ficará a descrição do exercício, execução e dicas para melhor rendimento,
-                        imagens e gifs seriam bem-vindos.</p>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="col-lg-9">
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-lg-12 padding-bottom">
-                            <label for="exampleInputEmail1">Séries</label><br>
-                            <span class="label label-primary">10 X 10 X 10</span>
-                          </div>
-                          <div class="col-lg-2">
-                            <input type="integer" class="form-control input-sm" placeholder="Repetições">
-                          </div>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-default">+ série</button>
-                            <button type="button" class="btn btn-danger">- série</button>
                           </div>
                         </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
                       </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item clickable"><h5>Descanço de 30 segundos</h5></li>
-          <li class="list-group-item clickable open-panel">
-            <div class="panel panel-primary">
-               <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-3">
-                    <label for="exampleInputEmail1">Descanso</label><br>
-                    <form role="form">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Descanso">
-                        <span class="input-group-addon">Segundos</span>
-                      </div>
-                    </form>
-                    <inpi
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item clickable"><h4>Peck Deck <small>10 X 10 X 10</small></h4></li>
-          <li class="list-group-item clickable"><h5>Descanço de 30 segundos</h5></li>
-          <li class="list-group-item clickable open-panel">
-            <div class="panel panel-primary">
-               <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-3">
-                    <label for="exampleInputEmail1">Descanso</label><br>
-                    <form role="form">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Descanso">
-                        <span class="input-group-addon">Segundos</span>
-                      </div>
-                    </form>
-                    <inpi
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item clickable"><h4>Tríceps Corda <small>10 X 10 X 10</small></h4></li>
-          <li class="list-group-item clickable"><h5><i class="fa fa-arrows-v"></i> Super Série</h5></li>
-          <li class="list-group-item clickable"><h4>Francês <small>10 X 10 X 10</small></h4></li>
-        </ul>
+                    </li>
+                  {%endif%}
+                {%endif%}
+              {%endfor%}
+              <li class="list-group-item text-center">
+                <button class="btn btn-primary" id="addExercicio"><strong>Lista de Exercícios</strong></button>
+              </li>
+            </ul>
+          </div>
+          {%endfor%}
+        </div>
       </div> <!-- col-lg-12 -->
       <div class="col-lg-1" id="exerciciosDiv">
         <h3 class="text-center">Lista de Exercícios</h3>
@@ -294,6 +260,10 @@
     </div><!-- row -->
   </div>
 </article>
+<script type="text/javascript">
+  //Content injection
+  train_uid = "{{train_uid}}";
+</script>
 {%endblock%}
 
 {%block scripts%}
