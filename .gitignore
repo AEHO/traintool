@@ -1,6 +1,6 @@
 venv
 .env
-*/.sass-cache/*
+.sass-cache/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
