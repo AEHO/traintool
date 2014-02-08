@@ -1,5 +1,3 @@
-# Will do tests over all the api endpoints
-
 import unittest
 import webtest
 import endpoints
@@ -8,24 +6,6 @@ import main
 from google.appengine.api import memcache
 from google.appengine.ext import db
 from google.appengine.ext import testbed
-
-
-class StubTest(unittest.TestCase):
-    """
-    Sanity Test to check if we are able to even create the stubs
-    """
-
-    def setUp(self):
-        self.testbed = testbed.Testbed()
-        self.testbed.activate()
-        self.testbed.init_datastore_v3_stub()
-        self.testbed.init_memcache_stub()
-
-    def tearDown(self):
-        self.testbed.deactivate()
-
-    def test_sanity(self):
-        self.assertTrue(True)
 
 
 # All the requests to the api **must** be done with a post request
@@ -37,9 +17,12 @@ class StubTest(unittest.TestCase):
 # that this does not happens in the production environment (_ah/api/) - 
 # you'll have to set the proper http methods in that environment.
 
-class ApiV1IntegrationTest(unittest.TestCase):
-    """ 
-    Tests the endpoints of Gup TrainTool API V1 
+
+class IntegrationTestCase(unittest.TestCase):
+    """
+    Base class that contains the proper setUp and tearDown methods
+    that will be used by all of the other integration tests that uses
+    webtest and testbed. Just inherit this class and write the tests. 
     """
 
     BASE_PATH = '/_ah/spi/GupApi.'
@@ -55,6 +38,21 @@ class ApiV1IntegrationTest(unittest.TestCase):
     def tearDown(self):
         self.testbed.deactivate
 
+
+class StubTest(IntegrationTestCase):
+    """
+    Sanity Test to check if we are able to even create the stubs
+    """
+
+    def test_sanity(self):
+        self.assertTrue(True)
+
+
+class TestExercise(IntegrationTestCase):
+    """ 
+    Tests the endpoints of Gup TrainTool API V1 
+    """
+
     def test_exercise_list_get(self):
         response = self.testapp.post_json(self.BASE_PATH + 'ExercisesList',{})
         self.assertEqual(response.status_int, 200)
@@ -67,6 +65,7 @@ class ApiV1IntegrationTest(unittest.TestCase):
             "body_part": "body_part",
         })
         self.assertEqual(response_ok.status_int, 200)
+        self.assertTrue(response_ok.json['id'])
         self.assertNotEqual(response_error.status_int, 200)
 
     def test_exercise_get(self):
@@ -85,10 +84,26 @@ class ApiV1IntegrationTest(unittest.TestCase):
         self.assertEqual(response_get.json['id'], response_post_ok.json['id'])
         self.assertNotEqual(response_get_fail.status_int, 200)
 
+
+class TestInterval(IntegrationTestCase):
+
     def test_intervals_list_get(self):
         response = self.testapp.post_json(self.BASE_PATH + \
             'IntervalsList',{})
         self.assertEqual(response.status_int, 200)
+
+    def test_interval_post(self):
+        response_error = self.testapp.post_json(self.BASE_PATH + 'IntervalPost',
+            { "id": "random_id" }, status=400)
+        response_ok = self.testapp.post_json(self.BASE_PATH + 'IntervalPost', {
+            "name": "exercise_name",
+            "body_part": "body_part",
+        })
+        print response_error
+        self.assertEqual(response_ok.status_int, 200)
+        self.assertTrue(response_ok.json['id'])
+        self.assertNotEqual(response_error.status_int, 200)
+
 
 
 if __name__ == '__main__':

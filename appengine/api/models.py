@@ -41,6 +41,9 @@ class Interval(EndpointsModel):
         time - time in seconds till the next exercise
         comment - a comment about the interval
     """
+    
+    _message_fields_schema = ('id', 'time', 'comment',)
+
     time = ndb.IntegerProperty(indexed=False)
     comment = ndb.StringProperty(indexed=False)
 

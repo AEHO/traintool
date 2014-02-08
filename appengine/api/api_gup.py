@@ -49,8 +49,6 @@ class GupApi(remote.Service):
                     name='exercise.post')
     def ExercisePost(self, exercise):
         """ Updates or Creates an Exercise in the Db """
-        if endpoints.get_current_user():
-            exercise.owner = endpoints.get_current_user()
         exercise.put()
         return exercise
 
@@ -64,6 +62,18 @@ class GupApi(remote.Service):
                             name='intervals.list')
     def IntervalsList(self, query):
         return query
+
+
+    @Interval.method(response_fields=('id',),
+                    path='interval',
+                    http_method='POST',
+                    name='interval.post')
+    def IntervalPost(self, interval):
+        """
+        Updates or creates an Interval in the Db
+        """
+        interval.put()
+        return interval
 
 
     @MyModel.method(path="mymodel", 
