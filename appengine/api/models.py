@@ -76,3 +76,17 @@ class Workout(EndpointsModel):
     description = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
     days_keys = ndb.KeyProperty(kind=Day, repeated=True)
+
+
+
+class MyModel(EndpointsModel):
+    attr1 = ndb.StringProperty()
+
+    def attr2_set(self, value):
+        self._attr2 = value
+
+    # Since no property_type was passed it will assume that it wants
+    # protorpc.messages.StringField
+    @EndpointsAliasProperty(setter=attr2_set)
+    def attr2(self):
+        return getattr(self, '_attr2', None)

@@ -4,7 +4,7 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from api.models import Exercise
+from api.models import Exercise, MyModel
 from api.models import Interval
 from api.models import Day
 from api.models import Workout
@@ -64,6 +64,13 @@ class GupApi(remote.Service):
                             name='intervals.list')
     def IntervalsList(self, query):
         return query
+
+
+    @MyModel.method(path="mymodel", 
+                    http_method="POST", 
+                    name="mymodel.post")
+    def MyModelPost(self, mymodel):
+        return mymodel
 
 
     # @Exercise.method(user_required=True,
