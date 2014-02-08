@@ -19,6 +19,10 @@ class Exercise(EndpointsModel):
         reps - a list of integers that represents the number of
             repetitions to be done when performing the exercise
         comment - a commentary about the exercise 
+        order - the order of the exercise in a list of exercises that
+            composes a day 
+        day - the day that this exericse is listed to. If not specified
+            then it is not an exercise of a day
     """
     
     _message_fields_schema = ('id', 'name', 'body_part', 'equipament',
@@ -31,6 +35,22 @@ class Exercise(EndpointsModel):
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
     comment = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
+    
+    order = ndb.IntegerProperty()
+    day = ndb.KeyProperty()
+
+    # VERIFY IF THIS APPROACH IS WORKING PROPERLY
+
+    def day_set(self, value):
+        """ 
+        Receives an ID and set the day property with the ndb.Key 
+        as it should.
+        """
+        self.day = ndb.Key('Day', value)
+
+    @EndpointsAliasProperty(setter=day_set)
+    def day_id(self):
+        return getattr(self, 'day', None)
 
 
 class Interval(EndpointsModel):
@@ -41,7 +61,7 @@ class Interval(EndpointsModel):
         time - time in seconds till the next exercise
         comment - a comment about the interval
     """
-    
+
     _message_fields_schema = ('id', 'time', 'comment',)
 
     time = ndb.IntegerProperty(indexed=False)
@@ -66,20 +86,6 @@ class Day(EndpointsModel):
     name = ndb.StringProperty(indexed=True)
     description = ndb.StringProperty(indexed=False)
     proper_time = ndb.IntegerProperty(indexed=False)
-    exercises_and_interval = ndb.KeyProperty(repeated=True)
-
-
-class Workout(EndpointsModel):
-    """
-    Conjunction of days that forms a Workout
-    """
-
-    name = ndb.StringProperty(indexed=True)
-    objective = ndb.StringProperty(indexed=True)
-    description = ndb.StringProperty(indexed=False)
-    created = ndb.DateTimeProperty(auto_now_add=True)
-    days_keys = ndb.KeyProperty(kind=Day, repeated=True)
-
 
 
 class MyModel(EndpointsModel):
@@ -93,3 +99,16 @@ class MyModel(EndpointsModel):
     @EndpointsAliasProperty(setter=attr2_set)
     def attr2(self):
         return getattr(self, '_attr2', None)
+
+
+class Workout(EndpointsModel):
+    """
+    Conjunction of days that forms a Workout
+    """
+
+    name = ndb.StringProperty(indexed=True)
+    objective = ndb.StringProperty(indexed=True)
+    description = ndb.StringProperty(indexed=False)
+    created = ndb.DateTimeProperty(auto_now_add=True)
+    days_keys = ndb.KeyProperty(kind=Day, repeated=True)
+
