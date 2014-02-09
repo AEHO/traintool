@@ -15,7 +15,6 @@ Structure Explained
                                   to convert from ndb.Model to
                                   ProtoRPC messages object.
     /index          -- landing page
-    /utils          -- tools
     /tests          -- test files
     app.yaml        -- GAE config
     main.py         -- routing
@@ -29,29 +28,34 @@ Preparing the Development environment
 ---
 1.  Run the shell script
 
-```
+```bash
 $ ./setup.sh
 ```
 
 2.  Activate the virtualenv environment
 
-```
-$ source .env/bin/activate
+```bash
+$ source venv/bin/activate
 ```
 
 3. Run the tests
 
-```
+```bash
 $ nosetests --with-doctest --verbose
 ```  
 
+4.  Initialize the server
+
+```bash
+$ ./runserver.sh
+```
 
 
 External Dependency
 ---
-This project relies on [endpointer-proto-datastore](https://github.com/GoogleCloudPlatform/endpoints-proto-datastore)(Apache 2.0 License), which extends the functionality provided by ndb.Model to not being needed to create ProtoRPC request objects.
+This project relies on [endpoints-proto-datastore](https://github.com/GoogleCloudPlatform/endpoints-proto-datastore)(Apache 2.0 License), which extends the functionality provided by ndb.Model to not being needed to create ProtoRPC request objects.
 
-It also uses the skeleton on [testable_appengine](https://github.com/rbanffy/testable_appengine)
+It also uses the skeleton of [testable_appengine](https://github.com/rbanffy/testable_appengine)
 
 
 Considerations

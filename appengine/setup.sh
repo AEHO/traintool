@@ -47,6 +47,6 @@ echo ---
 echo Running over virtualenv
 echo Installing dependencies
 
-pip install -r $ROOTDIR/resources/requirements.txt
+pip install -r $ROOTDIR/requirements.txt
 
 echo Done
