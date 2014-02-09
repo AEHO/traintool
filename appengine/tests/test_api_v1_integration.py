@@ -96,14 +96,26 @@ class TestInterval(IntegrationTestCase):
         response_error = self.testapp.post_json(self.BASE_PATH + 'IntervalPost',
             { "id": "random_id" }, status=400)
         response_ok = self.testapp.post_json(self.BASE_PATH + 'IntervalPost', {
-            "name": "exercise_name",
-            "body_part": "body_part",
+            "time": 20,
+            "comment": "body_part",
         })
-        print response_error
         self.assertEqual(response_ok.status_int, 200)
         self.assertTrue(response_ok.json['id'])
         self.assertNotEqual(response_error.status_int, 200)
 
+
+class TestDay(IntegrationTestCase):
+
+    def test_day_post(self):
+        response_error = self.testapp.post_json(self.BASE_PATH + 'DayPost',
+            { "id": "random_id" }, status=400)
+        response_ok = self.testapp.post_json(self.BASE_PATH + 'DayPost', {
+            "name": "day_name",
+            "description": "description",
+        })
+        self.assertEqual(response_ok.status_int, 200)
+        self.assertTrue(response_ok.json['id'])
+        self.assertNotEqual(response_error.status_int, 200)
 
 
 if __name__ == '__main__':

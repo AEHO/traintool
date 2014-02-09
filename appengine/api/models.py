@@ -26,7 +26,7 @@ class Exercise(EndpointsModel):
     """
     
     _message_fields_schema = ('id', 'name', 'body_part', 'equipament',
-        'execution', 'reps', 'comment', 'created')
+        'execution', 'reps', 'comment', 'created', 'order', 'day_id')
 
     name = ndb.StringProperty(indexed=True)
     body_part = ndb.StringProperty(indexed=True)
@@ -35,8 +35,8 @@ class Exercise(EndpointsModel):
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
     comment = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
-    
     order = ndb.IntegerProperty()
+
     day = ndb.KeyProperty()
 
     # VERIFY IF THIS APPROACH IS WORKING PROPERLY
@@ -50,7 +50,10 @@ class Exercise(EndpointsModel):
 
     @EndpointsAliasProperty(setter=day_set)
     def day_id(self):
-        return getattr(self, 'day', None)
+        try:
+            return self.day.id()
+        except:
+            return self.day 
 
 
 class Interval(EndpointsModel):
@@ -62,10 +65,11 @@ class Interval(EndpointsModel):
         comment - a comment about the interval
     """
 
-    _message_fields_schema = ('id', 'time', 'comment',)
+    _message_fields_schema = ('id', 'time', 'comment', 'order',)
 
     time = ndb.IntegerProperty(indexed=False)
     comment = ndb.StringProperty(indexed=False)
+    order = ndb.IntegerProperty(indexed=False)
 
 
 class Day(EndpointsModel):
@@ -83,22 +87,11 @@ class Day(EndpointsModel):
             training
     """
 
+    _message_fields_schema = ('id', 'name', 'description', 'proper_time')
+
     name = ndb.StringProperty(indexed=True)
     description = ndb.StringProperty(indexed=False)
     proper_time = ndb.IntegerProperty(indexed=False)
-
-
-class MyModel(EndpointsModel):
-    attr1 = ndb.StringProperty()
-
-    def attr2_set(self, value):
-        self._attr2 = value
-
-    # Since no property_type was passed it will assume that it wants
-    # protorpc.messages.StringField
-    @EndpointsAliasProperty(setter=attr2_set)
-    def attr2(self):
-        return getattr(self, '_attr2', None)
 
 
 class Workout(EndpointsModel):
@@ -111,4 +104,3 @@ class Workout(EndpointsModel):
     description = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
     days_keys = ndb.KeyProperty(kind=Day, repeated=True)
-

@@ -4,7 +4,7 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from api.models import Exercise, MyModel
+from api.models import Exercise
 from api.models import Interval
 from api.models import Day
 from api.models import Workout
@@ -24,6 +24,7 @@ class GupApi(remote.Service):
     # to require a field for filtering it.
 
     @Exercise.query_method(query_fields=('limit','pageToken',),
+                            # collection_fields=('name'),
                             path='exercises',
                             http_method="GET",
                             name='exercises.list')
@@ -38,17 +39,20 @@ class GupApi(remote.Service):
                     http_method="GET",
                     name="exercise.get")
     def ExerciseGet(self, exercise):
-        """ Queries the DB for an Exercise with the given ID. """
+        """
+        Queries the DB for an Exercise with the given ID.
+        """
         if not exercise.from_datastore:
             raise endpoints.NotFoundException('exercise not found')
         return exercise
 
-    @Exercise.method(response_fields=('id',),
-                    path='exercise',
+    @Exercise.method(path='exercise',
                     http_method='POST',
                     name='exercise.post')
     def ExercisePost(self, exercise):
-        """ Updates or Creates an Exercise in the Db """
+        """
+        Updates or Creates an Exercise in the Db
+        """
         exercise.put()
         return exercise
 
@@ -61,11 +65,13 @@ class GupApi(remote.Service):
                             http_method='GET',
                             name='intervals.list')
     def IntervalsList(self, query):
+        """
+        Returns a list containing all the intervals
+        """
         return query
 
 
-    @Interval.method(response_fields=('id',),
-                    path='interval',
+    @Interval.method(path='interval',
                     http_method='POST',
                     name='interval.post')
     def IntervalPost(self, interval):
@@ -75,68 +81,35 @@ class GupApi(remote.Service):
         interval.put()
         return interval
 
+    @Day.method(path="day",
+                http_method="POST",
+                name="day.post")
+    def DayPost(self, day):
+        """
+        Updates or creates a Day in the Database
+        """
+        day.put()
+        return day
 
-    @MyModel.method(path="mymodel", 
-                    http_method="POST", 
-                    name="mymodel.post")
-    def MyModelPost(self, mymodel):
-        return mymodel
 
+    @Day.method(request_fields=('id',),
+                path='day',
+                http_method='GET',
+                name='day.get')
+    def DayGet(self, day):
+        """
+        Returns a Day given an ID if the Day Exists in the Database
+        """
+        if not day.from_datastore:
+            raise endpoints.NotFoundException('day not found')
+        return day
 
-    # @Exercise.method(user_required=True,
-    #                 request_fields=('id',),
-    #                 path="exercise",
-    #                 http_method="DELETE",
-    #                 name="exercise.delete")
-    # def ExerciseDelete(self,exercise):
-    #     """ Deletes an Exercise from the Db if the ID matches one. """
-    #     if not exercise.from_datastore:
-    #         raise endpoints.NotFoundException('Exercise not found')
-    #     if not exercise.owner == endpoints.get_current_user():
-    #         raise endpoints.UnauthorizedException("Not authorized")
-    #     try:
-    #         exercise.key.delete()
-    #     except:
-    #         raise endpoints.InternalServerErrorException(
-    #             'exercise found but an error happened while deleting')
-    #     return exercise
-
-    # @ExerciseDay.method(path="exerciseday",
-    #                     http_method='POST',
-    #                     name='exerciseday.post')
-    # def ExerciseDayPost(self, exerciseday):
-    #     exerciseday.put()
-    #     return exerciseday
-
-    # @ExerciseDay.method(request_fields=('id',),
-    #                     path='exerciseday',
-    #                     http_method='GET',
-    #                     name='exerciseday.get')
-    # def ExerciseDayGet(self, exerciseday):
-    #     if not exerciseday.from_datastore:
-    #         raise endpoints.NotFoundException('ExerciseDay not found')
-    #     return exerciseday
-
-    # @ExerciseDay.query_method(query_fields=('limit','pageToken',),
-    #                         path="exercisedays",
-    #                         http_method='GET',
-    #                         name='exercisedays.list')
-    # def ExerciseDaysList(self, query):
-    #     return query
-
-    # @ExerciseDay.method(user_required=True,
-    #                     request_fields=('id',),
-    #                     path='exerciseday',
-    #                     http_method='DELETE',
-    #                     name='exerciseday.delete')
-    # def ExerciseDayDelete(self, exerciseday):
-    #     if not exerciseday.from_datastore:
-    #         raise endpoints.NotFoundException('ExerciseDay not found')
-    #     if not exerciseday.owner == endpoints.get_current_user():
-    #         raise endpoints.UnauthorizedException("Not authorized")
-    #     try:
-    #         exerciseday.key.delete()
-    #     except:
-    #         raise endpoints.InternalServerErrorException(
-    #             'Something unexpected happened while deleting')
-    #     return exercise
+    @Day.query_method(query_fields=('limit', 'pageToken',),
+                    path='days',
+                    http_method='GET',
+                    name="days.list")
+    def DaysList(self, query):
+        """
+        Lists all of the Days contained in the Database
+        """
+        return query
