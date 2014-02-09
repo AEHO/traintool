@@ -18,11 +18,6 @@ class GupApi(remote.Service):
     GymUP TrainTool Open API v1
     """
 
-    # //TODO
-    # As it doesnt makes sense to query over all the list of
-    # exercises (here we'll have a lot of dupplicates), it needs
-    # to require a field for filtering it.
-
     @Exercise.query_method(query_fields=('limit','pageToken',),
                             # collection_fields=('name'),
                             path='exercises',
@@ -55,10 +50,6 @@ class GupApi(remote.Service):
         """
         exercise.put()
         return exercise
-
-    # //TODO
-    # As it doesnt makes sense to query over all the list of
-    # intervals it needs to require a field for filtering it.
 
     @Interval.query_method(query_fields=('limit', 'pageToken',),
                             path='intervals',
@@ -93,6 +84,8 @@ class GupApi(remote.Service):
 
 
     @Day.method(request_fields=('id',),
+                response_fields=('id', 'name', 'description','proper_time',
+                    'exercises', 'workout_id',),
                 path='day',
                 http_method='GET',
                 name='day.get')
@@ -105,6 +98,8 @@ class GupApi(remote.Service):
         return day
 
     @Day.query_method(query_fields=('limit', 'pageToken',),
+                    collection_fields=('id', 'name', 'description', 
+                        'proper_time', 'exercises', 'workout_id',),
                     path='days',
                     http_method='GET',
                     name="days.list")
@@ -113,3 +108,31 @@ class GupApi(remote.Service):
         Lists all of the Days contained in the Database
         """
         return query
+
+    @Workout.query_method(query_fields=('limit', 'pageToken',),
+                            collection_fields=('id', 'name', 'objective',
+                                'description', 'created', 'comment', 'days',),
+                            path='workouts',
+                            http_method='GET',
+                            name='workouts.list')
+    def WorkoutsList(self, query):
+        """
+        Lists all of the workouts contained in the Database
+        """
+        return query
+
+    @Workout.method(request_fields=('id',),
+                    path='workout', 
+                    http_method='GET', 
+                    name='workout.get')
+    def WorkoutGet(self, workout):
+        if not workout.from_datastore:
+            raise endpoints.NotFoundException('workout not found')
+        return workout
+
+    @Workout.method(path='workout',
+                    http_method='POST',
+                    name='workout.post')
+    def WorkoutPost(self, workout):
+        workout.put()
+        return workout

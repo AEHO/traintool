@@ -87,7 +87,7 @@ class TestExercise(IntegrationTestCase):
 
 class TestInterval(IntegrationTestCase):
 
-    def test_intervals_list_get(self):
+    def test_intervals_list(self):
         response = self.testapp.post_json(self.BASE_PATH + \
             'IntervalsList',{})
         self.assertEqual(response.status_int, 200)
@@ -106,6 +106,12 @@ class TestInterval(IntegrationTestCase):
 
 class TestDay(IntegrationTestCase):
 
+    def test_days_list(self):
+        response = self.testapp.post_json(self.BASE_PATH + \
+            'DaysList', {})
+        self.assertEqual(response.status_int, 200)
+
+
     def test_day_post(self):
         response_error = self.testapp.post_json(self.BASE_PATH + 'DayPost',
             { "id": "random_id" }, status=400)
@@ -116,6 +122,39 @@ class TestDay(IntegrationTestCase):
         self.assertEqual(response_ok.status_int, 200)
         self.assertTrue(response_ok.json['id'])
         self.assertNotEqual(response_error.status_int, 200)
+
+    def test_day_get(self):
+        response_post_ok = self.testapp.post_json(self.BASE_PATH + \
+            'DayPost', {
+                "name": "name of the day"
+            })
+        response_get = self.testapp.post_json(self.BASE_PATH + \
+            'DayGet', {
+                "id": response_post_ok.json['id']
+            })
+        self.assertEqual(response_get.json['id'], response_post_ok.json['id'])
+
+
+class TestWorkout(IntegrationTestCase):
+
+    def test_workouts_list(self):
+        response = self.testapp.post_json(self.BASE_PATH + \
+            'WorkoutsList', {})
+        self.assertEqual(response.status_int, 200)
+
+    def test_workout_post(self):
+        response_error = self.testapp.post_json(self.BASE_PATH + \
+            'WorkoutPost', { 'id': 'random_id'}, status=400)
+        response_ok = self.testapp.post_json(self.BASE_PATH + \
+            'WorkoutPost', {
+                "name": "training"
+            })
+        self.assertEqual(response_ok.status_int, 200)
+        self.assertTrue(response_ok.json['id'])
+        self.assertNotEqual(response_error.status_int, 200)
+
+    def test_workout_get(self):
+        pass
 
 
 if __name__ == '__main__':
