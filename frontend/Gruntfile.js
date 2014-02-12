@@ -3,10 +3,36 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
-    // uglify: {
-    //   'dist/built.min.js': 'dist/built.js'
-    // },
-
+    uglify: {
+      'build/assets/js/built.min.js': 'dependencies/assets/js/*.js'
+    },
+    /*
+      Compile the sass files and generate the CSS.
+     */
+    compass: {
+      dist: {
+        options: {
+          sassDir:"dependencies/assets/sass/",
+          cssDir:"build/assets/css/"
+        }
+      }
+    },
+    /*
+      Here i'm copying hanadlebars runtime javascript
+      to the build assets folder to include it directly
+      in the html.
+      This is done because handlebars isn't exposed in
+      the global context directly until version >= 2.
+    */
+   copy: {
+    main: {
+      files: [
+       {expand:true,
+        src: ['dependencies/bower_components/handlebars/handlebars.runtime.min.js'],
+        dest:'build/assets/js/'}
+      ]
+    }
+   },
     /* 
        A simple ordered concatenation strategy.
        This will start at app/app.js and begin
@@ -23,9 +49,9 @@ module.exports = function(grunt) {
        production.
     */
     neuter: {
-      // options: {
-      //   includeSourceURL: true
-      // },
+      options: {
+        includeSourceURL: true
+      },
       'build/application.js': 'app/app.js'
     },
 
@@ -47,6 +73,10 @@ module.exports = function(grunt) {
       handlebars_templates: {
         files: ['app/**/*.hbs'],
         tasks: ['ember_templates', 'neuter']
+      },
+      compass_stylesheets:{
+        files: ['dependencies/assets/sass/*.scss'],
+        task: ['compass']
       }
     },
 
@@ -93,7 +123,6 @@ module.exports = function(grunt) {
       },
       'dependencies/compiled/templates.js': ["app/templates/**/*.hbs"]
     },
-
     /*
       Find all the <whatever>_test.js files in the test folder.
       These will get loaded via script tags when the task is run.
@@ -111,6 +140,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-neuter');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-ember-templates');
+  grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   
   /*
     A task to build the test runner html file that get place in
@@ -139,11 +170,11 @@ module.exports = function(grunt) {
       - build an html file with a script tag for each test file
       - headlessy load this page and print the test runner results
   */
-  grunt.registerTask('test', ['ember_templates', 'neuter', 'jshint', 'build_test_runner_file', 'qunit']);
+  grunt.registerTask('test', ['compass', 'ember_templates', 'neuter', 'copy', 'jshint', 'build_test_runner_file', 'qunit']);
 
   /*
     Default task. Compiles templates, neuters application code, and begins
     watching for changes.
   */
-  grunt.registerTask('default', ['ember_templates', 'neuter', 'watch']);
+  grunt.registerTask('default', ['compass', 'ember_templates', 'neuter', 'copy', 'watch']);
 };
