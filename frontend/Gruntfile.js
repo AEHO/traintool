@@ -49,9 +49,9 @@ module.exports = function(grunt) {
        production.
     */
     neuter: {
-      // options: {
-      //   includeSourceURL: true
-      // },
+      options: {
+        includeSourceURL: true
+      },
       'build/application.js': 'app/app.js'
     },
 
