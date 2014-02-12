@@ -22,9 +22,6 @@ require('dependencies/bower_components/jquery/jquery');
  * entire handlebars library and its string parsing functions.
 */
 
-//require('dependencies/bower_components/handlebars/handlebars.runtime');
-
-/* This is Ember. I think you'll like it */
 require('dependencies/bower_components/ember/ember');
 
 /*
@@ -35,6 +32,9 @@ require('dependencies/bower_components/ember/ember');
   generated file.
 */
 //require('dependencies/compiled/templates');
+
+
+require('dependencies/bower_components/ember-data/ember-data');
 
 /*
   Creates a new instance of an Ember application and
