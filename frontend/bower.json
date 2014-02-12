@@ -1,0 +1,29 @@
+{
+  "name": "traintool",
+  "version": "0.0.0",
+  "homepage": "https://github.com/AEHO/traintool",
+  "authors": [
+    "Mateus Zitelli <zitellimateus@gmail.com>"
+  ],
+  "description": "A simple website to create, manage and share your workouts made with ember.js, fully opensoursed and created for fun and leaning propouses.",
+  "main": "Gruntfile.js",
+  "keywords": [
+    "ember.js",
+    "workout",
+    "gym",
+    "rest"
+  ],
+  "license": "GPLv2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "dependencies/bower_components",
+    "build/application.js"
+  ],
+  "dependencies":{
+    "handlebars":"~1.1.2",
+    "ember":"~1.4.0-beta.6",
+    "ember-data":"~1.0.0-beta.6"
+  }
+}

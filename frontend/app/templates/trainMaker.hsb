@@ -1,0 +1,273 @@
+
+{% extends 'base/base.html'%}
+{% load staticfiles %}
+
+{% block title %}Maker - TrainTool{% endblock %}
+{%block extrahead%}
+<style>
+  body{
+    background:url("{%static 'img/pattern.png'%}") repeat;
+  }
+</style>
+{%endblock%}
+{%block content%}
+<header>
+  <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Esconder barra de navegação</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">GymUp</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse" id="menu">
+        <ul class="nav navbar-nav">
+          <li><a href="/" id="index_nav_btn"><i class="fa fa-home"></i> Home</a></li>
+          <li><a href="" id="index_nav_btn"><i class="fa fa-compass"></i> Explorar</a></li>
+        </ul>
+        <form class="navbar-form navbar-right hide" role="login" id="login_nav_form">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="login">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="senha">
+          </div>
+          <button type="submit" class="btn btn-default">Login</button>
+        </form>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Menu <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Criar novo treino</a></li>
+              <li><a href="#">Perfil</a></li>
+              <li><a href="#">Convidar amigo</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#" id="login_toggle">Login</a>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div>
+  </nav>
+</header>
+<article>
+  <div class="container">
+    <div class="row">
+      <div class='col-lg-12'>
+        <h2>Definição dos treinos</h2>
+      </div>
+      <div class="col-lg-3">
+        <label>Nome</label>
+        <input id="nome-treino-{{treino.uid}}" type="text" class="form-control" value="{{treino.nome}}"></input>
+      </div>
+      <div class="col-lg-5">
+        <label>Descrição</label>
+        <textarea id="detalhes-treino-{{treino.uid}}" rows="1" type="text" class="form-control">{{treino.detalhes}}</textarea>
+      </div>
+      <div class="col-lg-4 text-center">
+        
+      </div>
+      <div class="col-lg-12" id="daysDiv">
+        <h2>Dias de Treino</h2>
+        <ul class="nav nav-tabs">
+          {%for dia in treino.dias%}
+            <li class={%if forloop.first%}"active"{%endif%}><a href="#dia_{{dia.uid}}_div" data-toggle="tab">{{dia.nome}}</a></li>
+          {%endfor%}
+          <li><a class="btn btn-primary" id="new_day_btn">Novo dia de treino</a></li>
+        </ul>
+        <div class="tab-content">
+          {%for dia in treino.dias%}
+          <div class="tab-pane active" id="dia_{{dia.uid}}_div">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-lg-3">  
+                    <label>Nome</label>
+                    <input id="nome-dia-{{dia.uid}}" class="form-control day_editable_fields" value="{{dia.nome}}"></input>
+                  </div>
+                  <div class="col-lg-5">
+                    <label>Comentário</label>
+                    <textarea id="comentario-dia-{{dia.uid}}" class="form-control day_editable_fields" rows="1">{{dia.detalhes}}</textarea>
+                  </div>
+                </div>
+              </li>
+              {%for object in dia.objects%}
+                {%if object.objectType == 'exercicio'%}
+                  <li class="list-group-item clickable"><h4>{{object.nome}} <small>{{object.series}}</small></h4></li>
+                  <li class="list-group-item clickable open-panel">
+                    <div class="panel panel-primary">
+                       <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-3">
+                            <label for="exampleInputEmail1">Nome</label>
+                            <p class="form-control-static">{{object.nome}}</p>
+                          </div>
+                          <div class="col-lg-5">
+                            <label for="exampleInputEmail1">Descrição</label>
+                            <p class="form-control-static">{{object.descricao}}</p>
+                          </div>
+                          <div class="col-lg-3">
+                              <div class="form-group">
+                                <div class="row">
+                                  <div class="col-lg-12 padding-bottom">
+                                    <label for="exampleInputEmail1">Séries</label><br>
+                                    <span class="label label-primary">{{object.series}}</span>
+                                    <div class="btn-group">
+                                      <button type="button" class="btn btn-default">+ série</button>
+                                      <button type="button" class="btn btn-danger">- série</button>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-5">
+                                    <input type="integer" class="form-control input-sm" placeholder="Repetições">
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {%elif object.objectType == 'relacao'%}
+                  {%if object.relactionType == 'descanso'%}
+                    <li class="list-group-item clickable"><h5>Descanço de {{object.time}} segundos</h5></li>
+                    <li class="list-group-item clickable open-panel">
+                      <div class="panel panel-primary">
+                         <div class="panel-body">
+                          <div class="row">
+                            <div class="col-lg-3">
+                              <label for="exampleInputEmail1">Tipo</label><br>
+                              <select class="form-control">
+                                <option selected="selected">Descanso</option>
+                                <option>Supersérie</option>
+                              </select>
+                            </div>
+                            <div class="descanso_fields">
+                              <div class="col-lg-3">
+                                <label for="exampleInputEmail1">Descanso</label><br>
+                                <form role="form">
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Descanso" value="{{object.time}}">
+                                    <span class="input-group-addon">Segundos</span>
+                                  </div>
+                                </form>
+                              </div>
+                              <div class="col-lg-6">
+                                <label for="exampleInputEmail1">Comentário</label><br>
+                                <form role="form">
+                                    <input type="text" class="form-control" placeholder="Breve comentário">
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  {%elif object.relactionType == 'superserie'%}
+                    <li class="list-group-item clickable"><h5>Super Série</h5></li>
+                    <li class="list-group-item clickable open-panel">
+                      <div class="panel panel-primary">
+                         <div class="panel-body">
+                          <div class="row">
+                            <div class="col-lg-3">
+                              <label for="exampleInputEmail1">Tipo</label><br>
+                              <select class="form-control">
+                                <option>Descanso</option>
+                                <option selected="selected">Supersérie</option>
+                              </select>
+                            </div>
+                            <div class="superserie_fields">
+                              <div class="col-lg-6">
+                                <label for="exampleInputEmail1">Comentário</label><br>
+                                <form role="form">
+                                    <input type="text" class="form-control" placeholder="Breve comentário">
+                                </form>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  {%endif%}
+                {%endif%}
+              {%endfor%}
+              <li class="list-group-item text-center">
+                <button class="btn btn-primary" id="addExercicio"><strong>Lista de Exercícios</strong></button>
+              </li>
+            </ul>
+          </div>
+          {%endfor%}
+        </div>
+      </div> <!-- col-lg-12 -->
+      <div class="col-lg-1" id="exerciciosDiv">
+        <h3 class="text-center">Lista de Exercícios</h3>
+        <input class="form-control search" placeholder="Filtro"></input>
+        <buttom class="sort btn btn-default" data-sort="name">Organizar por Nome</buttom>
+        <ul class="list-group list">
+          <li class="list-group-item withFooter clickable">
+            <div class="row">
+              <div class="col-lg-12 text-left">
+                <h5><i class="fa fa fa-arrow-circle-o-left"></i>
+               <span class="name">Rosca Direta</span></h5>
+              </div>
+              <div class="col-lg-12 text-center btnFooter">
+                Detalhes
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item withFooter clickable">
+            <div class="row">
+              <div class="col-lg-12 text-left">
+                <h5><i class="fa fa fa-arrow-circle-o-left"></i>
+               <span class="name">Abdominal</span></h5>
+              </div>
+              <div class="col-lg-12 text-center btnFooter">
+                Detalhes
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item withFooter clickable">
+            <div class="row">
+              <div class="col-lg-12 text-left">
+                <h5><i class="fa fa fa-arrow-circle-o-left"></i>
+               <span class="name">Puley Costas</span></h5>
+              </div>
+              <div class="col-lg-12 text-center btnFooter">
+                Detalhes
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item withFooter clickable">
+            <div class="row">
+              <div class="col-lg-12 text-left">
+                <h5><i class="fa fa fa-arrow-circle-o-left"></i>
+               <span class="name">Remada Alta</span></h5>
+              </div>
+              <div class="col-lg-12 text-center btnFooter">
+                Detalhes
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div><!-- row -->
+  </div>
+</article>
+<script type="text/javascript">
+  //Content injection
+  train_uid = "{{train_uid}}";
+</script>
+{%endblock%}
+
+{%block scripts%}
+  <script src="{%static 'js/uuid.js'%}"></script>
+  <script src="{%static 'js/maker.js'%}"></script>
+{%endblock%}
