@@ -6,19 +6,23 @@
   "scripts": {
     "test": "grunt"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AEHO/traintool"
+  },
   "author": "Mateus Zitelli <zitellimateus@gmail.com>",
   "license": "GPLv2",
   "devDependencies": {
     "compass":"~0.1.0",
     "grunt": "~0.4.0",
+    "bower": "~1.2.8",
     "grunt-neuter": "~0.5.0",
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-jshint": "~0.4.0",
     "grunt-contrib-qunit": "~0.2.0",
-    "grunt-ember-templates": "0.4.5",
+    "grunt-ember-templates": "~0.4.18",
     "grunt-contrib-watch": "~0.4.0",
     "grunt-contrib-compass":"~0.7.1",
-    "grunt-contrib-copy":"~0.5.0" 
+    "grunt-contrib-copy":"~0.5.0"
   }
 }
