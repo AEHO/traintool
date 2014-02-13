@@ -45,7 +45,7 @@ class Exercise(EndpointsModel):
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
     comment = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
-    sequency = ndb.IntegerProperty()
+    sequency = ndb.IntegerProperty(indexed=False)
 
     day = ndb.KeyProperty(kind='Day')
 
@@ -105,6 +105,7 @@ class Day(EndpointsModel):
     description = ndb.StringProperty(indexed=False)
     proper_time = ndb.IntegerProperty(indexed=False)
     sequency = ndb.IntegerProperty(indexed=False)
+    created = ndb.DateTimeProperty(auto_now_add=True)
 
     workout = ndb.KeyProperty(kind='Workout')
 
