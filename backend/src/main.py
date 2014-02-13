@@ -6,4 +6,4 @@ from api.api_gup import GupApi
 
 api_application = endpoints.api_server([
     GupApi,
-], restricted=False) 
+], restricted=False)

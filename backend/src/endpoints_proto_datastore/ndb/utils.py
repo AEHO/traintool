@@ -69,153 +69,153 @@ NDB_PROPERTY_TO_PROTO = {
 
 
 def GetKeywordArgs(prop, include_default=True):
-  """Captures attributes from an NDB property to be passed to a ProtoRPC field.
+    """Captures attributes from an NDB property to be passed to a ProtoRPC field.
 
-  Args:
-    prop: The NDB property which will have its attributes captured.
-    include_default: An optional boolean indicating whether or not the default
-        value of the property should be included. Defaults to True, and is
-        intended to be turned off for special ProtoRPC fields which don't take
-        a default.
+    Args:
+      prop: The NDB property which will have its attributes captured.
+      include_default: An optional boolean indicating whether or not the default
+          value of the property should be included. Defaults to True, and is
+          intended to be turned off for special ProtoRPC fields which don't take
+          a default.
 
-  Returns:
-    A dictionary of attributes, intended to be passed to the constructor of a
-        ProtoRPC field as keyword arguments.
-  """
-  kwargs = {
-      'required': prop._required,
-      'repeated': prop._repeated,
-  }
-  if include_default and hasattr(prop, '_default'):
-    kwargs['default'] = prop._default
-  if hasattr(prop, '_variant'):
-    kwargs['variant'] = prop._variant
-  return kwargs
+    Returns:
+      A dictionary of attributes, intended to be passed to the constructor of a
+          ProtoRPC field as keyword arguments.
+    """
+    kwargs = {
+        'required': prop._required,
+        'repeated': prop._repeated,
+    }
+    if include_default and hasattr(prop, '_default'):
+        kwargs['default'] = prop._default
+    if hasattr(prop, '_variant'):
+        kwargs['variant'] = prop._variant
+    return kwargs
 
 
 def MessageFromSimpleField(field, prop, index):
-  """Converts a property to the corresponding field of specified type.
+    """Converts a property to the corresponding field of specified type.
 
-  Assumes index is the only positional argument needed to create an instance
-  of {field}, hence only simple fields will work and an EnumField or
-  MessageField will fail.
+    Assumes index is the only positional argument needed to create an instance
+    of {field}, hence only simple fields will work and an EnumField or
+    MessageField will fail.
 
-  Args:
-    field: A ProtoRPC field type.
-    prop: The NDB property to be converted.
-    index: The index of the property within the message.
+    Args:
+      field: A ProtoRPC field type.
+      prop: The NDB property to be converted.
+      index: The index of the property within the message.
 
-  Returns:
-    An instance of field with attributes corresponding to those in prop and
-        index corresponding to that which was passed in.
-  """
-  return field(index, **GetKeywordArgs(prop))
+    Returns:
+      An instance of field with attributes corresponding to those in prop and
+          index corresponding to that which was passed in.
+    """
+    return field(index, **GetKeywordArgs(prop))
 
 
 def StructuredPropertyToProto(prop, index):
-  """Converts a structured property to the corresponding message field.
+    """Converts a structured property to the corresponding message field.
 
-  Args:
-    prop: The NDB property to be converted.
-    index: The index of the property within the message.
+    Args:
+      prop: The NDB property to be converted.
+      index: The index of the property within the message.
 
-  Returns:
-    A message field with attributes corresponding to those in prop, index
-        corresponding to that which was passed in and with underlying message
-        class equal to the message class produced by the model class, which
-        should be a subclass of EndpointsModel.
+    Returns:
+      A message field with attributes corresponding to those in prop, index
+          corresponding to that which was passed in and with underlying message
+          class equal to the message class produced by the model class, which
+          should be a subclass of EndpointsModel.
 
-  Raises:
-    TypeError if the model class of the property does not have a callable
-        ProtoModel method. This is because we expected a subclass of
-        EndpointsModel set on the structured property.
-  """
-  modelclass = prop._modelclass
-  try:
-    property_proto_method = modelclass.ProtoModel
-    property_proto = property_proto_method()
-  except (AttributeError, TypeError):
-    error_msg = ('Structured properties must receive a model class with a '
-                 'callable ProtoModel attribute. The class %s has no such '
-                 'attribute.' % (modelclass.__name__,))
-    raise TypeError(error_msg)
+    Raises:
+      TypeError if the model class of the property does not have a callable
+          ProtoModel method. This is because we expected a subclass of
+          EndpointsModel set on the structured property.
+    """
+    modelclass = prop._modelclass
+    try:
+        property_proto_method = modelclass.ProtoModel
+        property_proto = property_proto_method()
+    except (AttributeError, TypeError):
+        error_msg = ('Structured properties must receive a model class with a '
+                     'callable ProtoModel attribute. The class %s has no such '
+                     'attribute.' % (modelclass.__name__,))
+        raise TypeError(error_msg)
 
-  # No default for {MessageField}s
-  kwargs = GetKeywordArgs(prop, include_default=False)
-  return messages.MessageField(property_proto, index, **kwargs)
+    # No default for {MessageField}s
+    kwargs = GetKeywordArgs(prop, include_default=False)
+    return messages.MessageField(property_proto, index, **kwargs)
 NDB_PROPERTY_TO_PROTO[ndb.StructuredProperty] = StructuredPropertyToProto
 # Ignore fact that LocalStructuredProperty is just a blob in the datastore
 NDB_PROPERTY_TO_PROTO[ndb.LocalStructuredProperty] = StructuredPropertyToProto
 
 
 def EnumPropertyToProto(prop, index):
-  """Converts an enum property from a model to a message field.
+    """Converts an enum property from a model to a message field.
 
-  Args:
-    prop: The NDB enum property to be converted.
-    index: The index of the property within the message.
+    Args:
+      prop: The NDB enum property to be converted.
+      index: The index of the property within the message.
 
-  Returns:
-    An enum field with attributes corresponding to those in prop, index
-        corresponding to that which was passed in and with underlying enum type
-        equal to the enum type set in the enum property.
-  """
-  enum = prop._enum_type
-  kwargs = GetKeywordArgs(prop)
-  return messages.EnumField(enum, index, **kwargs)
+    Returns:
+      An enum field with attributes corresponding to those in prop, index
+          corresponding to that which was passed in and with underlying enum type
+          equal to the enum type set in the enum property.
+    """
+    enum = prop._enum_type
+    kwargs = GetKeywordArgs(prop)
+    return messages.EnumField(enum, index, **kwargs)
 NDB_PROPERTY_TO_PROTO[msgprop.EnumProperty] = EnumPropertyToProto
 
 
 def MessagePropertyToProto(prop, index):
-  """Converts a message property from a model to a message field.
+    """Converts a message property from a model to a message field.
 
-  Args:
-    prop: The NDB message property to be converted.
-    index: The index of the property within the message.
+    Args:
+      prop: The NDB message property to be converted.
+      index: The index of the property within the message.
 
-  Returns:
-    A message field with attributes corresponding to those in prop, index
-        corresponding to that which was passed in and with underlying message
-        class equal to the message type set in the message property.
-  """
-  message_type = prop._message_type
-  # No default for {MessageField}s
-  kwargs = GetKeywordArgs(prop, include_default=False)
-  return messages.MessageField(message_type, index, **kwargs)
+    Returns:
+      A message field with attributes corresponding to those in prop, index
+          corresponding to that which was passed in and with underlying message
+          class equal to the message type set in the message property.
+    """
+    message_type = prop._message_type
+    # No default for {MessageField}s
+    kwargs = GetKeywordArgs(prop, include_default=False)
+    return messages.MessageField(message_type, index, **kwargs)
 NDB_PROPERTY_TO_PROTO[msgprop.MessageProperty] = MessagePropertyToProto
 
 
 def GeoPtPropertyToProto(prop, index):
-  """Converts a model property to a Geo Point message field.
+    """Converts a model property to a Geo Point message field.
 
-  Args:
-    prop: The NDB property to be converted.
-    index: The index of the property within the message.
+    Args:
+      prop: The NDB property to be converted.
+      index: The index of the property within the message.
 
-  Returns:
-    A message field with attributes corresponding to those in prop, index
-        corresponding to that which was passed in and with underlying message
-        class equal to GeoPtMessage.
-  """
-  # No default for {MessageField}s
-  kwargs = GetKeywordArgs(prop, include_default=False)
-  return messages.MessageField(GeoPtMessage, index, **kwargs)
+    Returns:
+      A message field with attributes corresponding to those in prop, index
+          corresponding to that which was passed in and with underlying message
+          class equal to GeoPtMessage.
+    """
+    # No default for {MessageField}s
+    kwargs = GetKeywordArgs(prop, include_default=False)
+    return messages.MessageField(GeoPtMessage, index, **kwargs)
 NDB_PROPERTY_TO_PROTO[ndb.GeoPtProperty] = GeoPtPropertyToProto
 
 
 def UserPropertyToProto(prop, index):
-  """Converts a model property to a user message field.
+    """Converts a model property to a user message field.
 
-  Args:
-    prop: The NDB property to be converted.
-    index: The index of the property within the message.
+    Args:
+      prop: The NDB property to be converted.
+      index: The index of the property within the message.
 
-  Returns:
-    A message field with attributes corresponding to those in prop, index
-        corresponding to that which was passed in and with underlying message
-        class equal to UserMessage.
-  """
-  # No default for {MessageField}s
-  kwargs = GetKeywordArgs(prop, include_default=False)
-  return messages.MessageField(UserMessage, index, **kwargs)
+    Returns:
+      A message field with attributes corresponding to those in prop, index
+          corresponding to that which was passed in and with underlying message
+          class equal to UserMessage.
+    """
+    # No default for {MessageField}s
+    kwargs = GetKeywordArgs(prop, include_default=False)
+    return messages.MessageField(UserMessage, index, **kwargs)
 NDB_PROPERTY_TO_PROTO[ndb.UserProperty] = UserPropertyToProto
