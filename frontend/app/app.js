@@ -45,6 +45,11 @@ window.TrainTool = Ember.Application.create({
   LOG_TRANSITIONS_INTERNAL: true // detailed logging of all routing steps
 });
 
+if (window.TESTING) {
+  window.TrainTool.deferReadiness();
+}
+
+
 TrainTool.ApplicationSerializer = DS.RESTSerializer.extend({
   extract: function(store, primaryType, payload, recordId, requestType) {
     root = "items";
@@ -52,17 +57,50 @@ TrainTool.ApplicationSerializer = DS.RESTSerializer.extend({
     var primaryRecord = this.normalize(primaryType, payload[root], root);
     return primaryRecord;
   },
+  serializeIntoHash: function(hash, type, record, options) {
+    Ember.merge(hash, this.serialize(record, options));
+  }
 });
 
 TrainTool.ApplicationAdapter = DS.RESTAdapter.extend({
   host:'https://gup-traintool.appspot.com',
   namespace:'_ah/api/gupapi/v1',
+  buildURLByOperation: function(type, operation) {
+    var url = [],
+        host = this.get('host'),
+        prefix = this.urlPrefix();
+
+    if (type) {
+      if(operation === "POST"){
+        url.push(this.pathForTypeSingular(type));
+      } else {
+        url.push(this.pathForType(type));
+      }
+    }
+    if (prefix) { url.unshift(prefix); }
+
+    url = url.join('/');
+    if (!host && url) { url = '/' + url; }
+
+    return url;
+  },
+
+  pathForTypeSingular: function(type) {
+    var camelized = Ember.String.camelize(type);
+    return camelized;
+  },
+
+  createRecord: function(store, type, record) {
+    var requestType = "POST";
+    var data = {};
+    var serializer = store.serializerFor(type.typeKey);
+
+    serializer.serializeIntoHash(data, type, record, { includeId: true });
+    console.log(data);
+    return this.ajax(this.buildURLByOperation(type.typeKey, requestType),requestType, { data: data });
+  },
+
 });
-
-
-if (window.TESTING) {
-  window.TrainTool.deferReadiness();
-}
 
 /* 
  * Model layer. 
@@ -84,6 +122,7 @@ require('app/models/traintool_models');
  * whose value is computed from the content of the
  * controllers wrapped objects.
 */
+require('app/controllers/traintool_controllers');
 
 /* 
  * States (i.e. Routes)
