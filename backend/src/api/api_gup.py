@@ -19,7 +19,9 @@ class GupApi(remote.Service):
     GymUP TrainTool Open API v1
     """
 
-    @Exercise.query_method(query_fields=('limit', 'pageToken',),
+    @Exercise.query_method(query_fields=('limit', 'pageToken', 'order',
+                                         'name', 'body_part', 'equipament',
+                                         'created',),
                            path='exercises',
                            http_method="GET",
                            name='exercises.list')
@@ -46,7 +48,7 @@ class GupApi(remote.Service):
                      name='exercise.post')
     def ExercisePost(self, exercise):
         """
-        Updates or Creates an Exercise in the Db
+        Creates an Exercise in the Db
         """
         exercise.put()
         return exercise
@@ -66,7 +68,7 @@ class GupApi(remote.Service):
                      name='interval.post')
     def IntervalPost(self, interval):
         """
-        Updates or creates an Interval in the Db
+        Creates an Interval in the Db
         """
         interval.put()
         return interval
@@ -76,7 +78,7 @@ class GupApi(remote.Service):
                 name="day.post")
     def DayPost(self, day):
         """
-        Updates or creates a Day in the Database
+        Creates a Day in the Database
         """
         day.put()
         return day
@@ -95,9 +97,9 @@ class GupApi(remote.Service):
             raise endpoints.NotFoundException('day not found')
         return day
 
-    @Day.query_method(query_fields=('limit', 'pageToken',),
+    @Day.query_method(query_fields=('limit', 'pageToken', 'name', 'created',),
                       collection_fields=('id', 'name', 'description',
-                                         'proper_time', 'exercises',
+                                         'proper_time', 'exercises', 'created',
                                          'workout_id',),
                       path='days',
                       http_method='GET',
@@ -108,7 +110,8 @@ class GupApi(remote.Service):
         """
         return query
 
-    @Workout.query_method(query_fields=('limit', 'pageToken',),
+    @Workout.query_method(query_fields=('limit', 'pageToken', 'name',
+                                        'objective', 'created',),
                           collection_fields=('id', 'name', 'objective',
                                              'description', 'created',
                                              'comment', 'days',),
@@ -126,6 +129,9 @@ class GupApi(remote.Service):
                     http_method='GET',
                     name='workout.get')
     def WorkoutGet(self, workout):
+        """
+        Returns a Workout gotten from the Database if found
+        """
         if not workout.from_datastore:
             raise endpoints.NotFoundException('workout not found')
         return workout
@@ -134,5 +140,8 @@ class GupApi(remote.Service):
                     http_method='POST',
                     name='workout.post')
     def WorkoutPost(self, workout):
+        """
+        Creates a Workout in the Database
+        """
         workout.put()
         return workout
