@@ -2,11 +2,7 @@ from google.appengine.ext import ndb
 from endpoints_proto_datastore.ndb import EndpointsModel
 from endpoints_proto_datastore.ndb import EndpointsAliasProperty
 
-# Defines all of the Models that shape the database
-
 # //TODO
-# - Provide SORT to the exercises that are returned by the day's
-#   exercises;
 # - Create test to test the methods that are converting the ids to
 #   the entitys keys.
 
@@ -47,7 +43,7 @@ class Exercise(EndpointsModel):
     created = ndb.DateTimeProperty(auto_now_add=True)
     sequency = ndb.IntegerProperty(indexed=True)
 
-    day = ndb.KeyProperty(kind='Day')
+    day = ndb.KeyProperty(kind='Day')  # just used internaly
 
     def day_set(self, value):
         """
@@ -58,6 +54,9 @@ class Exercise(EndpointsModel):
 
     @EndpointsAliasProperty(setter=day_set)
     def day_id(self):
+        """
+        A custom field that returns the ID of the day entity
+        """
         try:
             return str(self.day.id())
         except:
@@ -107,7 +106,7 @@ class Day(EndpointsModel):
     sequency = ndb.IntegerProperty(indexed=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
-    workout = ndb.KeyProperty(kind='Workout')
+    workout = ndb.KeyProperty(kind='Workout')  # just used internaly
 
     @EndpointsAliasProperty(repeated=True, property_type=Exercise.ProtoModel())
     def exercises(self):

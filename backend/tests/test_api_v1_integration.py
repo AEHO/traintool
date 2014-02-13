@@ -40,7 +40,7 @@ class IntegrationTestCase(unittest.TestCase):
         self.testbed.deactivate
 
 
-class StubTest(IntegrationTestCase):
+class TestStub(IntegrationTestCase):
 
     """
     Sanity Test to check if we are able to even create the stubs
@@ -138,6 +138,34 @@ class TestDay(IntegrationTestCase):
             "id": response_post_ok.json['id']
         })
         self.assertEqual(response_get.json['id'], response_post_ok.json['id'])
+
+    def test_day_exercises_get(self):
+        response_post_day = self.testapp.post_json(
+            self.BASE_PATH + 'DayPost', {
+                "name": "day_name",
+                "description": "description",
+            })
+        response_post_day_false = self.testapp.post_json(
+            self.BASE_PATH + 'DayPost', {
+                "name": "day_name",
+                "description": "description",
+            })
+        for i in range(4):
+            self.testapp.post_json(self.BASE_PATH + 'ExercisePost', {
+                "name": "exercise_name",
+                "sequency": i,
+                "day_id": response_post_day.json['id']
+            })
+
+        response_get = self.testapp.post_json(self.BASE_PATH + 'DayGet', {
+            "id": response_post_day.json['id']
+        })
+        response_get_false = self.testapp.post_json(
+            self.BASE_PATH + 'DayGet', {
+                "id": response_post_day_false.json['id']
+            })
+        self.assertTrue('exercises' in response_get.json)
+        self.assertFalse('exercises' in response_get_false.json)
 
 
 class TestWorkout(IntegrationTestCase):
