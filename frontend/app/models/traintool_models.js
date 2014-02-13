@@ -7,5 +7,5 @@ TrainTool.Exercise = DS.Model.extend({
 	execution:DS.attr('string'),
 	name:DS.attr('string'),
 	order:DS.attr('number'),
-	reps:DS.attr('string')
+	reps:DS.attr('array')
 });
