@@ -19,7 +19,7 @@ class GupApi(remote.Service):
     GymUP TrainTool Open API v1
     """
 
-    @Exercise.query_method(query_fields=('limit', 'pageToken',),
+    @Exercise.query_method(query_fields=('limit', 'pageToken', 'order',),
                            path='exercises',
                            http_method="GET",
                            name='exercises.list')

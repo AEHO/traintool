@@ -27,7 +27,7 @@ class Exercise(EndpointsModel):
         reps - a list of integers that represents the number of
             repetitions to be done when performing the exercise
         comment - a commentary about the exercise
-        order - the order of the exercise in a list of exercises that
+        sequency - the sequency of the exercise in a list of exercises that
             composes a day
         day - the day that this exericse is listed to. If not specified
             then it is not an exercise of a day
@@ -35,7 +35,7 @@ class Exercise(EndpointsModel):
 
     _message_fields_schema = (
         'id', 'name', 'body_part', 'equipament',
-        'execution', 'reps', 'comment', 'created', 'order', 'day_id',
+        'execution', 'reps', 'comment', 'created', 'sequency', 'day_id',
     )
 
     name = ndb.StringProperty(indexed=True)
@@ -45,7 +45,7 @@ class Exercise(EndpointsModel):
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
     comment = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
-    order = ndb.IntegerProperty()
+    sequency = ndb.IntegerProperty()
 
     day = ndb.KeyProperty(kind='Day')
 
@@ -75,11 +75,11 @@ class Interval(EndpointsModel):
         comment - a comment about the interval
     """
 
-    _message_fields_schema = ('id', 'time', 'comment', 'order',)
+    _message_fields_schema = ('id', 'time', 'comment', 'sequency',)
 
     time = ndb.IntegerProperty(indexed=False)
     comment = ndb.StringProperty(indexed=False)
-    order = ndb.IntegerProperty(indexed=False)
+    sequency = ndb.IntegerProperty(indexed=False)
 
 
 class Day(EndpointsModel):
@@ -95,7 +95,7 @@ class Day(EndpointsModel):
             training should last
         workout - a key that references the workout that this day
             is linked to
-        order - the order of the day in the context of a Workout
+        sequency - the sequency of the day in the context of a Workout
     """
 
     _message_fields_schema = ('id', 'name', 'description', 'proper_time',
@@ -104,7 +104,7 @@ class Day(EndpointsModel):
     name = ndb.StringProperty(indexed=True)
     description = ndb.StringProperty(indexed=False)
     proper_time = ndb.IntegerProperty(indexed=False)
-    order = ndb.IntegerProperty(indexed=False)
+    sequency = ndb.IntegerProperty(indexed=False)
 
     workout = ndb.KeyProperty(kind='Workout')
 
