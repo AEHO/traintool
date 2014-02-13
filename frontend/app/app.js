@@ -21,8 +21,9 @@ require('dependencies/bower_components/jquery/jquery');
  * handlebars-runtime microlib instead of the
  * entire handlebars library and its string parsing functions.
 */
-
+/* Added ember and ember-data */
 require('dependencies/bower_components/ember/ember');
+require('dependencies/bower_components/ember-data/ember-data');
 
 /*
   this file is generated as part of the build process.
@@ -31,10 +32,7 @@ require('dependencies/bower_components/ember/ember');
   It is excluded from git commits since it's a 
   generated file.
 */
-//require('dependencies/compiled/templates');
-
-
-require('dependencies/bower_components/ember-data/ember-data');
+require('dependencies/compiled/templates');
 
 /*
   Creates a new instance of an Ember application and
@@ -42,20 +40,72 @@ require('dependencies/bower_components/ember-data/ember-data');
   should manage for you.
 */
 window.TrainTool = Ember.Application.create({
-  rootElement: window.TESTING ? '#qunit-fixture' : '#traintoolapp'
+  rootElement: window.TESTING ? '#qunit-fixture' : '#traintoolapp',
+  LOG_TRANSITIONS: true, // basic logging of successful transitions
+  LOG_TRANSITIONS_INTERNAL: true // detailed logging of all routing steps
 });
 
 if (window.TESTING) {
   window.TrainTool.deferReadiness();
 }
 
+
+TrainTool.ApplicationSerializer = DS.RESTSerializer.extend({
+  extract: function(store, primaryType, payload, recordId, requestType) {
+    root = "items";
+    payload = this.normalizePayload(primaryType, payload);
+    var primaryRecord = this.normalize(primaryType, payload[root], root);
+    return primaryRecord;
+  },
+  serializeIntoHash: function(hash, type, record, options) {
+    Ember.merge(hash, this.serialize(record, options));
+  }
+});
+
+TrainTool.ApplicationAdapter = DS.RESTAdapter.extend({
+  host:'https://gup-traintool.appspot.com',
+  namespace:'_ah/api/gupapi/v1',
+  buildURLByOperation: function(type, operation) {
+    var url = [],
+        host = this.get('host'),
+        prefix = this.urlPrefix();
+
+    if (type) {
+      if(operation === "POST"){
+        url.push(this.pathForTypeSingular(type));
+      } else {
+        url.push(this.pathForType(type));
+      }
+    }
+    if (prefix) { url.unshift(prefix); }
+
+    url = url.join('/');
+    if (!host && url) { url = '/' + url; }
+
+    return url;
+  },
+
+  pathForTypeSingular: function(type) {
+    var camelized = Ember.String.camelize(type);
+    return camelized;
+  },
+
+  createRecord: function(store, type, record) {
+    var requestType = "POST";
+    var data = {};
+    var serializer = store.serializerFor(type.typeKey);
+
+    serializer.serializeIntoHash(data, type, record, { includeId: true });
+    console.log(data);
+    return this.ajax(this.buildURLByOperation(type.typeKey, requestType),requestType, { data: data });
+  },
+
+});
+
 /* 
  * Model layer. 
- * Ember.Object itself provides most of what
- * model layers elsewhere provide. Since TodoMVC
- * doesn't communicate with a server, plain
- * Ember.Objects will do.
 */
+require('app/models/traintool_models');
 
 /*
  * Views layer.
@@ -72,6 +122,7 @@ if (window.TESTING) {
  * whose value is computed from the content of the
  * controllers wrapped objects.
 */
+require('app/controllers/traintool_controllers');
 
 /* 
  * States (i.e. Routes)
@@ -79,3 +130,4 @@ if (window.TESTING) {
  * which results in view hierarchy updates. Responds to
  * actions.
 */
+require('app/routes/router');
