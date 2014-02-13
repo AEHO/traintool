@@ -11,18 +11,19 @@ from google.appengine.ext import testbed
 # All the requests to the api **must** be done with a post request
 # with 'application/json' as content-type. The path for the requests
 # must be addressed to /_ah/spi/{API_OBJECT.api_method}, and not as one
-# would do in the browser with /_ah/api/{path}. As we are referencing 
+# would do in the browser with /_ah/api/{path}. As we are referencing
 # the api method and not the path, there is, then, an implicit
 # differentiation between the http_methods that each supports. Remember
-# that this does not happens in the production environment (_ah/api/) - 
+# that this does not happens in the production environment (_ah/api/) -
 # you'll have to set the proper http methods in that environment.
 
 
 class IntegrationTestCase(unittest.TestCase):
+
     """
     Base class that contains the proper setUp and tearDown methods
     that will be used by all of the other integration tests that uses
-    webtest and testbed. Just inherit this class and write the tests. 
+    webtest and testbed. Just inherit this class and write the tests.
     """
 
     BASE_PATH = '/_ah/spi/GupApi.'
@@ -40,6 +41,7 @@ class IntegrationTestCase(unittest.TestCase):
 
 
 class StubTest(IntegrationTestCase):
+
     """
     Sanity Test to check if we are able to even create the stubs
     """
@@ -49,17 +51,19 @@ class StubTest(IntegrationTestCase):
 
 
 class TestExercise(IntegrationTestCase):
-    """ 
-    Tests the endpoints of Gup TrainTool API V1 
+
+    """
+    Tests the endpoints of Gup TrainTool API V1
     """
 
     def test_exercise_list_get(self):
-        response = self.testapp.post_json(self.BASE_PATH + 'ExercisesList',{})
+        response = self.testapp.post_json(self.BASE_PATH + 'ExercisesList', {})
         self.assertEqual(response.status_int, 200)
 
     def test_exercise_post(self):
-        response_error = self.testapp.post_json(self.BASE_PATH + 'ExercisePost',
-            { "id": "random_id" }, status=400)
+        response_error = self.testapp.post_json(
+            self.BASE_PATH + 'ExercisePost',
+            {"id": "random_id"}, status=400)
         response_ok = self.testapp.post_json(self.BASE_PATH + 'ExercisePost', {
             "name": "exercise_name",
             "body_part": "body_part",
@@ -69,16 +73,18 @@ class TestExercise(IntegrationTestCase):
         self.assertNotEqual(response_error.status_int, 200)
 
     def test_exercise_get(self):
-        response_post_ok = self.testapp.post_json(self.BASE_PATH + \
-            'ExercisePost', {
-                "name": "exercise_name",
-                "body_part": "body_part",
-            })
+        response_post_ok = self.testapp.post_json(self.BASE_PATH +
+                                                  'ExercisePost', {
+                                                      "name": "exercise_name",
+                                                      "body_part": "body_part",
+                                                  })
         response_get = self.testapp.post_json(self.BASE_PATH + 'ExerciseGet', {
             "id": response_post_ok.json['id']
         })
-        response_get_fail = self.testapp.post_json(self.BASE_PATH + \
-            'ExerciseGet', { "id": "fail_id" }, status=400)
+        response_get_fail = self.testapp.post_json(self.BASE_PATH +
+                                                   'ExerciseGet',
+                                                   {"id": "fail_id"},
+                                                   status=400)
 
         self.assertEqual(response_get.status_int, 200)
         self.assertEqual(response_get.json['id'], response_post_ok.json['id'])
@@ -88,13 +94,14 @@ class TestExercise(IntegrationTestCase):
 class TestInterval(IntegrationTestCase):
 
     def test_intervals_list(self):
-        response = self.testapp.post_json(self.BASE_PATH + \
-            'IntervalsList',{})
+        response = self.testapp.post_json(self.BASE_PATH +
+                                          'IntervalsList', {})
         self.assertEqual(response.status_int, 200)
 
     def test_interval_post(self):
-        response_error = self.testapp.post_json(self.BASE_PATH + 'IntervalPost',
-            { "id": "random_id" }, status=400)
+        response_error = self.testapp.post_json(
+            self.BASE_PATH + 'IntervalPost',
+            {"id": "random_id"}, status=400)
         response_ok = self.testapp.post_json(self.BASE_PATH + 'IntervalPost', {
             "time": 20,
             "comment": "body_part",
@@ -107,14 +114,14 @@ class TestInterval(IntegrationTestCase):
 class TestDay(IntegrationTestCase):
 
     def test_days_list(self):
-        response = self.testapp.post_json(self.BASE_PATH + \
-            'DaysList', {})
+        response = self.testapp.post_json(self.BASE_PATH +
+                                          'DaysList', {})
         self.assertEqual(response.status_int, 200)
-
 
     def test_day_post(self):
         response_error = self.testapp.post_json(self.BASE_PATH + 'DayPost',
-            { "id": "random_id" }, status=400)
+                                                {"id": "random_id"},
+                                                status=400)
         response_ok = self.testapp.post_json(self.BASE_PATH + 'DayPost', {
             "name": "day_name",
             "description": "description",
@@ -124,31 +131,31 @@ class TestDay(IntegrationTestCase):
         self.assertNotEqual(response_error.status_int, 200)
 
     def test_day_get(self):
-        response_post_ok = self.testapp.post_json(self.BASE_PATH + \
-            'DayPost', {
-                "name": "name of the day"
-            })
-        response_get = self.testapp.post_json(self.BASE_PATH + \
-            'DayGet', {
-                "id": response_post_ok.json['id']
-            })
+        response_post_ok = self.testapp.post_json(self.BASE_PATH + 'DayPost', {
+            "name": "name of the day"
+        })
+        response_get = self.testapp.post_json(self.BASE_PATH + 'DayGet', {
+            "id": response_post_ok.json['id']
+        })
         self.assertEqual(response_get.json['id'], response_post_ok.json['id'])
 
 
 class TestWorkout(IntegrationTestCase):
 
     def test_workouts_list(self):
-        response = self.testapp.post_json(self.BASE_PATH + \
-            'WorkoutsList', {})
+        response = self.testapp.post_json(self.BASE_PATH +
+                                          'WorkoutsList', {})
         self.assertEqual(response.status_int, 200)
 
     def test_workout_post(self):
-        response_error = self.testapp.post_json(self.BASE_PATH + \
-            'WorkoutPost', { 'id': 'random_id'}, status=400)
-        response_ok = self.testapp.post_json(self.BASE_PATH + \
-            'WorkoutPost', {
-                "name": "training"
-            })
+        response_error = self.testapp.post_json(self.BASE_PATH +
+                                                'WorkoutPost',
+                                                {'id': 'random_id'},
+                                                status=400)
+        response_ok = self.testapp.post_json(self.BASE_PATH +
+                                             'WorkoutPost', {
+                                                 "name": "training"
+                                             })
         self.assertEqual(response_ok.status_int, 200)
         self.assertTrue(response_ok.json['id'])
         self.assertNotEqual(response_error.status_int, 200)
