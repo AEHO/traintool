@@ -13,6 +13,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Virtualenv
+.env/
 venv/
 
 # Secrets

@@ -7,12 +7,11 @@ WIFIIP=$(ip addr | awk '/inet/ && /wlan0/{sub(/\/.*$/,"",$2); print $2}')
 
 echo Activating virtualenv
 
-. $ROOTDIR/venv/bin/activate
+. $ROOTDIR/.env/bin/activate
 
 echo Initializing local server
 echo ---
 echo Will run on: $WIFIIP:8000
 echo ---
 
-$ROOTDIR/lib/google_appengine/dev_appserver.py ../appengine/  --host=0.0.0.0
-
+$ROOTDIR/lib/google_appengine/dev_appserver.py src/  --host=0.0.0.0
