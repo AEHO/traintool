@@ -45,7 +45,7 @@ class Exercise(EndpointsModel):
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
     comment = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True)
-    sequency = ndb.IntegerProperty(indexed=False)
+    sequency = ndb.IntegerProperty(indexed=True)
 
     day = ndb.KeyProperty(kind='Day')
 
@@ -104,7 +104,7 @@ class Day(EndpointsModel):
     name = ndb.StringProperty(indexed=True)
     description = ndb.StringProperty(indexed=False)
     proper_time = ndb.IntegerProperty(indexed=False)
-    sequency = ndb.IntegerProperty(indexed=False)
+    sequency = ndb.IntegerProperty(indexed=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
     workout = ndb.KeyProperty(kind='Workout')
@@ -115,9 +115,12 @@ class Day(EndpointsModel):
         Returns a list of all of the Exercises that has this particular
         day as its day.
         """
-        exercises_qry = Exercise.query()
-        excs_keys = [excs.key for excs in
-                     exercises_qry.filter(Exercise.day == self.key)]
+        exercises_qry = Exercise.query(Exercise.day == self.key).\
+            order(Exercise.sequency)
+        excs_keys = [excs.key for excs in exercises_qry]
+
+        print excs_keys
+
         return ndb.get_multi(excs_keys)
 
     def workout_set(self, value):
@@ -155,7 +158,8 @@ class Workout(EndpointsModel):
         Returns a list of all of the days that are attached to this
         workout by specifying the workout id in the workout_id field.
         """
-        days_qry = Day.query()
+        days_qry = Day.query(Day.workout == self.key).\
+            order(Day.sequency)
         days_keys = [day.key for day in
                      days_qry.filter(Day.workout == self.key)]
         return ndb.get_multi(days_keys)
