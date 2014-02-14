@@ -60,7 +60,6 @@ require('app/routes/router');
  * REST API.
  */
 require('app/adapters/traintool_rest');
-
 /*
  *	Add the transformers to handle custom model attrs
  */

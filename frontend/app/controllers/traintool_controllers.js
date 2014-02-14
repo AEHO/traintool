@@ -1,7 +1,5 @@
 /*globals TrainTool*/
 TrainTool.ExercisesController = Ember.ArrayController.extend({
-	sortProperties: ['creation'],
-  	sortAscending: false,
 	actions:{
 		createExercise:function(){
 			var name = this.get('exName');
@@ -25,4 +23,13 @@ TrainTool.ExercisesController = Ember.ArrayController.extend({
 			exercise.save();
 		}
 	}
+});
+
+TrainTool.ExerciseController = Ember.ObjectController.extend({
+	actions:{
+		toggleDetails:function(){
+			this.set('showDetails', !this.get('showDetails'));
+		}
+	},
+	showDetails:false
 });

@@ -3,10 +3,10 @@ TrainTool.Exercise = DS.Model.extend({
 	body_part:DS.attr('string'),
 	comment:DS.attr('string'),
 	created:DS.attr('date'),
-	//day_id:DS.attr('')
 	equipament:DS.attr('string'),
 	execution:DS.attr('string'),
 	name:DS.attr('string'),
-	order:DS.attr('number'),
-	reps:DS.attr('array')
+	reps:DS.attr('array'),
+	//Used to chose field to be used to order the elements.
+	order:DS.attr('string'),
 });
