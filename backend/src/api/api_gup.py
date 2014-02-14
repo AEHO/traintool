@@ -1,3 +1,5 @@
+"""Methods ran by the API."""
+
 import endpoints
 
 from protorpc import messages
@@ -15,9 +17,7 @@ from api.models import Workout
                audiences=[endpoints.API_EXPLORER_CLIENT_ID])
 class GupApi(remote.Service):
 
-    """
-    GymUP TrainTool Open API v1
-    """
+    """GymUP TrainTool Open API v1."""
 
     @Exercise.query_method(query_fields=('limit', 'pageToken', 'order',
                                          'name', 'body_part', 'equipament',
@@ -26,9 +26,7 @@ class GupApi(remote.Service):
                            http_method="GET",
                            name='exercises.list')
     def ExercisesList(self, query):
-        """
-        Queries the entire DB for retrieving the Exercises.
-        """
+        """Queries the entire DB for retrieving the Exercises."""
         return query
 
     @Exercise.method(request_fields=('id',),
@@ -36,9 +34,7 @@ class GupApi(remote.Service):
                      http_method="GET",
                      name="exercise.get")
     def ExerciseGet(self, exercise):
-        """
-        Queries the DB for an Exercise with the given ID.
-        """
+        """Queries the DB for an Exercise with the given ID."""
         if not exercise.from_datastore:
             raise endpoints.NotFoundException('exercise not found')
         return exercise
@@ -47,9 +43,7 @@ class GupApi(remote.Service):
                      http_method='POST',
                      name='exercise.post')
     def ExercisePost(self, exercise):
-        """
-        Creates an Exercise in the Db
-        """
+        """Creates an Exercise in the Db."""
         exercise.put()
         return exercise
 
@@ -58,18 +52,14 @@ class GupApi(remote.Service):
                            http_method='GET',
                            name='intervals.list')
     def IntervalsList(self, query):
-        """
-        Returns a list containing all the intervals
-        """
+        """Returns a list containing all the intervals."""
         return query
 
     @Interval.method(path='interval',
                      http_method='POST',
                      name='interval.post')
     def IntervalPost(self, interval):
-        """
-        Creates an Interval in the Db
-        """
+        """Creates an Interval in the Db."""
         interval.put()
         return interval
 
@@ -77,9 +67,7 @@ class GupApi(remote.Service):
                 http_method="POST",
                 name="day.post")
     def DayPost(self, day):
-        """
-        Creates a Day in the Database
-        """
+        """Creates a Day in the Database."""
         day.put()
         return day
 
@@ -90,9 +78,7 @@ class GupApi(remote.Service):
                 http_method='GET',
                 name='day.get')
     def DayGet(self, day):
-        """
-        Returns a Day given an ID if the Day Exists in the Database
-        """
+        """Returns a Day given an ID if the Day exists in the Db."""
         if not day.from_datastore:
             raise endpoints.NotFoundException('day not found')
         return day
@@ -105,9 +91,7 @@ class GupApi(remote.Service):
                       http_method='GET',
                       name="days.list")
     def DaysList(self, query):
-        """
-        Lists all of the Days contained in the Database
-        """
+        """Lists all of the Days contained in the Database."""
         return query
 
     @Workout.query_method(query_fields=('limit', 'pageToken', 'name',
@@ -119,9 +103,7 @@ class GupApi(remote.Service):
                           http_method='GET',
                           name='workouts.list')
     def WorkoutsList(self, query):
-        """
-        Lists all of the workouts contained in the Database
-        """
+        """Lists all of the workouts contained in the Database."""
         return query
 
     @Workout.method(request_fields=('id',),
@@ -129,9 +111,7 @@ class GupApi(remote.Service):
                     http_method='GET',
                     name='workout.get')
     def WorkoutGet(self, workout):
-        """
-        Returns a Workout gotten from the Database if found
-        """
+        """Returns a Workout gotten from the Database if found."""
         if not workout.from_datastore:
             raise endpoints.NotFoundException('workout not found')
         return workout
@@ -140,8 +120,6 @@ class GupApi(remote.Service):
                     http_method='POST',
                     name='workout.post')
     def WorkoutPost(self, workout):
-        """
-        Creates a Workout in the Database
-        """
+        """Creates a Workout in the Database."""
         workout.put()
         return workout
