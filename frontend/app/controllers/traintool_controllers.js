@@ -14,7 +14,8 @@ TrainTool.ExerciseController = Ember.ArrayController.extend({
 				name:name,
 				comment:comment,
 				equipament:equipament,
-				execution:execution
+				execution:execution,
+				reps:reps
 			});
 			exercise.save();
 		}

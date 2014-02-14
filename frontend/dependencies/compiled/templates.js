@@ -15,10 +15,13 @@ function program1(depth0,data) {
   data.buffer.push("</p>\n								<p>Criado: ");
   stack1 = helpers._triageMustache.call(depth0, "created", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</p>\n								");
+  data.buffer.push("</p>\n								<p>Repetições: ");
+  stack1 = helpers._triageMustache.call(depth0, "reps", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n								<p>id: ");
   stack1 = helpers._triageMustache.call(depth0, "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n							</div>\n						</li>\n					");
+  data.buffer.push("</p>\n							</div>\n						</li>\n					");
   return buffer;
   }
 
