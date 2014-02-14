@@ -1,5 +1,5 @@
 require('app/routes/traintool_route');
 
 TrainTool.Router.map(function() {
-	this.resource("exercise", {path:"/"});
+	this.resource("exercises", {path:"/"});
 });

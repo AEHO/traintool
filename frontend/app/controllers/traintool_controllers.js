@@ -1,5 +1,5 @@
 /*globals TrainTool*/
-TrainTool.ExerciseController = Ember.ArrayController.extend({
+TrainTool.ExercisesController = Ember.ArrayController.extend({
 	actions:{
 		createExercise:function(){
 			var name = this.get('exName');
@@ -8,10 +8,8 @@ TrainTool.ExerciseController = Ember.ArrayController.extend({
 			var execution = this.get('exExecution');
 			var reps = this.get('exReps');
 			if(typeof reps === 'string'){
-				reps = reps.split(/\D/);
+				reps = reps.split(/\D*/);
 			}
-			if(!name.trim() && !comment.trim() && !equipament.trim() && !execution.trim() && !reps.trim()){ return ;}
-
 			var exercise = this.store.createRecord('exercise',
 			{
 				name:name,

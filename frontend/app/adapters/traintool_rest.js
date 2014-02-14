@@ -16,7 +16,8 @@ TrainTool.ApplicationSerializer = DS.RESTSerializer.extend({
 });
 
 TrainTool.ApplicationAdapter = DS.RESTAdapter.extend({
-  host:'http://localhost:8080',
+  //host:'http://localhost:8080',
+  host:'https://gup-traintool.appspot.com',
   namespace:'_ah/api/gupapi/v1',
 
   // Generate an URL for each operation type.
@@ -58,19 +59,5 @@ TrainTool.ApplicationAdapter = DS.RESTAdapter.extend({
 
     serializer.serializeIntoHash(data, type, record, { includeId: true });
     return this.ajax(this.buildURLByOperation(type.typeKey, requestType),requestType, { data: data });
-  },
-});
-
-
-// Use the raw value passed in the model
-TrainTool.ArrayTransform = DS.Transform.extend({
-  serialize:function(value){
-    if(typeof value === "string"){
-      return value.split(/\D/);
-    }
-    return value;
-  },
-  deserialize:function(value){
-    return value;
   }
 });

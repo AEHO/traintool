@@ -51,8 +51,9 @@ module.exports = function(grunt) {
     neuter: {
       options: {
         includeSourceURL: true
-      },
-      'build/application.js': 'app/app.js'
+      }, 
+      'build/application.js': 'app/app.js',
+      'build/testing_application.js': 'app/testing_app.js'
     },
 
     /*
