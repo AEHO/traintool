@@ -1,4 +1,4 @@
-TrainTool.ExerciseRoute = Ember.Route.extend({
+TrainTool.ExercisesRoute = Ember.Route.extend({
 	model:function(){
 		return this.store.find('exercise');
 	}

@@ -16,13 +16,16 @@
 */
 require('app/base_app');
 
+
+require('dependencies/bower_components/ember-localstorage-adapter/localstorage_adapter');
+
 /*
   Creates a new instance of an Ember application and
   specifies what HTML element inside index.html Ember
   should manage for you.
 */
 window.TrainTool = Ember.Application.create({
-  rootElement: '#traintoolapp'
+  rootElement: '#qunit-fixture'
 });
 
 /* 
@@ -59,7 +62,7 @@ require('app/routes/router');
  * Get the RESTAdapeter modified for the triantool
  * REST API.
  */
-require('app/adapters/traintool_rest');
+require('app/adapters/traintool_localstorage');
 
 /*
  *	Add the transformers to handle custom model attrs
