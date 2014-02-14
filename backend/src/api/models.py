@@ -1,16 +1,14 @@
+""" Defines the structure for the data in the Datastore. """
+
 from google.appengine.ext import ndb
 from endpoints_proto_datastore.ndb import EndpointsModel
 from endpoints_proto_datastore.ndb import EndpointsAliasProperty
-
-# //TODO
-# - Create test to test the methods that are converting the ids to
-#   the entitys keys.
 
 
 class Exercise(EndpointsModel):
 
     """
-    Represents the exercise per-se workout-independent
+    Represents the exercise per-se workout-independent.
 
     params:
         name - the name of that exercise
@@ -23,10 +21,11 @@ class Exercise(EndpointsModel):
         reps - a list of integers that represents the number of
             repetitions to be done when performing the exercise
         comment - a commentary about the exercise
-        sequency - the sequency of the exercise in a list of exercises that
-            composes a day
+        sequency - the sequency of the exercise in a list of exercises
+            that composes a day
         day - the day that this exericse is listed to. If not specified
             then it is not an exercise of a day
+
     """
 
     _message_fields_schema = (
@@ -46,17 +45,12 @@ class Exercise(EndpointsModel):
     day = ndb.KeyProperty(kind='Day')  # just used internaly
 
     def day_set(self, value):
-        """
-        Receives an ID and set the day property with the ndb.Key
-        as it should.
-        """
+        """ Sets the key on the day given an Id. """
         self.day = ndb.Key('Day', int(value))
 
     @EndpointsAliasProperty(setter=day_set)
     def day_id(self):
-        """
-        A custom field that returns the ID of the day entity
-        """
+        """Field representing the ID of the day's key."""
         try:
             return str(self.day.id())
         except:
@@ -72,6 +66,7 @@ class Interval(EndpointsModel):
     params:
         time - time in seconds till the next exercise
         comment - a comment about the interval
+
     """
 
     _message_fields_schema = ('id', 'time', 'comment', 'sequency',)
@@ -84,10 +79,9 @@ class Interval(EndpointsModel):
 class Day(EndpointsModel):
 
     """
-    Conjunction of Exercises and Intervals that constitutes a Day of
-    training.
+    A Day which is formed by Exercises and Intervals.
 
-    params
+    params:
         name - the name of the day
         description - a description about that day of training
         proper_time - in minutes, how much time does that day of
@@ -95,6 +89,7 @@ class Day(EndpointsModel):
         workout - a key that references the workout that this day
             is linked to
         sequency - the sequency of the day in the context of a Workout
+
     """
 
     _message_fields_schema = ('id', 'name', 'description', 'proper_time',
@@ -110,10 +105,7 @@ class Day(EndpointsModel):
 
     @EndpointsAliasProperty(repeated=True, property_type=Exercise.ProtoModel())
     def exercises(self):
-        """
-        Returns a list of all of the Exercises that has this particular
-        day as its day.
-        """
+        """Lists all the Exercises the day has."""
         exercises_qry = Exercise.query(Exercise.day == self.key).\
             order(Exercise.sequency)
         excs_keys = [excs.key for excs in exercises_qry]
@@ -123,14 +115,12 @@ class Day(EndpointsModel):
         return ndb.get_multi(excs_keys)
 
     def workout_set(self, value):
-        """
-        Receives an ID and set the workout property with the ndb.Key
-        as it should.
-        """
+        """Sets the key of the workout given an ID."""
         self.workout = ndb.Key('Workout', int(value))
 
     @EndpointsAliasProperty(setter=workout_set)
     def workout_id(self):
+        """Field representing the ID of the workout key."""
         try:
             return str(self.workout.id())
         except:
@@ -139,9 +129,8 @@ class Day(EndpointsModel):
 
 class Workout(EndpointsModel):
 
-    """
-    Conjunction of days that forms a Workout
-    """
+    """Conjunction of days that forms a Workout."""
+
     _message_fields_schema = ('id', 'name', 'objective', 'description',
                               'created', 'comment')
 
@@ -153,10 +142,7 @@ class Workout(EndpointsModel):
 
     @EndpointsAliasProperty(repeated=True, property_type=Day.ProtoModel())
     def days(self):
-        """
-        Returns a list of all of the days that are attached to this
-        workout by specifying the workout id in the workout_id field.
-        """
+        """List of days attached to the workout."""
         days_qry = Day.query(Day.workout == self.key).\
             order(Day.sequency)
         days_keys = [day.key for day in

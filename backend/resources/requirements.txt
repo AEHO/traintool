@@ -3,3 +3,5 @@ nose
 wsgiref
 WebTest
 pep8
+pep257
+pylint
