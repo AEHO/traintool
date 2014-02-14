@@ -5,4 +5,4 @@
 
 ROOTDIR=$(pwd)
 cd $ROOTDIR/lib/google_appengine/
-./appcfg.py update $ROOTDIR
+./appcfg.py update $ROOTDIR/src
