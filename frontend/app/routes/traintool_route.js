@@ -5,7 +5,8 @@ TrainTool.ExerciseRoute = Ember.Route.extend({
 	actions: {
 		error: function(error, transition) {
 			// handle the error
-			console.log(error.message);
+			console.log(error);
+			//transition.retry();
 		}
 	}
 });

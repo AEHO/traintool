@@ -24,15 +24,15 @@ module.exports = function(grunt) {
       This is done because handlebars isn't exposed in
       the global context directly until version >= 2.
     */
-   copy: {
-    main: {
-      files: [
-       {expand:true,
-        src: ['dependencies/bower_components/handlebars/handlebars.runtime.min.js'],
-        dest:'build/assets/js/'}
-      ]
-    }
-   },
+    copy: {
+      main: {
+        files: [
+          {expand:true,
+          src: ['dependencies/bower_components/handlebars/handlebars.runtime.min.js'],
+          dest:'build/assets/js/'}
+        ]
+      }
+    },
     /* 
        A simple ordered concatenation strategy.
        This will start at app/app.js and begin

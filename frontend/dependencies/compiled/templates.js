@@ -31,29 +31,34 @@ function program1(depth0,data) {
   data.buffer.push("\n				</ul>\n			</div>\n			<div class=\"col-lg-8\">\n				<h2>Criar Exercício</h2>\n				<p>Nome<br>");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.name"),
-    'value': ("exName")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID"},hashContexts:{'valueBinding': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+    'value': ("exName"),
+    'id': ("exName")
+  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("</p>\n				<p>Comentário<br>");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.comment"),
-    'value': ("exComment")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID"},hashContexts:{'valueBinding': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+    'value': ("exComment"),
+    'id': ("exComment")
+  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("</p>\n				<p>Equipamento<br>");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.equipament"),
-    'value': ("exEquipament")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID"},hashContexts:{'valueBinding': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+    'value': ("exEquipament"),
+    'id': ("exEquipament")
+  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("</p>\n				<p>Execução<br>");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.execution"),
-    'value': ("exExecution")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID"},hashContexts:{'valueBinding': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+    'value': ("exExecution"),
+    'id': ("exExecution")
+  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("</p>\n				<p>Repetições<br>");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.reps"),
-    'value': ("exReps")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID"},hashContexts:{'valueBinding': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("</p>\n				<button ");
+    'value': ("exReps"),
+    'id': ("exReps")
+  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("</p>\n				<button id=\"exCreate\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "createExercise", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">Criar exercício</button>\n			</div>\n		</div>\n	</div>\n</article>");
   return buffer;

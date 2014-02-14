@@ -1,3 +1,4 @@
+/* jshint camelcase: false */
 TrainTool.Exercise = DS.Model.extend({
 	body_part:DS.attr('string'),
 	comment:DS.attr('string'),

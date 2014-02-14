@@ -2,10 +2,10 @@ TrainTool.ApplicationSerializer = DS.RESTSerializer.extend({
   // When extract the JSON get the data from data[root].
   // In the case data['items']
   extract: function(store, primaryType, payload, recordId, requestType) {
-    root = "items";
+    var root = "items";
     payload = this.normalizePayload(primaryType, payload);
-    if(Object.keys(payload).length == 0){
-      return Array();
+    if(Object.keys(payload).length === 0){
+      return [];
     }    
     var primaryRecord = this.normalize(primaryType, payload[root], root);
     return primaryRecord;

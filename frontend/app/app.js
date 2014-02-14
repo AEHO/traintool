@@ -41,12 +41,12 @@ require('dependencies/compiled/templates');
 */
 window.TrainTool = Ember.Application.create({
   rootElement: window.TESTING ? '#qunit-fixture' : '#traintoolapp',
-  LOG_TRANSITIONS: true, // basic logging of successful transitions
-  LOG_TRANSITIONS_INTERNAL: true // detailed logging of all routing steps
+  LOG_TRANSITIONS: !window.TESTING, // basic logging of successful transitions
+  LOG_TRANSITIONS_INTERNAL: !window.TESTING // detailed logging of all routing steps
 });
 
 if (window.TESTING) {
-  window.TrainTool.deferReadiness();
+  window.TrainTool.deferReadiness(); 
 }
 /*
  * Get the RESTAdapeter modified for the triantool
