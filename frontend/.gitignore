@@ -11,13 +11,11 @@ lcov.info
 pids
 logs
 results
-build
 .grunt
 
 node_modules/
 bower_components/
-build/application.js
 build/assets
+build/application.js
 test/
-build/index.html
 .sass-cache
