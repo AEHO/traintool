@@ -9,7 +9,7 @@ function program1(depth0,data) {
   data.buffer.push("\n            <li class=\"list-group-item withFooter clickable\">\n              <div class=\"row\">\n                <div class=\"col-lg-12 text-left\">\n                ");
   stack1 = helpers['if'].call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n                </div>\n                <div class=\"col-lg-12 text-center btnFooter\" ");
+  data.buffer.push("\n                </div>\n                <div class=\"col-lg-12 text-center btnFooter\" id=\"\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "toggleDetails", {hash:{
     'on': ("click")
   },hashTypes:{'on': "STRING"},hashContexts:{'on': depth0},contexts:[depth0],types:["STRING"],data:data})));

@@ -17,5 +17,5 @@ node_modules/
 bower_components/
 build/assets
 build/application.js
-test/
+build/test_application.js
 .sass-cache
