@@ -1,12 +1,22 @@
 Ember.TEMPLATES["exercises"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, helper, options, self=this, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\n						<li>\n							<div>\n								<p>Nome: ");
+  data.buffer.push("\n            <li class=\"list-group-item withFooter clickable\">\n              <div class=\"row\">\n                <div class=\"col-lg-12 text-left\">\n                ");
+  stack1 = helpers['if'].call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                </div>\n                <div class=\"col-lg-12 text-center btnFooter\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "toggleDetails", {hash:{
+    'on': ("click")
+  },hashTypes:{'on': "STRING"},hashContexts:{'on': depth0},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\n                  Detalhes\n                </div>\n                ");
+  stack1 = helpers['if'].call(depth0, "showDetails", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n              </div>\n            </li>\n						<!--li>\n							<div>\n								<p>Nome: ");
   stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</p>\n								<p>Comentário: ");
@@ -27,44 +37,94 @@ function program1(depth0,data) {
   data.buffer.push("</p>\n								<p>id: ");
   stack1 = helpers._triageMustache.call(depth0, "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</p>\n							</div>\n						</li>\n					");
+  data.buffer.push("</p>\n							</div>\n						</li-->\n					");
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n                  <span class=\"name\">");
+  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</span></h5>\n                ");
   return buffer;
   }
 
-  data.buffer.push("<article>\n	<div class=\"container\">\n		<div class=\"row\">\n			<div class=\"col-lg-4\">\n				<h2>Lista de exercícios</h2>\n				<ul>\n					");
-  stack1 = helpers.each.call(depth0, {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[],types:[],data:data});
+function program4(depth0,data) {
+  
+  
+  data.buffer.push("\n                  <span class=\"name\"><span class=\"glyphicon glyphicon-remove form-control-feedback\"></span> Sem nome</span></h5>\n                ");
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n                  <div class=\"col-lg-12 text-left\">\n                    <p>Nome: ");
+  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n				</ul>\n			</div>\n			<div class=\"col-lg-8\">\n				<h2>Criar Exercício</h2>\n				<p>Nome<br>");
+  data.buffer.push("</p>\n                    <p>Comentário: ");
+  stack1 = helpers._triageMustache.call(depth0, "comment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n                    <p>Criado: ");
+  stack1 = helpers._triageMustache.call(depth0, "created", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n                    <p>Repetições: ");
+  stack1 = helpers._triageMustache.call(depth0, "reps", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n                    <p>Equipamento: ");
+  stack1 = helpers._triageMustache.call(depth0, "equipament", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n                    <p>Execução: ");
+  stack1 = helpers._triageMustache.call(depth0, "execution", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n                    <p>id: ");
+  stack1 = helpers._triageMustache.call(depth0, "id", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n                  </div>\n                ");
+  return buffer;
+  }
+
+  data.buffer.push("<header>\n  <nav class=\"navbar navbar-fixed-top navbar-default\" role=\"navigation\">\n    <div class=\"container\">\n      <div class=\"navbar-header\">\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-ex1-collapse\">\n          <span class=\"sr-only\">Esconder barra de navegação</span>\n          <span class=\"icon-bar\"></span>\n          <span class=\"icon-bar\"></span>\n          <span class=\"icon-bar\"></span>\n        </button>\n        <a class=\"navbar-brand\" href=\"/\">GymUp</a>\n      </div>\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse navbar-ex1-collapse\" id=\"menu\">\n        <ul class=\"nav navbar-nav\">\n          <li><a href=\"/\" id=\"index_nav_btn\"><i class=\"fa fa-home\"></i> Home</a></li>\n          <li><a href=\"\" id=\"index_nav_btn\"><i class=\"fa fa-compass\"></i> Explorar</a></li>\n        </ul>\n        <form class=\"navbar-form navbar-right hide\" role=\"login\" id=\"login_nav_form\">\n          <div class=\"form-group\">\n            <input type=\"text\" class=\"form-control\" placeholder=\"login\">\n          </div>\n          <div class=\"form-group\">\n            <input type=\"text\" class=\"form-control\" placeholder=\"senha\">\n          </div>\n          <button type=\"submit\" class=\"btn btn-default\">Login</button>\n        </form>\n        <ul class=\"nav navbar-nav\">\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><i class=\"fa fa-bars\"></i> Menu <b class=\"caret\"></b></a>\n            <ul class=\"dropdown-menu\">\n              <li><a href=\"#\">Criar novo treino</a></li>\n              <li><a href=\"#\">Perfil</a></li>\n              <li><a href=\"#\">Convidar amigo</a></li>\n            </ul>\n          </li>\n        </ul>\n        <ul class=\"nav navbar-nav navbar-right\">\n          <li>\n            <a href=\"#\" id=\"login_toggle\">Login</a>\n          </li>\n        </ul>\n      </div><!-- /.navbar-collapse -->\n    </div>\n  </nav>\n</header>\n<article>\n	<div class=\"container\">\n		<div class=\"row\">\n			<div class=\"col-lg-7\">\n				<h2>Lista de exercícios</h2>\n				<ul class=\"list-group list\">\n					");
+  stack1 = helpers.each.call(depth0, "", {hash:{
+    'itemController': ("exercise")
+  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n				</ul>\n			</div>\n			<div class=\"col-lg-5\">\n				<h2>Criar Exercício</h2>\n        <div class=\"form-group\">\n          <label>Nome</label>\n				  <br>");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.name"),
+    'class': ("form-control"),
     'value': ("exName"),
     'id': ("exName")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("</p>\n				<p>Comentário<br>");
-  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+  },hashTypes:{'valueBinding': "STRING",'class': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'class': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n        </div>\n				<div class=\"form-group\">\n        <label>Comentário</label>\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
     'valueBinding': ("model.comment"),
+    'class': ("form-control"),
     'value': ("exComment"),
     'id': ("exComment")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("</p>\n				<p>Equipamento<br>");
+  },hashTypes:{'valueBinding': "STRING",'class': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'class': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
+  data.buffer.push("</p>\n        </div>\n				<div class=\"form-group\">\n        <label>Equipamento</label>\n        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.equipament"),
+    'class': ("form-control"),
     'value': ("exEquipament"),
     'id': ("exEquipament")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("</p>\n				<p>Execução<br>");
+  },hashTypes:{'valueBinding': "STRING",'class': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'class': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("</p>\n        </div>\n				<div class=\"form-group\">\n        <label>Execução</label>\n        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.execution"),
+    'class': ("form-control"),
     'value': ("exExecution"),
     'id': ("exExecution")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("</p>\n				<p>Repetições<br>");
+  },hashTypes:{'valueBinding': "STRING",'class': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'class': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("</p>\n        </div>\n				<div class=\"form-group\">\n        <label>Repetições</label>\n        ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'valueBinding': ("model.reps"),
+    'class': ("form-control"),
     'value': ("exReps"),
     'id': ("exReps")
-  },hashTypes:{'valueBinding': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("</p>\n				<button id=\"exCreate\" ");
+  },hashTypes:{'valueBinding': "STRING",'class': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'valueBinding': depth0,'class': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("</p>\n        </div>\n				<button id=\"exCreate\" class=\"btn btn-default\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "createExercise", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">Criar exercício</button>\n			</div>\n		</div>\n	</div>\n</article>");
   return buffer;

@@ -9,9 +9,6 @@ TrainTool.ApplicationSerializer = DS.RESTSerializer.extend({
     }    
     var primaryRecord = this.normalize(primaryType, payload[root], root);
     return primaryRecord;
-  },
-  serializeIntoHash: function(hash, type, record, options) {
-    Ember.merge(hash, this.serialize(record, options));
   }
 });
 
