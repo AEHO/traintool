@@ -7,40 +7,10 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 from endpoints_proto_datastore import utils as epd_utils
-from api.models import Exercise
-from api.models import Interval
+from api.models import Exercise, ExerciseCollection
+from api.models import Interval, DayCollection
 from api.models import Day
 from api.models import Workout
-
-
-class ExerciseMsg(messages.Message):
-
-    """A message that represents the Exercise entity."""
-
-    # //TODO
-    #   -   THINK ABOUT THE day keyProperty and how to
-    #       properly include an day_id setter
-    #   -   Search more on the Fields of the message
-    #   -   Understand the ProtoRPC
-
-    name = messages.StringField(1)
-    body_part = messages.StringField(2)
-    equipament = messages.StringField(3)
-    execution = messages.BytesField(4)
-    reps = messages.IntegerField(5, repeated=True)
-    comment = messages.BytesField(6)
-    created = messages.StringField(7)
-    sequency = messages.IntegerField(8)
-
-    day_id = messages.StringField(9)
-    id = messages.StringField(10)
-
-
-class ExerciseMsgCollection(messages.Message):
-
-    """Container for multiple ExerciseMsg ProtoRPC message."""
-
-    items = messages.MessageField(ExerciseMsg, 1, repeated=True)
 
 
 @endpoints.api(name="gupapi", version="v1", description="GymUP Open Api",
@@ -60,32 +30,12 @@ class GupApi(remote.Service):
         """Queries the entire DB for retrieving the Exercises."""
         return query
 
-    @endpoints.method(ExerciseMsgCollection, ExerciseMsgCollection,
-                      path='exercises', http_method='POST',
-                      name='exercises.listpost')
-    def ExercisesListPost(self, request):
-        """Receives a POST containing a list of Exercises."""
-        exercises = []
-        for item in request.items:
-            exercise = Exercise()
-            exercise.name = getattr(item, 'name', None)
-            exercise.body_part = getattr(item, 'body_part', None)
-            exercise.equipament = getattr(item, 'equipament', None)
-            exercise.execution = getattr(item, 'execution', None)
-            exercise.reps = getattr(item, 'reps', None)
-            exercise.comment = getattr(item, 'comment', None)
-            if item.created:
-                exercise.created = epd_utils.\
-                    DatetimeValueFromString(getattr(item, 'created', ''))
-            exercise.sequency = getattr(item, 'sequency', None)
-            if item.day_id:
-                exercise.day = ndb.Key('Day', int(item.day_id))
-            exercises.append(exercise)
-
-        inserted = ndb.put_multi(exercises)
-
-        resp = [ExerciseMsg(id=str(key.id())) for key in inserted]
-        return ExerciseMsgCollection(items=resp)
+    @ExerciseCollection.method(path='exercises', http_method='POST',
+                               name='exercises.listpost')
+    def ExercisesListPost(self, exercises_collection):
+        """Receives a list of Days and inserts it in the db."""
+        ndb.put_multi(exercises_collection.items)
+        return exercises_collection
 
     @Exercise.method(request_fields=('id',),
                      path="exercise",
@@ -128,6 +78,13 @@ class GupApi(remote.Service):
         """Creates a Day in the Database."""
         day.put()
         return day
+
+    @DayCollection.method(path='days', http_method='POST',
+                          name='days.postlist')
+    def DaysListPost(self, days_collection):
+        """Receives a list of Days and inserts it in the db."""
+        ndb.put_multi(days_collection.items)
+        return days_collection
 
     @Day.method(request_fields=('id',),
                 response_fields=('id', 'name', 'description', 'proper_time',

@@ -57,6 +57,14 @@ class Exercise(EndpointsModel):
             return self.day
 
 
+class ExerciseCollection(EndpointsModel):
+
+    """Container for creating the ProtoRPC messages of Exercise."""
+
+    _message_fields_schema = ('id', 'items',)
+    items = ndb.LocalStructuredProperty(Exercise, repeated=True)
+
+
 # CHECK IF THIS IS REALLY NEEDED
 class Interval(EndpointsModel):
 
@@ -125,6 +133,14 @@ class Day(EndpointsModel):
             return str(self.workout.id())
         except:
             return self.workout
+
+
+class DayCollection(EndpointsModel):
+
+    """Container for creating the ProtoRPC messages of Day."""
+
+    _message_fields_schema = ('id', 'items',)
+    items = ndb.LocalStructuredProperty(Day, repeated=True)
 
 
 class Workout(EndpointsModel):

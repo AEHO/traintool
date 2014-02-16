@@ -93,16 +93,18 @@ class TestExercise(IntegrationTestCase):
     def test_post_list(self):
         """Tests the POST of a list of exercises."""
         response = self.testapp.post_json(self.BASE_PATH +
-                                                  'ExercisesListPost', {
-                                                    "items": [
-                                                        {
-                                                            "name": "ex1_name",
-                                                        },
-                                                        {
-                                                            "name": "ex2_name",
-                                                        },
-                                                    ]
-                                                  })
+                                          'ExercisesListPost', {
+                                              "items": [
+                                                  {
+                                                      "name":
+                                                      "ex1_name",
+                                                  },
+                                                  {
+                                                      "name":
+                                                      "ex2_name",
+                                                  },
+                                              ]
+                                          })
         self.assertEqual(response.status_int, 200)
         self.assertEqual(len(response.json['items']), 2)
         for exercise in response.json['items']:
@@ -184,6 +186,26 @@ class TestDay(IntegrationTestCase):
             })
         self.assertTrue('exercises' in response_get.json)
         self.assertFalse('exercises' in response_get_false.json)
+
+    def test_post_list(self):
+        """Tests the POST of a list of days."""
+        response = self.testapp.post_json(self.BASE_PATH +
+                                          'DaysListPost', {
+                                              "items": [
+                                                          {
+                                                              "name":
+                                                              "day1_nam",
+                                                          },
+                                                  {
+                                                      "name":
+                                                      "day2_nam",
+                                                  },
+                                              ]
+                                          })
+        self.assertEqual(response.status_int, 200)
+        self.assertEqual(len(response.json['items']), 2)
+        for exercise in response.json['items']:
+            self.assertTrue('id' in exercise)
 
 
 class TestWorkout(IntegrationTestCase):
