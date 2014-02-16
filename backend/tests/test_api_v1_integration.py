@@ -109,7 +109,6 @@ class TestExercise(IntegrationTestCase):
             self.assertTrue('id' in exercise)
 
 
-
 class TestInterval(IntegrationTestCase):
 
     def test_intervals_list(self):

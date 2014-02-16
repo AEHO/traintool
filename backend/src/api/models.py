@@ -36,9 +36,9 @@ class Exercise(EndpointsModel):
     name = ndb.StringProperty(indexed=True)
     body_part = ndb.StringProperty(indexed=True)
     equipament = ndb.StringProperty(indexed=True)
-    execution = ndb.StringProperty(indexed=False)
+    execution = ndb.TextProperty()
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
-    comment = ndb.StringProperty(indexed=False)
+    comment = ndb.TextProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     sequency = ndb.IntegerProperty(indexed=True)
 
