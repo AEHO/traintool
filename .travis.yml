@@ -6,4 +6,4 @@ python:
 install: 
   - cd backend && make
 
-script: 'nosetests --verbose backend/'
+script: 'nosetests --verbose'
