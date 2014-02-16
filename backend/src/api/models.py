@@ -36,9 +36,9 @@ class Exercise(EndpointsModel):
     name = ndb.StringProperty(indexed=True)
     body_part = ndb.StringProperty(indexed=True)
     equipament = ndb.StringProperty(indexed=True)
-    execution = ndb.StringProperty(indexed=False)
+    execution = ndb.TextProperty()
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
-    comment = ndb.StringProperty(indexed=False)
+    comment = ndb.TextProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     sequency = ndb.IntegerProperty(indexed=True)
 
@@ -55,6 +55,14 @@ class Exercise(EndpointsModel):
             return str(self.day.id())
         except:
             return self.day
+
+
+class ExerciseCollection(EndpointsModel):
+
+    """Container for creating the ProtoRPC messages of Exercise."""
+
+    _message_fields_schema = ('id', 'items',)
+    items = ndb.LocalStructuredProperty(Exercise, repeated=True)
 
 
 # CHECK IF THIS IS REALLY NEEDED
@@ -125,6 +133,14 @@ class Day(EndpointsModel):
             return str(self.workout.id())
         except:
             return self.workout
+
+
+class DayCollection(EndpointsModel):
+
+    """Container for creating the ProtoRPC messages of Day."""
+
+    _message_fields_schema = ('id', 'items',)
+    items = ndb.LocalStructuredProperty(Day, repeated=True)
 
 
 class Workout(EndpointsModel):

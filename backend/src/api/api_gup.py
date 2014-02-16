@@ -2,12 +2,13 @@
 
 import endpoints
 
+from google.appengine.ext import ndb
 from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
-
-from api.models import Exercise
-from api.models import Interval
+from endpoints_proto_datastore import utils as epd_utils
+from api.models import Exercise, ExerciseCollection
+from api.models import Interval, DayCollection
 from api.models import Day
 from api.models import Workout
 
@@ -28,6 +29,13 @@ class GupApi(remote.Service):
     def ExercisesList(self, query):
         """Queries the entire DB for retrieving the Exercises."""
         return query
+
+    @ExerciseCollection.method(path='exercises', http_method='POST',
+                               name='exercises.listpost')
+    def ExercisesListPost(self, exercises_collection):
+        """Receives a list of Days and inserts it in the db."""
+        ndb.put_multi(exercises_collection.items)
+        return exercises_collection
 
     @Exercise.method(request_fields=('id',),
                      path="exercise",
@@ -70,6 +78,13 @@ class GupApi(remote.Service):
         """Creates a Day in the Database."""
         day.put()
         return day
+
+    @DayCollection.method(path='days', http_method='POST',
+                          name='days.postlist')
+    def DaysListPost(self, days_collection):
+        """Receives a list of Days and inserts it in the db."""
+        ndb.put_multi(days_collection.items)
+        return days_collection
 
     @Day.method(request_fields=('id',),
                 response_fields=('id', 'name', 'description', 'proper_time',
