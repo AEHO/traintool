@@ -91,6 +91,7 @@ class TestExercise(IntegrationTestCase):
         self.assertNotEqual(response_get_fail.status_int, 200)
 
     def test_post_list(self):
+        """Tests the POST of a list of exercises."""
         response = self.testapp.post_json(self.BASE_PATH +
                                                   'ExercisesListPost', {
                                                     "items": [
@@ -104,6 +105,9 @@ class TestExercise(IntegrationTestCase):
                                                   })
         self.assertEqual(response.status_int, 200)
         self.assertEqual(len(response.json['items']), 2)
+        for exercise in response.json['items']:
+            self.assertTrue('id' in exercise)
+
 
 
 class TestInterval(IntegrationTestCase):

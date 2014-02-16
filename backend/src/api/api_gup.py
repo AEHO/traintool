@@ -2,6 +2,7 @@
 
 import endpoints
 
+from google.appengine.ext import ndb
 from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
@@ -36,6 +37,7 @@ MULTIPLY_METHOD_RESOURCE = endpoints.ResourceContainer(
 
 class ExerciseMsg(messages.Message):
     name = messages.StringField(1)
+    id = messages.StringField(2)
 
 class ExerciseMsgCollection(messages.Message):
     items = messages.MessageField(ExerciseMsg, 1, repeated=True)
@@ -92,8 +94,10 @@ class GupApi(remote.Service):
                       path='exercises', http_method='POST',
                       name='exercises.listpost')
     def ExercisesListPost(self, request):
-        result = [item for item in request.items]
-        return ExerciseMsgCollection(items=result)
+        inserted = ndb.put_multi(
+            [Exercise(name=item.name) for item in request.items])
+        resp = [ExerciseMsg(id=str(key.id())) for key in inserted]
+        return ExerciseMsgCollection(items=resp)
 
 
     @Exercise.method(request_fields=('id',),
