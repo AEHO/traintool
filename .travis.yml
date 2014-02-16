@@ -5,5 +5,8 @@ python:
  
 install: 
   - cd backend && make
+  - export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages/
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)/lib/google_appengine/
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)/src/
 
 script: 'nosetests --verbose'
