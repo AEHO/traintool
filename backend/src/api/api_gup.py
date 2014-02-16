@@ -5,11 +5,41 @@ import endpoints
 from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
-
 from api.models import Exercise
 from api.models import Interval
 from api.models import Day
 from api.models import Workout
+
+#  EXAMPLE
+
+package = 'TrainTool API'
+
+class Greeting(messages.Message):
+    message = messages.StringField(1)
+
+class GreetingCollection(messages.Message):
+    items = messages.MessageField(Greeting, 1, repeated=True)
+
+STORED_GREETINGS = GreetingCollection(items=[
+    Greeting(message='hello world!'),
+    Greeting(message='goodbye world!'),
+])
+
+MULTIPLY_METHOD_RESOURCE = endpoints.ResourceContainer(
+    Greeting,
+    times=messages.IntegerField(2, variant=messages.Variant.INT32,
+                                required=True)
+    )
+
+#   EXAMPLE
+
+
+class ExerciseMsg(messages.Message):
+    name = messages.StringField(1)
+
+class ExerciseMsgCollection(messages.Message):
+    items = messages.MessageField(ExerciseMsg, 1, repeated=True)
+
 
 
 @endpoints.api(name="gupapi", version="v1", description="GymUP Open Api",
@@ -18,6 +48,35 @@ from api.models import Workout
 class GupApi(remote.Service):
 
     """GymUP TrainTool Open API v1."""
+
+
+    # EXAMPLE
+
+    @endpoints.method(message_types.VoidMessage, GreetingCollection,
+                      path='hellogreeting', http_method='GET',
+                      name='greetings.listGreeting')
+    def greetings_list(self, unused_request):
+        return STORED_GREETINGS
+
+    @endpoints.method(GreetingCollection, GreetingCollection,
+                      path='hellogretting', http_method='POST',
+                      name='greetings.postGreeting')
+    def greetings_post(self, request):
+        result = [item for item in request.items]
+        return GreetingCollection(items=result)
+
+    @endpoints.method(MULTIPLY_METHOD_RESOURCE, Greeting,
+                      path='hellogreeting/{times}', http_method='POST',
+                      name='greetings.multiply')
+    def greetings_multiply(self, request):
+        return Greeting(message=request.message * request.times)
+
+
+    # EXAMPLE
+
+
+    # //TODO - PENSAR COMO INSERIR O ID DOS CAMPOS ADICIONADOS
+    # NA RESPOSTA GERADA APOS A INSERCAO DA LISTA
 
     @Exercise.query_method(query_fields=('limit', 'pageToken', 'order',
                                          'name', 'body_part', 'equipament',
@@ -28,6 +87,14 @@ class GupApi(remote.Service):
     def ExercisesList(self, query):
         """Queries the entire DB for retrieving the Exercises."""
         return query
+
+    @endpoints.method(ExerciseMsgCollection, ExerciseMsgCollection,
+                      path='exercises', http_method='POST',
+                      name='exercises.listpost')
+    def ExercisesListPost(self, request):
+        result = [item for item in request.items]
+        return ExerciseMsgCollection(items=result)
+
 
     @Exercise.method(request_fields=('id',),
                      path="exercise",
