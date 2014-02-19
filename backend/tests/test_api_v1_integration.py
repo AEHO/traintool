@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 import webtest
 import endpoints
@@ -71,6 +73,15 @@ class TestExercise(IntegrationTestCase):
         self.assertEqual(response_ok.status_int, 200)
         self.assertTrue(response_ok.json['id'])
         self.assertNotEqual(response_error.status_int, 200)
+
+    def test_exercise_post_non_ascii(self):
+        response = self.testapp.post_json(self.BASE_PATH + 'ExercisePost', {
+            "name": "exercise_name",
+            "comment": "àçãáā ēīūŗļķņģšžč.",
+        })
+        self.assertEqual(response.status_int, 200)
+        self.assertTrue(response.json['id'])
+
 
     def test_exercise_get(self):
         response_post_ok = self.testapp.post_json(self.BASE_PATH +
