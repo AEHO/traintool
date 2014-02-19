@@ -21,7 +21,7 @@ class GupApi(remote.Service):
     """GymUP TrainTool Open API v1."""
 
     @Exercise.query_method(query_fields=('limit', 'pageToken', 'order',
-                                         'name', 'body_part', 'equipament',
+                                         'name', 'body_part', 'equipment',
                                          'created',),
                            path='exercises',
                            http_method="GET",
