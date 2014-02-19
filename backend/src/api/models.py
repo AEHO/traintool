@@ -14,7 +14,7 @@ class Exercise(EndpointsModel):
         name - the name of that exercise
         body_part - the name of the body part that the exercises
             most uses
-        equipament - the name of  the equipament used for the execution
+        equipment - the name of  the equipment used for the execution
             of the exercise
         execution - how to execute the exercise
         created - the timestamp of the creation of the exercise
@@ -29,13 +29,13 @@ class Exercise(EndpointsModel):
     """
 
     _message_fields_schema = (
-        'id', 'name', 'body_part', 'equipament',
+        'id', 'name', 'body_part', 'equipment',
         'execution', 'reps', 'comment', 'created', 'sequency', 'day_id',
     )
 
     name = ndb.StringProperty(indexed=True)
     body_part = ndb.StringProperty(indexed=True)
-    equipament = ndb.StringProperty(indexed=True)
+    equipment = ndb.StringProperty(indexed=True)
     execution = ndb.TextProperty()
     reps = ndb.IntegerProperty(indexed=False, repeated=True)
     comment = ndb.TextProperty()
