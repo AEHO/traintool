@@ -82,7 +82,6 @@ class TestExercise(IntegrationTestCase):
         self.assertEqual(response.status_int, 200)
         self.assertTrue(response.json['id'])
 
-
     def test_exercise_get(self):
         response_post_ok = self.testapp.post_json(self.BASE_PATH +
                                                   'ExercisePost', {
