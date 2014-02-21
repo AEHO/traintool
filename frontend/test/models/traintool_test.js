@@ -1,107 +1,85 @@
 
+var getRandomStr = function(){
+  return Math.random().toString(36).substring(7);
+};
 
-module("Testing the exercises creator", {
+module("Testing exercises operations and page generations", {
   setup: function() {
     TrainTool.setupForTesting();
     TrainTool.injectTestHelpers();
+  },
+  teardown: function() {
+    localStorage.removeItem("traintool");
     TrainTool.reset();
   }
 });
 
-test("Exercise creation", function() {
-  // async helper telling the application to go to the '/' route
-  var name = Math.random().toString(36).substring(7);
-  var comment = Math.random().toString(36).substring(7);
-  var equipament = Math.random().toString(36).substring(7);
-  var execution = Math.random().toString(36).substring(7);
-  //The array adapter passes a raw value. So a random int is ok.
-  var reps = Math.round(Math.random() * 10000000);
-  visit("/")
-    .fillIn("#exName", name)
-    .fillIn("#exComment", comment)
-    .fillIn("#exEquipament", equipament)
-    .fillIn("#exExecution", execution)
-    .fillIn("#exReps", reps)
-    .click("#exCreate")
-    .then(function(){
-      ok(find("ul>li:last:contains('"+name+"')").length, "The exercise name text is ok.");
-      ok(find("ul>li:last:contains('"+comment+"')").length, "The exercise comment text is ok");
-      ok(find("ul>li:last:contains('"+execution+"')").length, "The exercise execution text is ok");
-      ok(find("ul>li:last:contains('"+equipament+"')").length, "The exercise equipament text is ok");
-      ok(find("ul>li:last:contains('"+reps+"')").length, "The exercise reps text is ok");
-    }).visit("/")
-    .then(function(){
-      ok(find("ul>li:last:contains('"+name+"')").length, "Before refresh the page the exercise name text still ok.");
-      ok(find("ul>li:last:contains('"+comment+"')").length, "Before refresh the page the exercise comment text still ok");
-      ok(find("ul>li:last:contains('"+execution+"')").length, "Before refresh the page the exercise execution text still ok");
-      ok(find("ul>li:last:contains('"+equipament+"')").length, "Before refresh the page the exercise equipament text still ok");
-      ok(find("ul>li:last:contains('"+reps.toString()+"')").length, "Before refresh the page the exercise reps text still ok");
-    });
-    
+test("Check HTML is returned", function() {
+  visit("/").then(function() {
+    ok(find("*"), "Found HTML!");
+  });
+  visit("/exercises").then(function() {
+    ok(find("*"), "Found HTML!");
+  });
+   
 });
 
-// test("a Todo begins with completed set to false", function(){
-//   var exercise = TrainTool.get('store').createRecord('exercise', {});
-//   ok(exercise.get('store') instanceof TrainTool.Store, "todo's store is a Store");
-// });
 
-// test("a Todo has access to the localStore store", function(){
-//   var todo = Todos.Todo.create();
-//   ok(todo.get('store') instanceof Todos.Store, "todo's store is a Store");
-// });
+test("Creating the exercises using the exercise creator page.", function(){
+  var name = getRandomStr();
+  var comment = getRandomStr();
+  var equipament = getRandomStr();
+  var execution = getRandomStr();
+  var bodyPart = getRandomStr();
+  //The array adapter passes a raw value. So a random int is ok.
+  var reps = Math.round(Math.random() * 10000000);
+  // async helper telling the application to go to the '/' route
+  visit("/exercises")
+    .fillIn("#exercise-name", name)
+    .fillIn("#exercise-comment", comment)
+    .fillIn("#exercise-equipament", equipament)
+    .fillIn("#exercise-execution", execution)
+    .fillIn("#exercise-reps", reps)
+    .fillIn("#exercise-bodypart", bodyPart)
+    .click('#exercise-create')
+    .then(function(){
+      ok(find(".exercise-div:first:contains('"+name+"')").length, "The exercise name text is ok.");
+    })
+    .click(".exercise-div:first>.btn-ex-details")
+    .then(function(){
+      ok(find(".exercise-div:first:contains('"+comment+"')").length, "The exercise comment text is ok");
+      ok(find(".exercise-div:first:contains('"+execution+"')").length, "The exercise execution text is ok");
+      ok(find(".exercise-div:first:contains('"+equipament+"')").length, "The exercise equipament text is ok");
+      ok(find(".exercise-div:first:contains('"+reps+"')").length, "The exercise reps text is ok");
+    });
+});
 
-// test("when a Todo's title changes it automatically saves", function(){
-//   var todo = Todos.Todo.create();
-//   var update = sinon.stub(todo.get('store'), 'update');
 
-//   Ember.run(function(){
-//     todo.set('title', 'a new title');
-//   });
+test("creating a Exercise proxies to the store", function(){
+  var create = sinon.stub(TrainTool.Exercise.store, 'createRecord'),
+      properties = {name: 'hi'};
+  TrainTool.Exercise.store.createRecord('exercise', properties);
 
-//   ok(update.calledOnce);
+  ok(create.calledOnce);
+  create.restore();
+});
 
-//   update.restore();
-// });
+test("destroying a Todo proxies to the store", function(){
+  var destroy = sinon.stub(TrainTool.Exercise.store, 'destroy');
+  var exercise;
+  Ember.run(function(){
+    exercise = TrainTool.Exercise.store.createRecord('exercise', {});
+  });
 
-// test("when a Todo's completed status changes it automatically saves", function(){
-//   var todo = Todos.Todo.create();
-//   var update = sinon.stub(todo.get('store'), 'update');
+  TrainTool.Exercise.store.destroy(exercise);
+  ok(destroy.calledOnce);
+  destroy.restore();
+});
 
-//   Ember.run(function(){
-//     todo.toggleProperty('completed');
-//   });
+test("asking for all todos proxies to the store", function(){
+  var all = sinon.stub(TrainTool.Exercise.store, 'all');
+  TrainTool.Exercise.store.all();
 
-//   ok(update.calledOnce);
-
-//   update.restore();
-// });
-
-// test("the Todo constructor has access to the store", function(){
-//   ok(Todos.Todo.store instanceof Todos.Store, "Todo store is a Store");
-// });
-
-// test("creating a Todo proxies to the store", function(){
-//   var create = sinon.stub(Todos.Todo.store, 'createRecord'),
-//       properties = {title: 'hi'};
-//   Todos.Todo.createRecord(properties);
-
-//   ok(create.calledOnce);
-//   create.restore();
-// });
-
-// test("destroying a Todo proxies to the store", function(){
-//   var destroy = sinon.stub(Todos.Todo.store, 'destroy'),
-//       todo = Todos.Todo.createRecord();
-
-//   Todos.Todo.destroy(todo);
-//   ok(destroy.calledOnce);
-//   destroy.restore();
-// });
-
-// test("asking for all todos proxies to the store", function(){
-//   var all = sinon.stub(Todos.Todo.store, 'all');
-//   Todos.Todo.all();
-
-//   ok(all.calledOnce);
-//   all.restore();
-// });
+  ok(all.calledOnce);
+  all.restore();
+});

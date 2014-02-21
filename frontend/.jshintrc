@@ -27,6 +27,7 @@
     "click":true,
     "find":true,
     "module":true,
-    "andThen":true
+    "andThen":true,
+    "moment":true
   }
 }

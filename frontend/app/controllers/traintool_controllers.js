@@ -1,35 +1,42 @@
-/*globals TrainTool*/
+/*jshint camelcase: false */
 TrainTool.ExercisesController = Ember.ArrayController.extend({
-	actions:{
-		createExercise:function(){
-			var name = this.get('exName');
-			var comment = this.get('exComment');
-			var equipament = this.get('exEquipament');
-			var execution = this.get('exExecution');
-			var reps = this.get('exReps');
-			var creation = new Date();
-			if(typeof reps === 'string'){
-				reps = reps.split(/\D+/);
-			}
-			var exercise = this.store.createRecord('exercise',
-			{
-				name:name,
-				comment:comment,
-				equipament:equipament,
-				execution:execution,
-				reps:reps,
-				creation:creation
-			});
-			exercise.save();
-		}
-	}
+  sortProperties: ['created'],
+  sortAscending: false,
+  actions:{
+    createExercise:function(){
+      // Get values from inputs
+      var name = this.get('exercise-name');
+      var comment = this.get('exercise-comment');
+      var equipament = this.get('exercise-equipament');
+      var execution = this.get('exercise-execution');
+      var reps = this.get('exercise-reps');
+      var body_part = this.get('exercise-bodypart');
+      // Reps must be a Array of integer, so split in each sequence
+      // of non numerals.
+      if(typeof reps === 'string'){
+        reps = reps.split(/\D+/);
+      }
+      var exercise = this.store.createRecord('exercise', {
+        name:name === null ? '' : name,
+        body_part:body_part,
+        comment:comment === null ? '' : comment,
+        equipament:equipament === null ? '' : equipament,
+        execution:execution === null ? '' : execution,
+        reps:reps === null ? '' : reps
+      });
+      exercise.save();
+    }
+  }
 });
 
-TrainTool.ExerciseController = Ember.ObjectController.extend({
-	actions:{
-		toggleDetails:function(){
-			this.set('showDetails', !this.get('showDetails'));
-		}
-	},
-	showDetails:false
+TrainTool.ExerciseInListController = Ember.ObjectController.extend({
+  actions:{
+    //Toggle the details of an exercise
+    toggleDetails:function(){
+      this.toggleProperty('showDetails');
+    }
+  },
+  showDetails:false
 });
+
+TrainTool.ExerciseController = Ember.ObjectController.extend({});

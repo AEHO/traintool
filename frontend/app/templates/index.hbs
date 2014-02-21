@@ -1,53 +1,5 @@
-<header>
-  <div class="navbar-wrapper">
-    <div class='container'>
-      <nav class="navbar navbar-static-top navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-              <span class="sr-only">Esconder barra de navegação</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">GymUp</a>
-          </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse navbar-ex1-collapse" id="menu">
-            <ul class="nav navbar-nav">
-              <li><a href="/" id="index_nav_btn"><i class="fa fa-home"></i> Home</a></li>
-              <li><a href="" id="index_nav_btn"><i class="fa fa-compass"></i> Explorar</a></li>
-            </ul>
-            <form class="navbar-form navbar-right hide" role="login" id="login_nav_form">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="login">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="senha">
-              </div>
-              <button type="submit" class="btn btn-default">Login</button>
-            </form>
-            <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Menu <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Criar novo treino</a></li>
-                  <li><a href="#">Perfil</a></li>
-                  <li><a href="#">Convidar amigo</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li>
-                <a href="#" id="login_toggle">Login</a>
-              </li>
-            </ul>
-          </div><!-- /.navbar-collapse -->
-        </div>
-      </nav>
-    </div>
-  </div>
+{{partial "reusable/header"}}
+<article role="header">
   <div id="mainCarousel" class="carousel slide" data-ride="darousel">
     <ol class="carousel-indicators">
       <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
@@ -88,7 +40,7 @@
     <a class="left carousel-control" href="#mainCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
     <a class="right carousel-control" href="#mainCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
   </div>
-</header>
+</article>
 <div class="container main-container">
   <article>
     <div class="row">
