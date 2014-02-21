@@ -6,7 +6,5 @@ TrainTool.Exercise = DS.Model.extend({
 	equipament:DS.attr('string'),
 	execution:DS.attr('string'),
 	name:DS.attr('string'),
-	reps:DS.attr('array'),
-	//Used to chose field to be used to order the elements.
-	order:DS.attr('string'),
+	reps:DS.attr('array')
 });

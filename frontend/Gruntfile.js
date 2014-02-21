@@ -52,8 +52,7 @@ module.exports = function(grunt) {
       options: {
         includeSourceURL: true
       }, 
-      'build/application.js': 'app/app.js',
-      'build/testing_application.js': 'app/testing_app.js'
+      'build/application.js': 'app/app.js'
     },
 
     /*
