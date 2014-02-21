@@ -1,120 +1,64 @@
-<header>
-  <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Esconder barra de navegação</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">GymUp</a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse navbar-ex1-collapse" id="menu">
-        <ul class="nav navbar-nav">
-          <li><a href="/" id="index_nav_btn"><i class="fa fa-home"></i> Home</a></li>
-          <li><a href="" id="index_nav_btn"><i class="fa fa-compass"></i> Explorar</a></li>
-        </ul>
-        <form class="navbar-form navbar-right hide" role="login" id="login_nav_form">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="login">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="senha">
-          </div>
-          <button type="submit" class="btn btn-default">Login</button>
-        </form>
-        <ul class="nav navbar-nav">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Menu <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Criar novo treino</a></li>
-              <li><a href="#">Perfil</a></li>
-              <li><a href="#">Convidar amigo</a></li>
-            </ul>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="#" id="login_toggle">Login</a>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div>
-  </nav>
-</header>
-<article>
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-7">
-				<h2>Lista de exercícios</h2>
-				<ul class="list-group list">
-					{{#each this itemController="exercise"}}
-            <li class="list-group-item withFooter clickable">
-              <div class="row">
-                <div class="col-lg-12 text-left">
-                {{#if name}}
-                  <span class="name">{{name}}</span></h5>
-                {{else}}
-                  <span class="name"><span class="glyphicon glyphicon-remove form-control-feedback"></span> Sem nome</span></h5>
-                {{/if}}
-                </div>
-                <div class="col-lg-12 text-center btnFooter" {{action "toggleDetails" on="click"}}>
-                  Detalhes
-                </div>
-                {{#if showDetails}}
-                  <div class="col-lg-12 text-left">
-                    <p>Nome: {{name}}</p>
-                    <p>Comentário: {{comment}}</p>
-                    <p>Criado: {{created}}</p>
-                    <p>Repetições: {{reps}}</p>
-                    <p>Equipamento: {{equipament}}</p>
-                    <p>Execução: {{execution}}</p>
-                    <p>id: {{id}}</p>
-                  </div>
-                {{/if}}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-7">
+      <h2>Lista de exercícios</h2>
+      <ul class="list-group list">
+        {{#each this itemController="exerciseInList"}}
+          <li class="list-group-item withFooter clickable">
+            <div class="row exercise-div">
+              <div class="col-lg-12 text-left">
+              {{#if name}}
+                <span class="name">{{name}}</span></h5>
+              {{else}}
+                <span class="name"><span class="glyphicon glyphicon-remove form-control-feedback"></span> Sem nome</span></h5>
+              {{/if}}
               </div>
-            </li>
-						<!--li>
-							<div>
-								<p>Nome: {{name}}</p>
-								<p>Comentário: {{comment}}</p>
-								<p>Criado: {{created}}</p>
-								<p>Repetições: {{reps}}</p>
-								<p>Equipamento: {{equipament}}</p>
-								<p>Execução: {{execution}}</p>
-								<p>id: {{id}}</p>
-							</div>
-						</li-->
-					{{/each}}
-				</ul>
-			</div>
-			<div class="col-lg-5">
-				<h2>Criar Exercício</h2>
-        <div class="form-group">
-          <label>Nome</label>
-				  <br>{{input valueBinding="model.name" class="form-control" value=exName id="exName"}}
-        </div>
-				<div class="form-group">
-        <label>Comentário</label>
-        {{textarea valueBinding="model.comment" class="form-control" value=exComment id="exComment"}}</p>
-        </div>
-				<div class="form-group">
-        <label>Equipamento</label>
-        {{input valueBinding="model.equipament" class="form-control" value=exEquipament id="exEquipament"}}</p>
-        </div>
-				<div class="form-group">
-        <label>Execução</label>
-        {{input valueBinding="model.execution" class="form-control" value=exExecution id="exExecution"}}</p>
-        </div>
-				<div class="form-group">
-        <label>Repetições</label>
-        {{input valueBinding="model.reps" class="form-control" value=exReps id="exReps"}}</p>
-        </div>
-				<button id="exCreate" class="btn btn-default" {{action "createExercise"}}>Criar exercício</button>
-			</div>
-		</div>
-	</div>
-</article>
+              <div class="col-lg-12 text-center btnFooter btn-ex-details" {{action "toggleDetails" on="click"}}>
+                Detalhes
+              </div>
+              {{#if showDetails}}
+                <div class="col-lg-12 text-left">
+                  <p>Nome: {{name}}</p>
+                  <p>Comentário: {{comment}}</p>
+                  <p>Criado: {{format-date created}}</p>
+                  <p>Repetições: {{reps}}</p>
+                  <p>Equipamento: {{equipament}}</p>
+                  <p>Execução: {{execution}}</p>
+                  <p>id: {{#link-to 'exercise' this}}{{id}}{{/link-to}}</p>
+                </div>
+              {{/if}}
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="col-lg-5">
+      <h2>Criar Exercício</h2>
+      <div class="form-group">
+        <label>Nome</label>
+        <br>{{input class="form-control" value=exercise-name id="exercise-name"}}
+      </div>
+      <div class="form-group">
+      <label>Comentário</label>
+      {{textarea class="form-control" value=exercise-comment id="exercise-comment"}}</p>
+      </div>
+      <div class="form-group">
+      <label>Equipamento</label>
+      {{input class="form-control" value=exercise-equipament id="exercise-equipament"}}</p>
+      </div>
+      <div class="form-group">
+      <label>Execução</label>
+      {{input class="form-control" value=exercise-execution id="exercise-execution"}}</p>
+      </div>
+      <div class="form-group">
+      <label>Repetições</label>
+      {{input class="form-control" value=exercise-reps id="exercise-reps"}}</p>
+      </div>
+      <div class="form-group">
+      <label>Parte do Corpo</label>
+      {{input class="form-control" value=exercise-bodypzart id="exercise-bodypart"}}</p>
+      </div>
+      <button id="exercise-create" class="btn btn-default" {{action "createExercise"}}>Criar exercício</button>
+    </div>
+  </div>
+</div>

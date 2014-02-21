@@ -7,3 +7,7 @@ TrainTool.ArrayTransform = DS.Transform.extend({
     return value;
   }
 });
+
+Ember.Handlebars.helper('format-date', function(date){
+    return moment(date).fromNow();
+  });
