@@ -26,8 +26,14 @@ TrainTool.ExercisesController = Ember.ArrayController.extend({
       });
       exercise.save();
     }
-  }
+  },
+  nextPage: function(){
+    var meta = this.store.metadataFor("exercise");
+    return meta.nextPageToken;
+  }.property('exercise')
 });
+
+TrainTool.ExercisesPageController = TrainTool.ExercisesController.extend();
 
 TrainTool.ExerciseInListController = Ember.ObjectController.extend({
   actions:{
