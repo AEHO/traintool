@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-7">
+      <h2>Lista de exercícios</h2>
+      <ul class="list-group list">
+        {{#each this itemController="exerciseInList"}}
+          <li class="list-group-item withFooter clickable">
+            <div class="row exercise-div">
+              <div class="col-lg-12 text-left">
+              {{#if name}}
+                <span class="name">{{name}}</span></h5>
+              {{else}}
+                <span class="name"><span class="glyphicon glyphicon-remove form-control-feedback"></span> Sem nome</span></h5>
+              {{/if}}
+              </div>
+              <div class="col-lg-12 text-center btnFooter btn-ex-details" {{action "toggleDetails" on="click"}}>
+                Detalhes
+              </div>
+              {{#if showDetails}}
+                <div class="col-lg-12 text-left">
+                  <p>Nome: {{name}}</p>
+                  <p>Comentário: {{comment}}</p>
+                  <p>Criado: {{format-date created}}</p>
+                  <p>Repetições: {{reps}}</p>
+                  <p>Equipamento: {{equipament}}</p>
+                  <p>Execução: {{execution}}</p>
+                  <p>id: {{#link-to 'exercise' this}}{{id}}{{/link-to}}</p>
+                </div>
+              {{/if}}
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="col-lg-5">
+      <h2>Criar Exercício</h2>
+      <div class="form-group">
+        <label>Nome</label>
+        <br>{{input class="form-control" value=exercise-name id="exercise-name"}}
+      </div>
+      <div class="form-group">
+      <label>Comentário</label>
+      {{textarea class="form-control" value=exercise-comment id="exercise-comment"}}</p>
+      </div>
+      <div class="form-group">
+      <label>Equipamento</label>
+      {{input class="form-control" value=exercise-equipament id="exercise-equipament"}}</p>
+      </div>
+      <div class="form-group">
+      <label>Execução</label>
+      {{input class="form-control" value=exercise-execution id="exercise-execution"}}</p>
+      </div>
+      <div class="form-group">
+      <label>Repetições</label>
+      {{input class="form-control" value=exercise-reps id="exercise-reps"}}</p>
+      </div>
+      <div class="form-group">
+      <label>Parte do Corpo</label>
+      {{input class="form-control" value=exercise-bodypzart id="exercise-bodypart"}}</p>
+      </div>
+      <button id="exercise-create" class="btn btn-default" {{action "createExercise"}}>Criar exercício</button>
+    </div>
+  </div>
+</div>
