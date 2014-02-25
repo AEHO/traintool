@@ -6,5 +6,6 @@ TrainTool.Exercise = DS.Model.extend({
 	equipament:DS.attr('string'),
 	execution:DS.attr('string'),
 	name:DS.attr('string'),
-	reps:DS.attr('array')
+	reps:DS.attr('array'),
+	pageToken:DS.attr('string')
 });
