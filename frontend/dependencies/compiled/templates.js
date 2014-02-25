@@ -177,7 +177,7 @@ function program10(depth0,data) {
   },hashTypes:{'class': "STRING",'value': "ID",'id': "STRING"},hashContexts:{'class': depth0,'value': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("</p>\n      </div>\n      <button id=\"exercise-create\" class=\"btn btn-default\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "createExercise", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Criar exercício</button>\n    </div>\n  </div>\n</div>");
+  data.buffer.push(">Criar exercício</button>\n    </div>\n  </div>\n</div>\n");
   return buffer;
   
 });
