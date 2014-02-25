@@ -118,17 +118,8 @@ function program7(depth0,data) {
 
 function program9(depth0,data) {
   
-  var buffer = '', stack1, helper, options;
-  data.buffer.push("\n        ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "exercisesPage", "nextPage", options) : helperMissing.call(depth0, "link-to", "exercisesPage", "nextPage", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n      ");
-  return buffer;
-  }
-function program10(depth0,data) {
   
-  
-  data.buffer.push("Próxima Página");
+  data.buffer.push("Mostrar mais");
   }
 
   data.buffer.push("<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-lg-7\">\n      <h2>Lista de exercícios</h2>\n      <ul class=\"list-group list\">\n        ");
@@ -137,7 +128,7 @@ function program10(depth0,data) {
   },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n      </ul>\n      ");
-  stack1 = helpers['if'].call(depth0, "nextPage", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.view.call(depth0, "TrainTool.ShowMoreButtonView", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </div>\n    <div class=\"col-lg-5\">\n      <h2>Criar Exercício</h2>\n      <div class=\"form-group\">\n        <label>Nome</label>\n        <br>");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
