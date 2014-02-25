@@ -29,6 +29,8 @@ TrainTool.ExercisesController = Ember.ArrayController.extend({
   }
 });
 
+TrainTool.ExercisesPageController = TrainTool.ExercisesController.extend();
+
 TrainTool.ExerciseInListController = Ember.ObjectController.extend({
   actions:{
     //Toggle the details of an exercise

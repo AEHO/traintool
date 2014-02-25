@@ -1,12 +1,23 @@
 TrainTool.ExercisesRoute = Ember.Route.extend({
-	model:function(){
-		return this.store.find('exercise');
-	}
+  model:function(params){
+    return this.store.find('exercise');
+  },
+
+  actions: {
+    more: function(){
+      var meta = this.store.metadataFor("exercise");
+      var exercises = this.store.modelFor("exercise");
+      var newsModels = this.store.find('exercise', {pageToken: meta.nextPageToken});
+      newsModels.forEach(function(newModel){
+        exercises.pushObject(newModel);
+      });
+    }
+  }
 });
 
 TrainTool.ExerciseRoute = Ember.Route.extend({
-	setupController: function(controller, params) {
-		var exercise = this.store.find('exercise', params.id);
-		controller.set('model', exercise);
-	}
+  setupController: function(controller, params) {
+    var exercise = this.store.find('exercise', params.id);
+    controller.set('model', exercise);
+  }
 });

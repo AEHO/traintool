@@ -62,6 +62,8 @@ require('app/models/traintool_models');
  * programming to do. 
 */
 
+require('app/views/traintool_views');
+
 /*
  * Controller layer.
  * Controllers wrap objects and provide a place

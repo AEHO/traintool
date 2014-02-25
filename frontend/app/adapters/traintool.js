@@ -1,10 +1,12 @@
 var setRestConfigs = function(){
   TrainTool.ApplicationSerializer = DS.RESTSerializer.extend({
+    pages:[],
     // When requestType is 'findAll' extract the JSON get the data from data[root].
     // In the case data['items']
     extract: function(store, primaryType, payload, recordId, requestType) {
       var root;
-      if(requestType === 'findAll'){
+      this.extractMeta(store, primaryType, payload);
+      if(requestType === 'findAll' || requestType === 'findQuery'){
         root = "items";
       }else{
         root = null;
@@ -16,7 +18,25 @@ var setRestConfigs = function(){
       var primaryRecord = this.normalize(primaryType, payload, root);
       return primaryRecord;
     },
-
+    //Update the page tokens from a exercises list
+    updatePageTokens: function(store, type, payload){
+      var actualMeta = store.metadataFor(type);
+      if(actualMeta.actualPageToken !== undefined && actualMeta.actualPageToken){
+        store.metaForType(type, { previousPageToken: actualMeta.actualPageToken });
+      }
+      if(actualMeta.nextPageToken !== undefined && actualMeta.nextPageToken){
+        store.metaForType(type, { actualPageToken: actualMeta.nextPageToken });
+      }
+      if (payload && payload.nextPageToken) {
+        store.metaForType(type, { nextPageToken: payload.nextPageToken });
+        delete payload.nextPageToken;
+      }else{
+        store.metaForType(type, { nextPageToken: null });
+      }
+    },
+    extractMeta: function(store, type, payload) {
+      this.updatePageTokens(store, type, payload);
+    },
     normalize: function(type, hash, prop) {
       if(prop !== undefined && prop){
         hash = hash[prop];
