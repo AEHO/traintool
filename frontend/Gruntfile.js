@@ -28,6 +28,7 @@ module.exports = function(grunt) {
       main: {
         files: [
           {expand:true,
+          flatten: true,
           src: ['dependencies/bower_components/handlebars/handlebars.runtime.min.js'],
           dest:'build/assets/js/'}
         ]
