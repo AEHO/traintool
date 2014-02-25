@@ -31,9 +31,7 @@
           </li>
         {{/each}}
       </ul>
-      {{#if nextPage}}
-        {{#link-to 'exercisesPage' nextPage}}Próxima Página{{/link-to}}
-      {{/if}}
+      {{#view TrainTool.ShowMoreButtonView}}Mostrar mais{{/view}}
     </div>
     <div class="col-lg-5">
       <h2>Criar Exercício</h2>
