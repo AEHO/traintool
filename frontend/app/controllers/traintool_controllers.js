@@ -42,3 +42,35 @@ TrainTool.ExerciseInListController = Ember.ObjectController.extend({
 });
 
 TrainTool.ExerciseController = Ember.ObjectController.extend({});
+
+TrainTool.TrainsNewController = Ember.ObjectController.extend({
+  selectedDay : null,
+  actions : {
+    newDay : function(){
+      var day = this.store.createRecord('day');
+      this.get('days').pushObject(day);
+      this.send('selectDay', day);
+    },
+
+    selectDay : function(day){
+      this.get('days').forEach(function(day){
+        day.set('selected', false);
+      });
+
+      day.set('selected', true);
+      this.set('selectedDay', day);
+    }
+  }
+});
+
+TrainTool.DayController = Ember.ObjectController.extend({
+  displayedName : function(){
+    var name = this.get('name');
+    return name === undefined || name === '' ? 'Sem nome' : name;
+  }.property('name'),
+
+  withoutName : function(){
+    var name = this.get('name');
+    return name === undefined || name === '';
+  }.property('name')
+});

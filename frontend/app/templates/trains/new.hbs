@@ -1,0 +1,40 @@
+<article>
+  <div class="container">
+    <div class="row">
+      <div class='col-lg-12'>
+        <h2><small>Definição do treino</small> {{name}}</h2>
+      </div>
+      <div class="col-lg-3">
+        <label>Nome</label>
+        {{input type="text" value=name placeholder="Nome do Treino" class="form-control"}}
+      </div>
+      <div class="col-lg-5">
+        <label>Descrição</label>
+        {{textarea type="text" value=description placeholder="Descrição do Treino" class="form-control"}}
+      </div>
+      <div class="col-lg-4 text-center">
+      </div>
+      <div class="col-lg-12" id="daysDiv">
+        <h2>Dias de Treino</h2>
+        <ul class="nav nav-tabs">
+          {{#each days itemController="Day"}}
+            <li {{bind-attr class='selected:active'}}>
+              <a href="#/trains/new" {{action "selectDay" this}}>
+                {{displayedName}} 
+                {{#if withoutName}}
+                  <i class="fa fa-exclamation-circle"></i>
+                {{/if}}
+              </a>
+            </li>
+          {{/each}}
+          <li><a {{action "newDay"}} class="btn btn-primary" id="new_day_btn">Novo dia de treino</a></li>
+        </ul>
+        {{#if selectedDay}}
+          {{view TrainTool.DayContentView selectedDay="selectedDay"}}
+        {{else}}
+          <h3>Selecione ou crie um novo dia para edita-lo</h3>
+        {{/if}}
+      </div> <!-- col-lg-12 -->
+    </div><!-- row -->
+  </div>
+</article>

@@ -1,0 +1,117 @@
+{{#if view.dayToShow}}
+<div class="tab-content">
+  <div class="tab-pane active" id="dia_&dia.uid">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-lg-3">  
+            <label>Nome</label>
+            {{input type='text' placeholder="Nome do dia" value=view.dayToShow.name class="form-control day_editable_fields"}}
+          </div>
+          <div class="col-lg-5">
+            <label>Comentário</label>
+            {{textarea value=view.dayToShow.comment placeholder="Comentário do dia" class="form-control day_editable_fields"}}
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item clickable"><h4>&object.nome <small>&object.series</small></h4></li>
+      <li class="list-group-item clickable open-panel">
+        <div class="panel panel-primary">
+           <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-3">
+                <label for="exampleInputEmail1">Nome</label>
+                <p class="form-control-static">&object.nome</p>
+              </div>
+              <div class="col-lg-5">
+                <label for="exampleInputEmail1">Descrição</label>
+                <p class="form-control-static">&object.descricao</p>
+              </div>
+              <div class="col-lg-3">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-lg-12 padding-bottom">
+                        <label for="exampleInputEmail1">Séries</label><br>
+                        <span class="label label-primary">&object.series</span>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default">+ série</button>
+                          <button type="button" class="btn btn-danger">- série</button>
+                        </div>
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="integer" class="form-control input-sm" placeholder="Repetições">
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item clickable"><h5>Descanço de &object.time segundos</h5></li>
+      <li class="list-group-item clickable open-panel">
+        <div class="panel panel-primary">
+           <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-3">
+                <label for="exampleInputEmail1">Tipo</label><br>
+                <select class="form-control">
+                  <option selected="selected">Descanso</option>
+                  <option>Supersérie</option>
+                </select>
+              </div>
+              <div class="descanso_fields">
+                <div class="col-lg-3">
+                  <label for="exampleInputEmail1">Descanso</label><br>
+                  <form role="form">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Descanso" value="&object.time">
+                      <span class="input-group-addon">Segundos</span>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-lg-6">
+                  <label for="exampleInputEmail1">Comentário</label><br>
+                  <form role="form">
+                      <input type="text" class="form-control" placeholder="Breve comentário">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    
+      <li class="list-group-item clickable"><h5>Super Série</h5></li>
+      <li class="list-group-item clickable open-panel">
+        <div class="panel panel-primary">
+           <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-3">
+                <label for="exampleInputEmail1">Tipo</label><br>
+                <select class="form-control">
+                  <option>Descanso</option>
+                  <option selected="selected">Supersérie</option>
+                </select>
+              </div>
+              <div class="superserie_fields">
+                <div class="col-lg-6">
+                  <label for="exampleInputEmail1">Comentário</label><br>
+                  <form role="form">
+                      <input type="text" class="form-control" placeholder="Breve comentário">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item text-center">
+        <button class="btn btn-primary" id="addExercicio"><strong>Lista de Exercícios</strong></button>
+      </li>
+    </ul>
+  </div>
+</div>
+{{else}}
+Selecione ou crie um novo dia para edita-lo.
+{{/if}}
