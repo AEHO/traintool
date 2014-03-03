@@ -49,6 +49,11 @@ window.TrainTool = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
 
+/*
+ * Mixins to act in the application
+ */
+require('app/mixins/traintool');
+
 /* 
  * Model layer. 
 */

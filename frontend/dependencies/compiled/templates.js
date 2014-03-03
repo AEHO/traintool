@@ -223,3 +223,202 @@ function program5(depth0,data) {
   return buffer;
   
 });
+
+Ember.TEMPLATES["reusable/itemTab"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1;
+
+
+  data.buffer.push("<a href=\"#/trains/new\">");
+  stack1 = helpers._triageMustache.call(depth0, "content.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</a>");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["trains/day"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n        <li class=\"list-group-item clickable\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "edit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\n          <h4>");
+  stack1 = helpers._triageMustache.call(depth0, "displayedName", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" <small>");
+  stack1 = helpers._triageMustache.call(depth0, "reps", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</small></h4>\n          ");
+  stack1 = helpers.unless.call(depth0, "isEditing", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </li>\n        ");
+  stack1 = helpers['if'].call(depth0, "isEditing", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      ");
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n            <div class=\"row\">\n              <div class=\"col-lg-4\">\n                <p>");
+  stack1 = helpers._triageMustache.call(depth0, "execution", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n              </div>\n            </div>\n          ");
+  return buffer;
+  }
+
+function program4(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\n          <li class=\"list-group-item clickable open-panel\">\n            <div class=\"panel panel-primary\">\n               <div class=\"panel-body\">\n                <div class=\"row\">\n                  <div class=\"col-lg-3\">\n                    <label for=\"exampleInputEmail1\">Nome</label>\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("text"),
+    'placeholder': ("Nome do exercício"),
+    'value': ("name"),
+    'class': ("form-control")
+  },hashTypes:{'type': "STRING",'placeholder': "STRING",'value': "ID",'class': "STRING"},hashContexts:{'type': depth0,'placeholder': depth0,'value': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                  </div>\n                  <div class=\"col-lg-5\">\n                    <label for=\"exampleInputEmail1\">Exercução</label>\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("text"),
+    'placeholder': ("Intrução de execução"),
+    'value': ("execution"),
+    'class': ("form-control")
+  },hashTypes:{'type': "STRING",'placeholder': "STRING",'value': "ID",'class': "STRING"},hashContexts:{'type': depth0,'placeholder': depth0,'value': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n                  </div>\n                  <div class=\"col-lg-3\">\n                      <div class=\"form-group\">\n                        <div class=\"row\">\n                          <div class=\"col-lg-12 padding-bottom\">\n                            <label for=\"exampleInputEmail1\">Séries</label><br>\n                            <span class=\"label label-primary\">&object.series</span>\n                            <div class=\"btn-group\">\n                              <button type=\"button\" class=\"btn btn-default\">+ série</button>\n                              <button type=\"button\" class=\"btn btn-danger\">- série</button>\n                            </div>\n                          </div>\n                          <div class=\"col-lg-5\">\n                            <input type=\"integer\" class=\"form-control input-sm\" placeholder=\"Repetições\">\n                          </div>\n                        </div>\n                      </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </li>\n        ");
+  return buffer;
+  }
+
+  data.buffer.push("<div class=\"tab-content\">\n  <div class=\"tab-pane active\" id=\"dia_&dia.uid\">\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <div class=\"col-lg-3\">  \n            <label>Nome</label>\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("text"),
+    'placeholder': ("Nome do dia"),
+    'value': ("name"),
+    'class': ("form-control day_editable_fields")
+  },hashTypes:{'type': "STRING",'placeholder': "STRING",'value': "ID",'class': "STRING"},hashContexts:{'type': depth0,'placeholder': depth0,'value': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n          </div>\n          <div class=\"col-lg-5\">\n            <label>Comentário</label>\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
+    'value': ("comment"),
+    'placeholder': ("Comentário do dia"),
+    'class': ("form-control day_editable_fields")
+  },hashTypes:{'value': "ID",'placeholder': "STRING",'class': "STRING"},hashContexts:{'value': depth0,'placeholder': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
+  data.buffer.push("\n          </div>\n        </div>\n        <hr>\n        <button class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "createExercise", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><strong>Novo Exercício</strong></button>\n      </li>\n      ");
+  stack1 = helpers.each.call(depth0, "exercises", {hash:{
+    'itemController': ("ExercisesInTrain")
+  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      <!--\n      <li class=\"list-group-item clickable\"><h5>Descanço de &object.time segundos</h5></li>\n      <li class=\"list-group-item clickable open-panel\">\n        <div class=\"panel panel-primary\">\n           <div class=\"panel-body\">\n            <div class=\"row\">\n              <div class=\"col-lg-3\">\n                <label for=\"exampleInputEmail1\">Tipo</label><br>\n                <select class=\"form-control\">\n                  <option selected=\"selected\">Descanso</option>\n                  <option>Supersérie</option>\n                </select>\n              </div>\n              <div class=\"descanso_fields\">\n                <div class=\"col-lg-3\">\n                  <label for=\"exampleInputEmail1\">Descanso</label><br>\n                  <form role=\"form\">\n                    <div class=\"input-group\">\n                      <input type=\"text\" class=\"form-control\" placeholder=\"Descanso\" value=\"&object.time\">\n                      <span class=\"input-group-addon\">Segundos</span>\n                    </div>\n                  </form>\n                </div>\n                <div class=\"col-lg-6\">\n                  <label for=\"exampleInputEmail1\">Comentário</label><br>\n                  <form role=\"form\">\n                      <input type=\"text\" class=\"form-control\" placeholder=\"Breve comentário\">\n                  </form>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </li>\n    \n      <li class=\"list-group-item clickable\"><h5>Super Série</h5></li>\n      <li class=\"list-group-item clickable open-panel\">\n        <div class=\"panel panel-primary\">\n           <div class=\"panel-body\">\n            <div class=\"row\">\n              <div class=\"col-lg-3\">\n                <label for=\"exampleInputEmail1\">Tipo</label><br>\n                <select class=\"form-control\">\n                  <option>Descanso</option>\n                  <option selected=\"selected\">Supersérie</option>\n                </select>\n              </div>\n              <div class=\"superserie_fields\">\n                <div class=\"col-lg-6\">\n                  <label for=\"exampleInputEmail1\">Comentário</label><br>\n                  <form role=\"form\">\n                      <input type=\"text\" class=\"form-control\" placeholder=\"Breve comentário\">\n                  </form>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </li>\n      -->\n    </ul>\n  </div>\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["trains/new"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n            <li ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("selected:active")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\n              <a href=\"#/trains/new\">\n                <span ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "selectDay", "", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">\n                  ");
+  stack1 = helpers._triageMustache.call(depth0, "displayedName", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" \n                  ");
+  stack1 = helpers['if'].call(depth0, "withoutName", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n                </span>\n                ");
+  stack1 = helpers['if'].call(depth0, "deleteMode", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n              </a>\n            </li>\n          ");
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  
+  data.buffer.push("\n                    <i class=\"fa fa-exclamation-circle\"></i>\n                  ");
+  }
+
+function program4(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n                  <div>\n                    <button class=\"btn btn-danger\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "removeDay", "", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">\n                      <i class=\"fa fa-trash-o\"></i> Deletar\n                    </button>\n                    <button class=\"btn\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelDeleteMode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\n                      Cancelar\n                    </button>\n                  </div>\n                ");
+  return buffer;
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n                  <i class=\"fa fa-trash-o\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "enterDeleteMode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("></i>\n                ");
+  return buffer;
+  }
+
+function program8(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\n          ");
+  stack1 = helpers['if'].call(depth0, "selected", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        ");
+  return buffer;
+  }
+function program9(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n            ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "TrainTool.DayContentView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n          ");
+  return buffer;
+  }
+
+  data.buffer.push("<article>\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class='col-lg-12'>\n        <h2><small>Definição do treino</small> ");
+  stack1 = helpers._triageMustache.call(depth0, "displayedName", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h2>\n      </div>\n      <div class=\"col-lg-3\">\n        <label>Nome</label>\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("text"),
+    'value': ("name"),
+    'placeholder': ("Nome do Treino"),
+    'class': ("form-control")
+  },hashTypes:{'type': "STRING",'value': "ID",'placeholder': "STRING",'class': "STRING"},hashContexts:{'type': depth0,'value': depth0,'placeholder': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\n      </div>\n      <div class=\"col-lg-5\">\n        <label>Descrição</label>\n        ");
+  data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
+    'type': ("text"),
+    'value': ("description"),
+    'placeholder': ("Descrição do Treino"),
+    'class': ("form-control")
+  },hashTypes:{'type': "STRING",'value': "ID",'placeholder': "STRING",'class': "STRING"},hashContexts:{'type': depth0,'value': depth0,'placeholder': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
+  data.buffer.push("\n      </div>\n      <div class=\"col-lg-4 text-center\">\n      </div>\n      <div class=\"col-lg-12\" id=\"daysDiv\">\n        <h2>Dias de Treino</h2>\n        <ul class=\"nav nav-tabs\">\n          ");
+  stack1 = helpers.each.call(depth0, "days", {hash:{
+    'itemController': ("Day")
+  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n          <li><a ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "newDay", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" class=\"btn btn-primary\" id=\"new_day_btn\">Novo dia de treino</a></li>\n        </ul>\n        ");
+  stack1 = helpers.each.call(depth0, "days", {hash:{
+    'itemController': ("Day")
+  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      </div> <!-- col-lg-12 -->\n    </div><!-- row -->\n  </div>\n</article>");
+  return buffer;
+  
+});

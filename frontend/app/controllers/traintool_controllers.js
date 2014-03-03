@@ -42,3 +42,57 @@ TrainTool.ExerciseInListController = Ember.ObjectController.extend({
 });
 
 TrainTool.ExerciseController = Ember.ObjectController.extend({});
+
+TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
+  selectedDay : null,
+  actions : {
+    newDay : function(){
+      var day = this.store.createRecord('day');
+      this.get('days').pushObject(day);
+      this.send('selectDay', day);
+    },
+
+    selectDay : function(day){
+      this.get('days').forEach(function(day){
+        day.set('selected', false);
+      });
+
+      day.set('selected', true);
+      this.set('selectedDay', day);
+    },
+    removeDay : function(day){
+      if(this.get('selectedDay') === day){
+        this.set('selectedDay', null);
+      }
+      this.get('days').removeObject(day);
+      day.deleteRecord();
+    }
+  }
+});
+
+TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
+  deleteMode : false,
+  actions : {
+    enterDeleteMode : function(){
+      this.set('deleteMode', true);
+    },
+    cancelDeleteMode : function(){
+      this.set('deleteMode', false);
+    },
+    createExercise : function(){
+      var exercise = this.store.createRecord('exercise');
+      this.get('exercises').pushObject(exercise);
+      return false;
+    }
+  }
+});
+
+TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
+  isEditing : false,
+
+  actions : {
+    edit : function(){
+      this.toggleProperty('isEditing');
+    }
+  }
+});
