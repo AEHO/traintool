@@ -29,6 +29,6 @@ TrainTool.TrainsNewRoute = Ember.Route.extend({
     this.render('trains/new');
   },
   model: function(){
-    return this.store.createRecord('workout', {name:'teste'});
+    return this.store.createRecord('workout');
   }
 });

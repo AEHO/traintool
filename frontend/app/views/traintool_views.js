@@ -33,19 +33,19 @@ TrainTool.TabsView = Ember.CollectionView.extend({
 
 TrainTool.DayContentView = Ember.View.extend({
   templateName : 'trains/day',
-  didInsertElement : function(){
-    this.$().hide();
-    this.set('dayToShow', this.get('controller').get('selectedDay'));
-    this.$().fadeIn(100);
-    Ember.addObserver(this.get('controller'), 'selectedDay', this, this.updateContentAnimation);
+  delay: 200,
+  didInsertElement: function () {
+    var el = this.$();
+    el.hide()
+      .delay(this.delay)
+      .fadeIn(this.delay)
+    this._super();
   },
 
-  updateContentAnimation : function(){
-    Ember.run(this, function(){
-      this.$().fadeOut(100);
-      this.set('dayToShow', this.get('controller').get('selectedDay'));
-      this.$().fadeIn(100);
-    });
+  willDestroyElement: function() {
+    var clone = this.$().clone();
+    this.$().parent().append(clone);
+    clone.fadeOut(this.delay);
   }
 });
 
