@@ -101,7 +101,7 @@ class Day(EndpointsModel):
     """
 
     _message_fields_schema = ('id', 'name', 'description', 'proper_time',
-                              'workout_id',)
+                              'sequency', 'workout_id',)
 
     name = ndb.StringProperty(indexed=True)
     description = ndb.StringProperty(indexed=False)
@@ -109,7 +109,7 @@ class Day(EndpointsModel):
     sequency = ndb.IntegerProperty(indexed=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
-    workout = ndb.KeyProperty(kind='Workout')  # just used internaly
+    workout = ndb.KeyProperty(kind='Workout', indexed=True)  # just used internaly
 
     @EndpointsAliasProperty(repeated=True, property_type=Exercise.ProtoModel())
     def exercises(self):
