@@ -38,7 +38,7 @@ TrainTool.DayContentView = Ember.View.extend({
     var el = this.$();
     el.hide()
       .delay(this.delay)
-      .fadeIn(this.delay)
+      .fadeIn(this.delay);
     this._super();
   },
 

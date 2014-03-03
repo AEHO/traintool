@@ -66,6 +66,9 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
       }
       this.get('days').removeObject(day);
       day.deleteRecord();
+    },
+    saveWorkout : function(){
+      //console.log(this.get('model').save());
     }
   }
 });
@@ -80,7 +83,7 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
       this.set('deleteMode', false);
     },
     createExercise : function(){
-      var exercise = this.store.createRecord('exercise');
+      var exercise = this.store.createRecord('exercise', {reps : Ember.A()});
       this.get('exercises').pushObject(exercise);
       return false;
     }
@@ -89,10 +92,38 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
 
 TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   isEditing : false,
-
+  errorInReps : false,
   actions : {
     edit : function(){
       this.toggleProperty('isEditing');
+    },
+
+    newSerie : function(){
+      var repetitions = this.get('repetitions');
+      var regexNumber = /^\d+$/;
+      if(regexNumber.test(repetitions)){
+        var value = parseInt(repetitions);
+        var lastReps = this.get('reps').get('lastObject');
+        this.get('reps').pushObject(value);
+        if(lastReps){
+          var nextPredictedRep = 2 * value - lastReps;
+          this.set('repetitions', nextPredictedRep);
+        } else {
+          this.set('repetitions', '');
+        }
+        this.set('errorInReps', false);
+      }else{
+        this.set('errorInReps', true);
+      }
+    },
+    removeSerie : function(){
+      var reps = this.get('reps');
+      this.set('reps', reps.slice(0, reps.get('length')-1));
     }
-  }
+  },
+
+  displReps : function(){
+    return this.get('reps').join('x');
+  }.property('reps.@each')
+
 });
