@@ -155,6 +155,7 @@ class TestDay(IntegrationTestCase):
         response_ok = self.testapp.post_json(self.BASE_PATH + 'DayPost', {
             "name": "day_name",
             "description": "description",
+            "sequency": 1
         })
         self.assertEqual(response_ok.status_int, 200)
         self.assertTrue(response_ok.json['id'])
@@ -237,9 +238,6 @@ class TestWorkout(IntegrationTestCase):
         self.assertEqual(response_ok.status_int, 200)
         self.assertTrue(response_ok.json['id'])
         self.assertNotEqual(response_error.status_int, 200)
-
-    def test_workout_get(self):
-        pass
 
 
 if __name__ == '__main__':
