@@ -375,10 +375,16 @@ function program12(depth0,data) {
     'value': ("name"),
     'class': ("form-control day_editable_fields")
   },hashTypes:{'type': "STRING",'placeholder': "STRING",'value': "ID",'class': "STRING"},hashContexts:{'type': depth0,'placeholder': depth0,'value': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\n          </div>\n          <div class=\"col-lg-5\">\n            <label>Comentário</label>\n            ");
+  data.buffer.push("\n          </div>\n          <div class=\"col-lg-3\">\n            <label>Descrição</label>\n            ");
   data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
     'value': ("comment"),
-    'placeholder': ("Comentário do dia"),
+    'placeholder': ("Descrição geral sobre esse dia de treino."),
+    'class': ("form-control day_editable_fields")
+  },hashTypes:{'value': "ID",'placeholder': "STRING",'class': "STRING"},hashContexts:{'value': depth0,'placeholder': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
+  data.buffer.push("\n          </div>\n          <div class=\"col-lg-3\">\n            <label>Tempo apropiado</label>\n            ");
+  data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
+    'value': ("comment"),
+    'placeholder': ("Comentários sobre o dia, como dicas e relatos."),
     'class': ("form-control day_editable_fields")
   },hashTypes:{'value': "ID",'placeholder': "STRING",'class': "STRING"},hashContexts:{'value': depth0,'placeholder': depth0,'class': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
   data.buffer.push("\n          </div>\n        </div>\n        <hr>\n        <button class=\"btn btn-primary\" ");
@@ -447,19 +453,34 @@ function program6(depth0,data) {
 
 function program8(depth0,data) {
   
+  
+  data.buffer.push("\n          <h4>Crie novos dias de treino para montar sua ficha!</h4>\n        ");
+  }
+
+function program10(depth0,data) {
+  
   var buffer = '', stack1;
   data.buffer.push("\n          ");
-  stack1 = helpers['if'].call(depth0, "selected", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "selected", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n        ");
   return buffer;
   }
-function program9(depth0,data) {
+function program11(depth0,data) {
   
   var buffer = '';
   data.buffer.push("\n            ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "TrainTool.DayContentView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\n          ");
+  return buffer;
+  }
+
+function program13(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n          <button class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveWorkout", "", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">Salvar treino</button>\n        ");
   return buffer;
   }
 
@@ -488,13 +509,17 @@ function program9(depth0,data) {
   data.buffer.push("\n          <li><a ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "newDay", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(" class=\"btn btn-primary\" id=\"new_day_btn\">Novo dia de treino</a></li>\n        </ul>\n        ");
+  stack1 = helpers.unless.call(depth0, "days", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        ");
   stack1 = helpers.each.call(depth0, "days", {hash:{
     'itemController': ("Day")
-  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n        <button class=\"btn btn-primary\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveWorkout", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Salvar treino</button>\n      </div> <!-- col-lg-12 -->\n    </div><!-- row -->\n  </div>\n</article>");
+  data.buffer.push("\n        ");
+  stack1 = helpers['if'].call(depth0, "canBeSaved", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n      </div> <!-- col-lg-12 -->\n    </div><!-- row -->\n  </div>\n</article>");
   return buffer;
   
 });

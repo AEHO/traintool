@@ -43,12 +43,17 @@
           {{/each}}
           <li><a {{action "newDay"}} class="btn btn-primary" id="new_day_btn">Novo dia de treino</a></li>
         </ul>
+        {{#unless days}}
+          <h4>Crie novos dias de treino para montar sua ficha!</h4>
+        {{/unless}}
         {{#each days itemController="Day"}}
           {{#if selected}}
             {{view TrainTool.DayContentView}}
           {{/if}}
         {{/each}}
-        <button class="btn btn-primary" {{action "saveWorkout"}}>Salvar treino</button>
+        {{#if canBeSaved}}
+          <button class="btn btn-primary" {{action "saveWorkout" this}}>Salvar treino</button>
+        {{/if}}
       </div> <!-- col-lg-12 -->
     </div><!-- row -->
   </div>

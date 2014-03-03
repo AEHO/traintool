@@ -45,6 +45,7 @@ TrainTool.ExerciseController = Ember.ObjectController.extend({});
 
 TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   selectedDay : null,
+  canBeSaved : false,
   actions : {
     newDay : function(){
       var day = this.store.createRecord('day');
@@ -68,7 +69,29 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
       day.deleteRecord();
     },
     saveWorkout : function(){
-      //console.log(this.get('model').save());
+      var that = this;
+      var workour_attrs = this.get('model').toJSON();
+      var days_list = this.get('model').get('days');
+      var exercises_list;
+      var workout_copy = this.store.createRecord('workout', workour_attrs);
+      var day_copy;
+      var exercise_copy;
+      workout_copy.save().then(function(workout){
+        days_list.forEach(function(day){
+          exercises_list = day.get('exercises');
+          day_copy = that.store.createRecord('day', day.toJSON());
+          day_copy.set('workout_id', workout);
+          workout.get('days').pushObject(day_copy);
+          day_copy.save().then(function(saved_day){
+            exercises_list.forEach(function(exercise){
+              exercise_copy = that.store.createRecord('exercise', exercise.toJSON());
+              exercise_copy.set('day_id', saved_day);
+              saved_day.get('exercises').pushObject(exercise_copy);
+              exercise_copy.save();
+            });
+          });
+        });
+      });
     }
   }
 });
