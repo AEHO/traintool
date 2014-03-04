@@ -113,8 +113,8 @@ class Day(EndpointsModel):
     workout = ndb.KeyProperty(kind='Workout', indexed=True)
 
     def exercises_set(self, values):
-        self._exercises = [Exercise.FromMessage(exercise)
-                            for exercise in values ]
+        self._exercises = [Exercise.FromMessage(exercise) for
+                           exercise in values]
 
     @EndpointsAliasProperty(repeated=True, setter=exercises_set,
                             property_type=Exercise.ProtoModel())
@@ -151,7 +151,7 @@ class Workout(EndpointsModel):
     """Conjunction of days that forms a Workout."""
 
     _message_fields_schema = ('id', 'name', 'objective', 'description',
-                              'created', 'comment')
+                              'created', 'comment', 'days',)
 
     name = ndb.StringProperty(indexed=True)
     objective = ndb.StringProperty(indexed=True)
@@ -159,7 +159,11 @@ class Workout(EndpointsModel):
     created = ndb.DateTimeProperty(auto_now_add=True)
     comment = ndb.StringProperty(indexed=False)
 
-    @EndpointsAliasProperty(repeated=True, property_type=Day.ProtoModel())
+    def days_set(self, values):
+        self._days = [Day.FromMessage(day) for day in values]
+
+    @EndpointsAliasProperty(repeated=True, setter=days_set,
+                            property_type=Day.ProtoModel())
     def days(self):
         """List of days attached to the workout."""
         days_qry = Day.query(Day.workout == self.key).\

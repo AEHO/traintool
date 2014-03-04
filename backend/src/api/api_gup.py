@@ -144,4 +144,11 @@ class GupApi(remote.Service):
     def WorkoutPost(self, workout):
         """Creates a Workout in the Database."""
         workout.put()
+
+        days = getattr(workout, '_days', None)
+        if days:
+            key = workout.key
+            map((lambda x: setattr(x, 'workout', key)), days)
+            ndb.put_multi(days)
+
         return workout

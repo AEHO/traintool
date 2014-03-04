@@ -163,13 +163,13 @@ class TestDay(IntegrationTestCase):
         self.assertNotEqual(response_error.status_int, 200)
 
     def test_day_get(self):
-        response_post_ok = self.testapp.post_json(self.BASE_PATH + 'DayPost', {
+        response_post = self.testapp.post_json(self.BASE_PATH + 'DayPost', {
             "name": "name of the day"
         })
         response_get = self.testapp.post_json(self.BASE_PATH + 'DayGet', {
-            "id": response_post_ok.json['id']
+            "id": response_post.json['id']
         })
-        self.assertEqual(response_get.json['id'], response_post_ok.json['id'])
+        self.assertEqual(response_get.json['id'], response_post.json['id'])
 
     def test_day_exercises_get(self):
         response_post_day = self.testapp.post_json(
@@ -260,6 +260,54 @@ class TestWorkout(IntegrationTestCase):
         self.assertEqual(response_ok.status_int, 200)
         self.assertTrue(response_ok.json['id'])
         self.assertNotEqual(response_error.status_int, 200)
+
+    def test_workout_get(self):
+        response_post = self.testapp.post_json(self.BASE_PATH +
+                                             'WorkoutPost', {
+                                                 "name": "training"
+                                             })
+        response_get = self.testapp.post_json(self.BASE_PATH + 'WorkoutGet', {
+                                              'id': response_post.json['id']
+                                              })
+        self.assertEqual(response_get.json['id'], response_post.json['id'])
+
+
+    def test_workout_get_days(self):
+        response_workout = self.testapp.post_json(self.BASE_PATH +
+                                             'WorkoutPost', {
+                                                 "name": "training"
+                                             })
+
+        response_day = self.testapp.post_json(self.BASE_PATH + 'DayPost', {
+            "name": "day_name",
+            "description": "description",
+            "workout_id": response_workout.json['id']
+        })
+
+        response_get = self.testapp.post_json(self.BASE_PATH + 'WorkoutGet', {
+                                              "id": response_workout.json['id']
+                                              })
+
+        self.assertEqual(response_get.status_int, 200)
+        self.assertTrue('days' in response_get.json)
+
+    def test_workout_post_batch(self):
+        response = self.testapp.post_json(self.BASE_PATH + 'WorkoutPost', {
+                                          "name": "training",
+                                          "days": [
+                                            {"name": "day1"}
+                                          ]
+                                          })
+
+        self.assertTrue(response.status_int == 200 and 'id' in response.json)
+
+        response_get = self.testapp.post_json(self.BASE_PATH + 'WorkoutGet', {
+                                              "id": response.json['id']
+                                              })
+
+        self.assertEqual(response_get.json['id'], response.json['id'])
+        self.assertTrue('days' in response_get.json)
+
 
 
 if __name__ == '__main__':
