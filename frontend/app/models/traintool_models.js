@@ -24,8 +24,6 @@ TrainTool.Workout = DS.Model.extend({
 	comment:DS.attr('string'),
 	created:DS.attr('date'),
 	description:DS.attr('string'),
-	execution:DS.attr('string'),
 	objective:DS.attr('string'),
 	days:DS.hasMany('day'),
-
 });

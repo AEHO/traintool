@@ -45,7 +45,14 @@ TrainTool.ExerciseController = Ember.ObjectController.extend({});
 
 TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   selectedDay : null,
-  canBeSaved : false,
+
+  canBeSaved : function(){
+    var days = this.get('days');
+    var withoutName = this.get('withoutName');
+    var days_length = days.get('length');
+    return !withoutName && days_length > 0;
+  }.property('days.@each', 'name'),
+
   actions : {
     newDay : function(){
       var day = this.store.createRecord('day');
@@ -98,15 +105,31 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
 
 TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   deleteMode : false,
+
+  canBeSaved : function(){
+    var exercises = this.get('exercises');
+    var withoutName = this.get('withoutName');
+    var exercisesLength = exercises.get('length');
+    return !withoutName && exercisesLength > 0;
+  }.property('exercises.length', 'withoutName'),
+
+  exercisesQuantity : function(){
+    return this.get('exercises').get('length');
+  }.property('exercises.length'),
+
   actions : {
     enterDeleteMode : function(){
       this.set('deleteMode', true);
     },
+
     cancelDeleteMode : function(){
       this.set('deleteMode', false);
     },
+
     createExercise : function(){
-      var exercise = this.store.createRecord('exercise', {reps : Ember.A()});
+      var exercise = this.store.createRecord('exercise', {
+        reps : Ember.A()
+      });
       this.get('exercises').pushObject(exercise);
       return false;
     }
