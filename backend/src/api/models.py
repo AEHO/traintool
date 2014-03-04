@@ -101,7 +101,7 @@ class Day(EndpointsModel):
     """
 
     _message_fields_schema = ('id', 'name', 'description', 'proper_time',
-                              'sequency', 'workout_id',)
+                              'sequency', 'workout_id', 'exercises',)
 
     name = ndb.StringProperty(indexed=True)
     description = ndb.StringProperty(indexed=False)
@@ -109,17 +109,20 @@ class Day(EndpointsModel):
     sequency = ndb.IntegerProperty(indexed=True)
     created = ndb.DateTimeProperty(auto_now_add=True)
 
-    workout = ndb.KeyProperty(kind='Workout', indexed=True)  # just used internaly
+    # just used internaly
+    workout = ndb.KeyProperty(kind='Workout', indexed=True)
 
-    @EndpointsAliasProperty(repeated=True, property_type=Exercise.ProtoModel())
+    def exercises_set(self, values):
+        self._exercises = [Exercise.FromMessage(exercise)
+                            for exercise in values ]
+
+    @EndpointsAliasProperty(repeated=True, setter=exercises_set,
+                            property_type=Exercise.ProtoModel())
     def exercises(self):
         """Lists all the Exercises the day has."""
         exercises_qry = Exercise.query(Exercise.day == self.key).\
             order(Exercise.sequency)
         excs_keys = [excs.key for excs in exercises_qry]
-
-        print excs_keys
-
         return ndb.get_multi(excs_keys)
 
     def workout_set(self, value):

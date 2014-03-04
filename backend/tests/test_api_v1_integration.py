@@ -157,6 +157,7 @@ class TestDay(IntegrationTestCase):
             "description": "description",
             "sequency": 1
         })
+
         self.assertEqual(response_ok.status_int, 200)
         self.assertTrue(response_ok.json['id'])
         self.assertNotEqual(response_error.status_int, 200)
@@ -197,6 +198,27 @@ class TestDay(IntegrationTestCase):
             })
         self.assertTrue('exercises' in response_get.json)
         self.assertFalse('exercises' in response_get_false.json)
+
+    def test_day_batch_post(self):
+        response = self.testapp.post_json(self.BASE_PATH + 'DayPost', {
+                                            "name": "dayname",
+                                            "exercises": [
+                                                {
+                                                    "name": "ex1",
+                                                },
+                                                {
+                                                    "name": "ex2",
+                                                },
+                                            ]
+                                          })
+        self.assertEqual(response.status_int, 200)
+        self.assertTrue(response.json['id'])
+
+        response_get = self.testapp.post_json(self.BASE_PATH + 'DayGet', {
+                                                  "id": response.json['id']
+                                                  })
+        self.assertTrue('exercises' in response_get.json)
+        self.assertTrue(len(response_get.json['exercises']) == 2)
 
     def test_post_list(self):
         """Tests the POST of a list of days."""
