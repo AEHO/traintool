@@ -10,6 +10,6 @@ echo Activating virtualenv
 
 echo Running src tests
 
-nosetests $ROOTDIR/tests --verbose
+nosetests $ROOTDIR/tests -q
 
 deactivate

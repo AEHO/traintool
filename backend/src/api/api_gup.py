@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Methods ran by the API."""
 
 import endpoints
@@ -8,8 +9,8 @@ from protorpc import message_types
 from protorpc import remote
 from endpoints_proto_datastore import utils as epd_utils
 from api.models import Exercise, ExerciseCollection
-from api.models import Interval, DayCollection
-from api.models import Day
+from api.models import Interval
+from api.models import Day, DayCollection
 from api.models import Workout
 
 
@@ -77,6 +78,13 @@ class GupApi(remote.Service):
     def DayPost(self, day):
         """Creates a Day in the Database."""
         day.put()
+
+        exercises = getattr(day, '_exercises', None)
+        if exercises:
+            key = day.key
+            map((lambda x: setattr(x, 'day', key)), exercises)
+            ndb.put_multi(exercises)
+
         return day
 
     @DayCollection.method(path='days', http_method='POST',
@@ -137,4 +145,19 @@ class GupApi(remote.Service):
     def WorkoutPost(self, workout):
         """Creates a Workout in the Database."""
         workout.put()
+
+        days = getattr(workout, '_days', None)
+        if days:
+            key = workout.key
+            map((lambda x: setattr(x, 'workout', key)), days)
+
+            ndb.put_multi(days)
+
+            for day in days:
+                excs = getattr(day, '_exercises', None)
+                if excs:
+                    excs = [Exercise.FromMessage(ex) for ex in excs]
+                    map((lambda x: setattr(x, 'day', day.key)), excs)
+                    keys = ndb.put_multi(excs)
+
         return workout
