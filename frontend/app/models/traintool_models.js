@@ -7,8 +7,7 @@ TrainTool.Exercise = DS.Model.extend({
 	execution:DS.attr('string'),
 	name:DS.attr('string'),
 	reps:DS.attr('array'),
-	day_id: DS.belongsTo('day'),
-
+	day_id: DS.belongsTo('day')
 });
 
 TrainTool.Day = DS.Model.extend({
@@ -25,5 +24,5 @@ TrainTool.Workout = DS.Model.extend({
 	created:DS.attr('date'),
 	description:DS.attr('string'),
 	objective:DS.attr('string'),
-	days:DS.hasMany('day'),
+	days:DS.hasMany('day')
 });

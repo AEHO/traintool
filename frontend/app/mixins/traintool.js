@@ -7,5 +7,5 @@ TrainTool.NamesProperties = Ember.Mixin.create({
   withoutName : function(){
     var name = this.get('name');
     return name === undefined || name === '';
-  }.property('name'),
+  }.property('name')
 });

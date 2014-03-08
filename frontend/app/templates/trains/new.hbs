@@ -6,7 +6,7 @@
       </div>
       <div class="col-lg-2">
         <label>Nome</label>
-        {{input type="text" value=name placeholder="Nome do Treino" class="form-control"}}
+        {{input type="text" id="workout-name" value=name placeholder="Nome do Treino" class="form-control"}}
       </div>
       <div class="col-lg-2">
         <label>Objetivo</label>
@@ -26,10 +26,10 @@
         <h2>Dias de Treino</h2>
         <ul class="nav nav-tabs">
           {{#each days itemController="Day"}}
-            <li {{bind-attr class='selected:active'}}>
+            <li class='day-tab' {{bind-attr class='selected:active'}}>
               <a href="#/trains/new">
                 <span {{action "selectDay" this}}>
-                  {{displayedName}} 
+                  <span class="day-title">{{displayedName}}</span>
                   {{#if canBeSaved}}
                     <span class="badge">{{exercisesQuantity}}</span>
                   {{else}}
@@ -53,7 +53,7 @@
               </a>
             </li>
           {{/each}}
-          <li><a {{action "newDay"}} class="btn btn-primary" id="new_day_btn">Novo dia de treino</a></li>
+          <li><a {{action "createDay"}} class="btn btn-primary" id="create-day-btn">Novo dia de treino</a></li>
         </ul>
         {{#unless days}}
           <h4>Crie novos dias de treino para montar sua ficha!</h4>

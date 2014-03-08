@@ -54,7 +54,7 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
   }.property('days.@each', 'name'),
 
   actions : {
-    newDay : function(){
+    createDay : function(){
       var day = this.store.createRecord('day');
       this.get('days').pushObject(day);
       this.send('selectDay', day);
@@ -68,6 +68,7 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
       day.set('selected', true);
       this.set('selectedDay', day);
     },
+
     removeDay : function(day){
       if(this.get('selectedDay') === day){
         this.set('selectedDay', null);
@@ -75,6 +76,7 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
       this.get('days').removeObject(day);
       day.deleteRecord();
     },
+    
     saveWorkout : function(){
       var that = this;
       var workour_attrs = this.get('model').toJSON();
@@ -148,7 +150,7 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
       var repetitions = this.get('repetitions');
       var regexNumber = /^\d+$/;
       if(regexNumber.test(repetitions)){
-        var value = parseInt(repetitions);
+        var value = parseInt(repetitions, 10);
         var lastReps = this.get('reps').get('lastObject');
         this.get('reps').pushObject(value);
         if(lastReps){

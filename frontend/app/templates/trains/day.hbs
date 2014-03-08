@@ -5,23 +5,23 @@
         <div class="row">
           <div class="col-lg-3">  
             <label>Nome</label>
-            {{input type='text' placeholder="Nome do dia" value=name class="form-control day_editable_fields"}}
+            {{input type='text' placeholder="Nome do dia" value=name class="form-control day-name-input"}}
           </div>
           <div class="col-lg-3">
             <label>Descrição</label>
-            {{textarea value=comment placeholder="Descrição geral sobre esse dia de treino." class="form-control day_editable_fields"}}
+            {{textarea value=comment placeholder="Descrição geral sobre esse dia de treino." class="form-control"}}
           </div>
           <div class="col-lg-3">
             <label>Tempo apropiado</label>
-            {{textarea value=comment placeholder="Comentários sobre o dia, como dicas e relatos." class="form-control day_editable_fields"}}
+            {{textarea value=comment placeholder="Comentários sobre o dia, como dicas e relatos." class="form-control"}}
           </div>
         </div>
         <hr>
-        <button class="btn btn-primary" {{action "createExercise"}}><strong>Novo Exercício</strong></button>
+        <button class="btn btn-primary" id="create-exercise-btn" {{action "createExercise"}}><strong>Novo Exercício</strong></button>
       </li>
       {{#each exercises itemController="ExercisesInTrain"}}
-        <li class="list-group-item clickable" {{action "edit"}} {{bind-attr class="isEditing:active"}}>
-          <h4>{{displayedName}} 
+        <li class="list-group-item clickable exercise-group-item" {{action "edit"}} {{bind-attr class="isEditing:active"}}>
+          <h4><span class="exercise-title">{{displayedName}}</span>
             <small>{{displReps}}<br>
               {{#unless isEditing}}
                 {{#if comment}}
@@ -39,7 +39,7 @@
                 <div class="row">
                   <div class="col-lg-4">
                     <label>Nome</label>
-                    {{input type='text' placeholder="Nome do exercício" value=name class="form-control"}}
+                    {{input type='text' placeholder="Nome do exercício" value=name class="form-control exercise-name-input"}}
                   </div>
                   <div class="col-lg-4">
                     <label>Equipamento</label>
