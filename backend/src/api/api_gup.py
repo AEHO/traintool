@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Methods ran by the API."""
 
 import endpoints
@@ -149,6 +150,14 @@ class GupApi(remote.Service):
         if days:
             key = workout.key
             map((lambda x: setattr(x, 'workout', key)), days)
+
             ndb.put_multi(days)
+
+            for day in days:
+                excs = getattr(day, '_exercises', None)
+                if excs:
+                    excs = [Exercise.FromMessage(ex) for ex in excs]
+                    map((lambda x: setattr(x, 'day', day.key)), excs)
+                    keys = ndb.put_multi(excs)
 
         return workout

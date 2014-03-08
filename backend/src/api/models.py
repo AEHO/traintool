@@ -160,7 +160,13 @@ class Workout(EndpointsModel):
     comment = ndb.StringProperty(indexed=False)
 
     def days_set(self, values):
-        self._days = [Day.FromMessage(day) for day in values]
+        """Sets the list of days with or without exercises."""
+        self._days = []
+        for day_msg in values:
+            day = Day.FromMessage(day_msg)
+            if day_msg.exercises:
+                day._exercises = day_msg.exercises
+            self._days.append(day)
 
     @EndpointsAliasProperty(repeated=True, setter=days_set,
                             property_type=Day.ProtoModel())
