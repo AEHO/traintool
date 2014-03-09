@@ -55,9 +55,12 @@ bower install
 This will install the dependencies in the `bower.json` file
 and store them in `dependencies/bower_components/`.
 
-And the last dependencie is ruby, some download links and instructions
-in the [site of the language](https://www.ruby-lang.org/en/downloads/).
-Ruby is used in this project for [compass](http://compass-style.org/).
+You will need ruby too, some download links and instructions
+in the [official ruby download page](https://www.ruby-lang.org/en/downloads/),
+ruby is used in this project by compass, a stylesheets compiler.
+
+Our last dependencie is the [compass](http://compass-style.org/) itself, to install it
+just run `gem install compass`.
 
 Once all the development dependencies are installed you can start the
 development tasks with
