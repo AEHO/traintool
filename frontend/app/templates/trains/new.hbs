@@ -30,7 +30,7 @@
               <a href="#/trains/new">
                 <span {{action "selectDay" this}}>
                   <span class="day-title">{{displayedName}}</span>
-                  {{#if canBeSaved}}
+                  {{#if valid}}
                     <span class="badge">{{exercisesQuantity}}</span>
                   {{else}}
                     <span class="hint--top" data-hint="O dia está sem nome ou sem exercícios.">
