@@ -79,8 +79,8 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
       this.get('days').removeObject(day);
       day.deleteRecord();
     },
-    // Do a copy of all models neasted in the workout recursively and
-    // save the copied models.
+    // Do a copy of all models neasted in the workout and
+    // save those models and their relations. 
     saveWorkout : function(){
       var that = this;
       var workour_attrs = this.get('model').toJSON();

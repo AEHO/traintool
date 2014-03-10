@@ -1,4 +1,4 @@
-
+/*jshint camelcase: false */
 var workout, day, exercise, controller;
 var getRandomStr = function(){
   return Math.random().toString(36).substring(7);
@@ -10,32 +10,30 @@ var getRandomStr = function(){
 // (e.g. {selected : true, withoutName : false})
 var getDaysLength = function(filterBy){
   var length;
-  var key;
   Ember.run(function(){
-    days = controller.get('days');
-    for(key in filterBy){
+    var days = controller.get('days');
+    for(var key in filterBy){
       days = days.filterBy(key, filterBy[key]);
     }
     length = days.get('length');
   });
   return length;
-}
+};
 
 // get length of the exercises list in the actual controller
 // {object || undefined} filterBy - {property : desiredValue, ...}
 // (e.g. {selected : true, withoutName : false})
 var getExercisesLength = function(filterBy){
   var length;
-  var key;
   Ember.run(function(){
-    exercises = controller.get('exercises');
-    for(key in filterBy){
+    var exercises = controller.get('exercises');
+    for(var key in filterBy){
       exercises = exercises.filterBy(key, filterBy[key]);
     }
     length = exercises.get('length');
   });
   return length;
-}
+};
 
 TrainTool.setupForTesting();
 TrainTool.injectTestHelpers();
@@ -74,13 +72,13 @@ test("Test canBeSaved property of the workout", function() {
     workout.set('name', '');
     canBeSaved = controller.get('canBeSaved');
   });
-  equal(canBeSaved, false, 'When workout name is null and there is no days in it, it can not be saved.');
+  equal(canBeSaved, false, 'When workout name is null and there is no days in it, it can not be saved');
 
   Ember.run(function(){
     workout.set('name', 'Name set');
     canBeSaved = controller.get('canBeSaved');
   });
-  equal(canBeSaved, false, 'When workout have no days can not be saved.');
+  equal(canBeSaved, false, 'When workout have no days can not be saved');
 
   Ember.run(function(){
     workout.set('name', '');
@@ -88,13 +86,13 @@ test("Test canBeSaved property of the workout", function() {
     workout.get('days').pushObject(day);
     canBeSaved = controller.get('canBeSaved');
   });
-  equal(canBeSaved, false, 'When workout name is null it can not be saved.');
+  equal(canBeSaved, false, 'When workout name is null it can not be saved');
 
   Ember.run(function(){
     workout.set('name', 'Name set');
     canBeSaved = controller.get('canBeSaved');
   });
-  equal(canBeSaved, true, 'When workout have a day and it is named it can be saved.');
+  equal(canBeSaved, true, 'When workout have a day and it is named it can be saved');
 });
  
 test('Test createDay action', function(){
@@ -130,7 +128,7 @@ test('Test selectDay action and selected days\' property', function(){
       controller.send('createDay');
     }
   });
-  equal(getDaysLength(), 10, 'There is 10 days created.');
+  equal(getDaysLength(), 10, 'There is 10 days created');
   equal(getDaysLength({'selected' : true}), 1, 'Just the last created day is selected');
   Ember.run(function(){
     day = controller.get('days').objectAt(5);
@@ -157,11 +155,11 @@ module("Day controller test", {
 });
 
 test('Test createExercise action', function(){
-  equal(getExercisesLength(), 0, 'There is no exercises before add some.');
+  equal(getExercisesLength(), 0, 'There is no exercises before add some');
   Ember.run(function(){
     controller.send('createExercise');
   });
-  equal(getExercisesLength(), 1, 'There is one exercises after addition.');
+  equal(getExercisesLength(), 1, 'There is one exercises after addition');
 });
 
 test('Test removeExercise action', function(){
@@ -183,26 +181,26 @@ test('Test valid property', function(){
     day.set('name', '');
     valid = controller.get('valid');
   });
-  ok(!valid, 'When day name is null and there is no exercises in it, it can not be saved.');
+  ok(!valid, 'When day name is null and there is no exercises in it, it can not be saved');
 
   Ember.run(function(){
     day.set('name', 'Name set');
     valid = controller.get('valid');
   });
-  ok(!valid, 'When day have no exercises can not be saved.');
+  ok(!valid, 'When day have no exercises can not be saved');
 
   Ember.run(function(){
     day.set('name', '');
     controller.send('createExercise');
     valid = controller.get('valid');
   });
-  ok(!valid, 'When day name is null it can not be saved.');
+  ok(!valid, 'When day name is null it can not be saved');
 
   Ember.run(function(){
     day.set('name', 'Name set');
     valid = controller.get('valid');
   });
-  ok(valid, 'When day have a exercise and it is named it can be saved.');
+  ok(valid, 'When day have a exercise and it is named it can be saved');
 });
 
 test('Test exercisesQuantity property', function(){
@@ -218,7 +216,7 @@ test('Test exercisesQuantity property', function(){
   equal(exercisesQuantity, desiredExercisesQuantity, 'The exerciseQuantity is ok');
 });
 
-test
+
 module("Testing workout creation page.", {
   setup: function() {
     TrainTool.reset();
@@ -230,18 +228,18 @@ module("Testing workout creation page.", {
 
 test('Check HTML is returned', function() {
   visit('/trains/new').then(function(){
-    ok(find('*'), 'Found HTML.');
+    ok(find('*'), 'Found HTML');
   });
 });
 
 test('Check if the change of workout\'s name field make the right changes in the page.', function(){
   visit('/trains/new')
     .then(function(){
-      ok(find('h2:first:contains(\'Sem nome\')'), 'The default title when the workout is without name is ok.');
+      ok(find('h2:first:contains(\'Sem nome\')'), 'The default title when the workout is without name is ok');
     })
     .fillIn('#workout-name', 'Testing')
     .then(function(){
-      ok(find('h2:first:contains(\'Testing\')'), 'The name added was puted in the <workout></workout> title.');
+      ok(find('h2:first:contains(\'Testing\')'), 'The name added was puted in the <workout></workout> title');
     });
 });
 
@@ -249,16 +247,49 @@ test('Check the creation of a new day.', function(){
   visit('/trains/new')
     .click('#create-day-btn')
     .then(function(){
-      equal(find('.day-tab').length, 1, 'New day tab created.');
+      equal(find('.day-tab').length, 1, 'New day tab created');
     });
 });
 
 test('Check the creation of a new exercise.', function(){
   visit('/trains/new')
     .click('#create-day-btn')
-    .click('#create-exercise-btn')
+    .click('.create-exercise-btn:first')
     .then(function(){
-      equal(find('.exercise-group-item').length, 1, 'New exercise group-item created.');
+      equal(find('.exercise-group-item').length, 1, 'New exercise group-item created');
+    });
+});
+
+test('Check the remotion mode of a day.', function(){
+  visit('/trains/new')
+    .click('#create-day-btn')
+    .click('.remove-day:first')
+    .then(function(){
+      equal(find('.delete-day-confirmation').length, 1, 'Delete confirmation div ok');
+    })
+    .click('.cancel-day-deletion-btn')
+    .then(function(){
+      equal(find('.delete-day-confirmation').length, 0, 'Cancel deletion ok');
+    });
+});
+
+test('Check the remotion of a day.', function(){
+  visit('/trains/new')
+    .click('#create-day-btn')
+    .click('.remove-day:first')
+    .click('.remove-day-btn:first')
+    .then(function(){
+      equal(find('.day-tab').length, 0, 'Day remotion ok');
+    });
+});
+
+test('Check the remotion of a exercise.', function(){
+  visit('/trains/new')
+    .click('#create-day-btn')
+    .click('.create-exercise-btn:first')
+    .click('.remove-exercise:first')
+    .then(function(){
+      equal(find('.exercise-group-item').length, 0, 'Exercise remotion ok');
     });
 });
 
@@ -266,24 +297,24 @@ test('Check if the change of day\'s name field make the right changes in the pag
   visit('/trains/new')
     .click('#create-day-btn')
     .then(function(){
-      equal(find('.day-title:contains("Sem nome")').length, 1, 'The default title when the day is without name is ok.');
+      equal(find('.day-title:contains("Sem nome")').length, 1, 'The default title when the day is without name is ok');
     })
     .fillIn('.day-name-input', 'Testing day name')
     .then(function(){
-      equal(find('.day-title:contains(\'Testing day name\')').length, 1, 'The name added was puted in the day title.');
+      equal(find('.day-title:contains(\'Testing day name\')').length, 1, 'The name added was puted in the day title');
     });
 });
 
 test('Check if the change of exercise\'s name field make the right changes in the page.', function(){
   visit('/trains/new')
     .click('#create-day-btn')
-    .click('#create-exercise-btn')
+    .click('.create-exercise-btn:first')
     .click('.exercise-group-item:first')
     .then(function(){
-      equal(find('.exercise-title:contains("Sem nome")').length, 1, 'The default title when the exercise is without name is ok.');
+      equal(find('.exercise-title:contains("Sem nome")').length, 1, 'The default title when the exercise is without name is ok');
     })
     .fillIn('.exercise-name-input', 'Testing day name')
     .then(function(){
-      equal(find('.exercise-title:contains("Testing day name")').length, 1, 'The default title when the exercise is without name is ok.');
+      equal(find('.exercise-title:contains("Testing day name")').length, 1, 'The default title when the exercise is without name is ok');
     });
 });

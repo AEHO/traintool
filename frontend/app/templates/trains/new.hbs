@@ -39,16 +39,16 @@
                   {{/if}}
                 </span>
                 {{#if deleteMode}}
-                  <div>
-                    <button class="btn btn-danger" {{action "removeDay" this}}>
+                  <div class="delete-day-confirmation">
+                    <button class="btn btn-danger remove-day-btn" {{action "removeDay" this}}>
                       <i class="fa fa-trash-o"></i> Deletar
                     </button>
-                    <button class="btn" {{action "cancelDeleteMode"}}>
+                    <button class="btn cancel-day-deletion-btn" {{action "cancelDeleteMode"}}>
                       Cancelar
                     </button>
                   </div>
                 {{else}}
-                  <i class="fa fa-trash-o danger" {{action "enterDeleteMode"}}></i>
+                  <i class="fa fa-trash-o danger remove-icon remove-day" {{action "enterDeleteMode"}}></i>
                 {{/if}}
               </a>
             </li>
@@ -56,28 +56,36 @@
           <li><a {{action "createDay"}} class="btn btn-primary" id="create-day-btn">Novo dia de treino</a></li>
         </ul>
         {{#unless days}}
-          <h4>Crie novos dias de treino para montar sua ficha!</h4>
+          <div class="tab-content">
+            <div class="tab-pane active">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <h4>Crie novos dias de treino para montar sua ficha!</h4>
+                </li>
+              </ul>
+            </div>
+          </div>
         {{/unless}}
-        {{#each days itemController="Day"}}
-          {{#if selected}}
-            {{view TrainTool.DayContentView}}
-          {{/if}}
-        {{/each}}
+        <div>
+          {{#each days itemController="Day"}}
+            {{#if selected}}
+              {{view TrainTool.DayContentView}}
+            {{/if}}
+          {{/each}}
+        </div>
         {{#if canBeSaved}}
           <button class="btn btn-primary" {{action "saveWorkout" this}}>Salvar treino</button>
         {{else}}
           <div class="row">
-            <div class="col-lg-2">
-              <button class="btn btn-primary" disabled="disabled">Salvar treino</button>
-            </div>
-            <div class="col-lg-8">
-              Para salvar:
-              <ul>
-                <li>O treino deve ter no mínimo um dia de treino</li>
-                <li>Cada dia de treino deve ter no mínimo um exercício</li> 
-                <li>Treinos, dias e exercícios devem ser nomeados</li>
-              </ul>
-            </div>
+            {{#if withoutName}}
+              <div class="col-lg-2 hint--right" data-hint="Nomeie o treino para salvar.">
+                <button class="btn btn-primary" disabled="disabled">Salvar treino</button>
+              </div>
+            {{else}}
+              <div class="col-lg-2 hint--right" data-hint="Adicione dias de treino para salvar.">
+                <button class="btn btn-primary" disabled="disabled">Salvar treino</button>
+              </div>
+            {{/if}}
           </div>
         {{/if}}
       </div> <!-- col-lg-12 -->
