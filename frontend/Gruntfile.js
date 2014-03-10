@@ -62,7 +62,7 @@ module.exports = function(grunt) {
       Changes in dependencies/ember.js or application javascript
       will trigger the neuter task.
 
-      Changes to any templates will trigger the ember_templates
+      Changes to any templates will trigger the emberTemplates
       task (which writes a new compiled file into dependencies/)
       and then neuter all the files again.
     */
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
       },
       handlebars_templates: {
         files: ['app/**/*.hbs'],
-        tasks: ['ember_templates', 'neuter']
+        tasks: ['emberTemplates', 'neuter']
       },
       compass_stylesheets:{
         files: ['dependencies/assets/sass/*.scss'],
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
       The compiled result will be stored in
       Ember.TEMPLATES keyed on their file path (with the 'app/templates' stripped)
     */
-    ember_templates: {
+    emberTemplates: {
       options: {
         templateName: function(sourceFile) {
           return sourceFile.replace(/app\/templates\//, '');
@@ -171,11 +171,11 @@ module.exports = function(grunt) {
       - build an html file with a script tag for each test file
       - headlessy load this page and print the test runner results
   */
-  grunt.registerTask('test', ['compass', 'ember_templates', 'neuter', 'copy', 'jshint', 'build_test_runner_file', 'qunit']);
+  grunt.registerTask('test', ['compass', 'emberTemplates', 'neuter', 'copy', 'jshint', 'build_test_runner_file', 'qunit']);
 
   /*
     Default task. Compiles templates, neuters application code, and begins
     watching for changes.
   */
-  grunt.registerTask('default', ['compass', 'ember_templates', 'neuter', 'copy', 'watch']);
+  grunt.registerTask('default', ['compass', 'emberTemplates', 'neuter', 'copy', 'watch']);
 };

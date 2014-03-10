@@ -11,20 +11,18 @@ TrainTool.Exercise = DS.Model.extend({
 });
 
 TrainTool.Day = DS.Model.extend({
-	comment:DS.attr('string'),
 	created:DS.attr('date'),
 	description:DS.attr('string'),
-	execution:DS.attr('string'),
-	objective:DS.attr('string'),
 	workout_id: DS.belongsTo('workout'),
-	exercises: DS.hasMany('exercise')
+	exercises: DS.hasMany('exercise'),
+  proper_time : DS.attr('number')
 });
 
 TrainTool.Workout = DS.Model.extend({
+  name:DS.attr('string'),
 	comment:DS.attr('string'),
 	created:DS.attr('date'),
 	description:DS.attr('string'),
-	execution:DS.attr('string'),
 	objective:DS.attr('string'),
 	days:DS.hasMany('day')
 });
