@@ -45,9 +45,14 @@ require('dependencies/compiled/templates');
   should manage for you.
 */
 window.TrainTool = Ember.Application.create({
-  rootElement: window.TESTING ? '#qunit-fixture':'#traintoolapp',
+  rootElement: window.TESTING ? '#ember-testing':'#traintoolapp',
   LOG_TRANSITIONS: true
 });
+
+/*
+ * Mixins to act in the application
+ */
+require('app/mixins/traintool');
 
 /* 
  * Model layer. 
