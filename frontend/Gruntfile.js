@@ -68,16 +68,25 @@ module.exports = function(grunt) {
     */
     watch: {
       application_code: {
-        files: ['dependencies/ember.js', 'app/**/*.js'],
-        tasks: ['neuter']
+        files: ['dependencies/ember.js', 'app/**/*.js', 'app/dependencies/bower_components/**/*.js', 'test/**/*.js'],
+        tasks: ['neuter'],
+        options: {
+          livereload: true
+        }
       },
       handlebars_templates: {
         files: ['app/**/*.hbs'],
-        tasks: ['emberTemplates', 'neuter']
+        tasks: ['emberTemplates', 'neuter'],
+        options: {
+          livereload: true
+        }
       },
       compass_stylesheets:{
         files: ['dependencies/assets/sass/*.scss'],
-        task: ['compass']
+        task: ['compass'],
+        options: {
+          livereload: true
+        }
       }
     },
 
