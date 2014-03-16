@@ -78,22 +78,25 @@ module.exports = function(grunt) {
       application_code: {
         files: ['dependencies/ember.js', 'app/**/*.js', 'app/dependencies/bower_components/**/*.js', 'test/**/*.js'],
         tasks: ['neuter'],
-        options: {
-          livereload: true
+        options:{
+          livereload:true
         }
       },
       handlebars_templates: {
         files: ['app/**/*.hbs'],
         tasks: ['emberTemplates', 'neuter'],
-        options: {
-          livereload: true
+        options:{
+          livereload:true
         }
       },
-      compass_stylesheets:{
+      sass: {
         files: ['dependencies/assets/sass/*.scss'],
-        task: ['compass'],
-        options: {
-          livereload: true
+        tasks: ['compass']
+      },
+      css: {
+        files:['build/assets/css/*.css'],
+        options:{
+          livereload:true
         }
       }
     },
@@ -188,11 +191,11 @@ module.exports = function(grunt) {
       - build an html file with a script tag for each test file
       - headlessy load this page and print the test runner results
   */
-  grunt.registerTask('test', ['compass', 'emberTemplates', 'neuter', 'copy', 'jshint', 'build_test_runner_file', 'qunit']);
+  grunt.registerTask('test', ['emberTemplates', 'neuter', 'copy', 'jshint', 'compass', 'build_test_runner_file', 'qunit']);
 
   /*
     Default task. Compiles templates, neuters application code, and begins
     watching for changes.
   */
-  grunt.registerTask('default', ['compass', 'emberTemplates', 'neuter', 'copy', 'watch']);
+  grunt.registerTask('default', ['emberTemplates', 'neuter', 'copy', 'compass', 'watch']);
 };

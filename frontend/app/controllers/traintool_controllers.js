@@ -183,5 +183,5 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
 
 });
 
-TrainTool.TrainsTrainController = Ember.ObjectController.extend({
+TrainTool.TrainsTrainController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
 });
