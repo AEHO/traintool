@@ -1,0 +1,1 @@
+require('app/misc/inflector_rules')

@@ -27,10 +27,18 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          {expand:true,
-          flatten: true,
-          src: ['dependencies/bower_components/handlebars/handlebars.runtime.min.js'],
-          dest:'build/assets/js/'}
+          {
+            expand:true,
+            flatten: true,
+            src: ['dependencies/bower_components/handlebars/handlebars.runtime.min.js'],
+            dest:'build/assets/js/'
+          },
+          {
+            expand:true,
+            flatten: true,
+            src: ['dependencies/bower_components/sinonjs/sinon.js'],
+            dest:'test/support/'
+          },
         ]
       }
     },

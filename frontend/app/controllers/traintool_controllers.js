@@ -45,15 +45,17 @@ TrainTool.ExerciseController = Ember.ObjectController.extend({});
 
 TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   selectedDay : null,
+  saving: false,
+
   // Define if the workout can be saved,
   // to be true the workout must be named and have
   // at least one day in it.
-  canBeSaved : function(){
+  saveLocked : function(){
     var days = this.get('days');
     var withoutName = this.get('withoutName');
     var days_length = days.get('length');
-    return !withoutName && days_length > 0;
-  }.property('days.@each', 'name'),
+    return withoutName || !(days_length > 0) || this.get('saving');
+  }.property('days.@each', 'name', 'saving'),
 
   actions : {
     createDay : function(){
@@ -86,31 +88,13 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
         day.deleteRecord();
       });
     },
-    // Do a copy of all models neasted in the workout and
-    // save those models and their relations. 
+    // Save those models and their childs models.
     saveWorkout : function(){
       var that = this;
-      var workour_attrs = this.get('model').toJSON();
-      var days_list = this.get('model').get('days');
-      var exercises_list;
-      var workout_copy = this.store.createRecord('workout', workour_attrs);
-      var day_copy;
-      var exercise_copy;
-      workout_copy.save().then(function(workout){
-        days_list.forEach(function(day){
-          exercises_list = day.get('exercises');
-          day_copy = that.store.createRecord('day', day.toJSON());
-          day_copy.set('workout_id', workout);
-          workout.get('days').pushObject(day_copy);
-          day_copy.save().then(function(saved_day){
-            exercises_list.forEach(function(exercise){
-              exercise_copy = that.store.createRecord('exercise', exercise.toJSON());
-              exercise_copy.set('day_id', saved_day);
-              saved_day.get('exercises').pushObject(exercise_copy);
-              exercise_copy.save();
-            });
-          });
-        });
+      this.set('saving', true);
+      var workout = this.get('model');
+      workout.saveModelAndChilds().then(function(){
+        that.set('saving', false);
       });
     }
   }
@@ -127,13 +111,9 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
 
   // Set initialy and update exercisesQuantity when exercises.lenth
   // changes.
-  exercisesQuantityUpdater : function(){
-    var that = this;
-    this.get('exercises').then(function(exercises){
-      that.set('exercisesQuantity', exercises.get('length'));
-      console.log(that.get('exercisesQuantity'));
-    });
-  }.observes('exercises.length'),
+  exercisesQuantity : function(){
+    return this.get('exercises.length');
+  }.property('exercises.length'),
 
   actions : {
     enterDeleteMode : function(){
@@ -190,6 +170,7 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
         this.set('errorInReps', true);
       }
     },
+
     removeSerie : function(){
       var reps = this.get('reps');
       this.set('reps', reps.slice(0, reps.get('length')-1));
@@ -203,6 +184,4 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
 });
 
 TrainTool.TrainsTrainController = Ember.ObjectController.extend({
-  days_string: function(){
-  }.property('days')
 });

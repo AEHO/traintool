@@ -8,12 +8,12 @@
             {{input type='text' placeholder="Nome do dia" value=name class="form-control day-name-input"}}
           </div>
           <div class="col-lg-3">
-            <label>Descrição</label>
-            {{textarea value=comment placeholder="Descrição geral sobre esse dia de treino." class="form-control"}}
+            <label>Tempo apropiado</label>
+            {{input value=proper_time placeholder="Tempo apropriado de treino em minutos." class="form-control"}}
           </div>
           <div class="col-lg-3">
-            <label>Tempo apropiado</label>
-            {{textarea value=comment placeholder="Comentários sobre o dia, como dicas e relatos." class="form-control"}}
+            <label>Descrição</label>
+            {{textarea value=description placeholder="Descrição geral sobre esse dia de treino." class="form-control"}}
           </div>
         </div>
         <hr>
@@ -37,22 +37,24 @@
             <div class="panel panel-primary">
                <div class="panel-body">
                 <div class="row">
-                  <div class="col-lg-4">
-                    <label>Nome</label>
-                    {{input type='text' placeholder="Nome do exercício" value=name class="form-control exercise-name-input"}}
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Equipamento</label>
-                    {{input type='text' placeholder="Equipamento utilizado" value=equipament class="form-control"}}
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Comentário</label>
-                    {{textarea placeholder="Comentário sobre o exercício" value=comment class="form-control"}}
-                  </div>
-                  <div class="col-lg-4">
-                    <label>Execução</label>
-                    {{textarea placeholder="Intrução de execução" value=execution class="form-control"}}
-                  </div>
+                  <form>
+                    <div class="col-lg-4">
+                      <label>Nome</label>
+                      {{input type='text' placeholder="Nome do exercício" value=name class="form-control exercise-name-input"}}
+                    </div>
+                    <div class="col-lg-4">
+                      <label>Equipamento</label>
+                      {{input type='text' placeholder="Equipamento utilizado" value=equipament class="form-control"}}
+                    </div>
+                    <div class="col-lg-4">
+                      <label>Comentário</label>
+                      {{textarea placeholder="Comentário sobre o exercício" value=comment class="form-control"}}
+                    </div>
+                    <div class="col-lg-4">
+                      <label>Execução</label>
+                      {{textarea placeholder="Intrução de execução" value=execution class="form-control"}}
+                    </div>
+                  </form>
                   <div class="col-lg-4">
                       <label>Séries</label>
                       <div class="form-group">

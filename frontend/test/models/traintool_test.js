@@ -1,5 +1,7 @@
 /*jshint camelcase: false */
-var workout, day, exercise, controller;
+var workout, day, exercise;
+var controller;
+var server;
 
 // Return the length of an array property in a model, if filterBy parameter is
 // given the array is filtered using the values provided
@@ -52,33 +54,33 @@ test("Test displayedName property", function() {
   equal(controller.get('displayedName'), 'Testing', 'When name is defined displayedName is the name itself');
 });
 
-test("Test canBeSaved property of the workout", function() {
-  var canBeSaved;
+test("Test saveLocked property of the workout", function() {
+  var saveLocked;
   Ember.run(function(){
     workout.set('name', '');
-    canBeSaved = controller.get('canBeSaved');
+    saveLocked = controller.get('saveLocked');
   });
-  equal(canBeSaved, false, 'When workout name is null and there is no days in it, it can not be saved');
+  equal(saveLocked, true, 'When workout name is null and there is no days in it, it can not be saved');
 
   Ember.run(function(){
     workout.set('name', 'Name set');
-    canBeSaved = controller.get('canBeSaved');
+    saveLocked = controller.get('saveLocked');
   });
-  equal(canBeSaved, false, 'When workout have no days can not be saved');
+  equal(saveLocked, true, 'When workout have no days can not be saved');
 
   Ember.run(function(){
     workout.set('name', '');
     day = controller.get('store').createRecord('day');
     workout.get('days').pushObject(day);
-    canBeSaved = controller.get('canBeSaved');
+    saveLocked = controller.get('saveLocked');
   });
-  equal(canBeSaved, false, 'When workout name is null it can not be saved');
+  equal(saveLocked, true, 'When workout name is null it can not be saved');
 
   Ember.run(function(){
     workout.set('name', 'Name set');
-    canBeSaved = controller.get('canBeSaved');
+    saveLocked = controller.get('saveLocked');
   });
-  equal(canBeSaved, true, 'When workout have a day and it is named it can be saved');
+  equal(saveLocked, false, 'When workout have a day and it is named it can be saved');
 });
  
 test('Test createDay action', function(){
@@ -94,7 +96,7 @@ test('Test removeDay action', function(){
   Ember.run(function(){
     controller.send('createDay');
     controller.get('days').then(function(days){
-      day = days.objectAt(0)
+      day = days.objectAt(0);
     });
   });
   equal(getFilteredArrayLengthInController('days', controller), 1, 'There is one day created');
@@ -142,7 +144,6 @@ module("Day controller test", {
 });
 
 test('Test createExercise action', function(){
-  equal(true, true, 'all ok')
   equal(getFilteredArrayLengthInController('exercises', controller), 0, 'There is no exercises before add some');
   Ember.run(function(){
     controller.send('createExercise');
@@ -204,6 +205,7 @@ test('Test exercisesQuantity property', function(){
   equal(controller.get('exercisesQuantity'), desiredExercisesQuantity, 'The exerciseQuantity is ok');
 });
 
+// Integration tests
 
 module("Testing workout creation page.", {
   setup: function() {
@@ -304,5 +306,37 @@ test('Check if the change of exercise\'s name field make the right changes in th
     .fillIn('.exercise-name-input', 'Testing day name')
     .then(function(){
       equal(find('.exercise-title:contains("Testing day name")').length, 1, 'The default title when the exercise is without name is ok');
+    });
+});
+
+
+// Integration with the server tests
+
+module("Sever integration tests", {
+  setup: function() {
+    TrainTool.reset();
+    server = sinon.fakeServer.create();
+  },
+
+  teardown: function() {
+    server.restore();
+  }
+});
+
+test('Test mock server', function(){
+  var fakeData = {name:'Testing', id:123123};
+  var jsonHeaders = {"Content-Type": "application/json"};
+  var dataStringified = JSON.stringify(fakeData)
+  visit('/trains/new')
+    .fillIn('#workout-name', 'Testing')
+    .click('#create-day-btn')
+    .fillIn('.day-name-input', 'Testing day name')
+    .click('.create-exercise-btn:first')
+    .then(function(){
+      click('#save_workout');
+      for(var i = 0; i < server.requests.length; i++){
+        server.requests[i].respond(200, jsonHeaders, dataStringified);
+      }
+      equal(server.requests.length, 3, '3 request were made.');
     });
 });

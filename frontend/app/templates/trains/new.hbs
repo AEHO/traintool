@@ -67,26 +67,30 @@
           </div>
         {{/unless}}
         <div>
-          {{#each days itemController="Day"}}
+          {{#each day in days itemController="Day"}}
             {{#if selected}}
-              {{view TrainTool.DayContentView}}
+              {{view TrainTool.DayContentView valueBinding='day'}}
             {{/if}}
           {{/each}}
         </div>
-        {{#if canBeSaved}}
-          <button class="btn btn-primary" {{action "saveWorkout" this}}>Salvar treino</button>
-        {{else}}
-          <div class="row">
+        {{#if saveLocked}}
+           <div class="row">
             {{#if withoutName}}
               <div class="col-lg-2 hint--right" data-hint="Nomeie o treino para salvar.">
                 <button class="btn btn-primary" disabled="disabled">Salvar treino</button>
               </div>
             {{else}}
-              <div class="col-lg-2 hint--right" data-hint="Adicione dias de treino para salvar.">
-                <button class="btn btn-primary" disabled="disabled">Salvar treino</button>
-              </div>
+              {{#if saving}}
+                
+              {{else}}
+                <div class="col-lg-2 hint--right" data-hint="Adicione dias de treino para salvar.">
+                  <button class="btn btn-primary" disabled="disabled">Salvar treino</button>
+                </div>
+              {{/if}}
             {{/if}}
           </div>
+        {{else}}
+          <button class="btn btn-primary" {{action "saveWorkout" this}} id="save_workout">Salvar treino</button>
         {{/if}}
       </div> <!-- col-lg-12 -->
     </div><!-- row -->
