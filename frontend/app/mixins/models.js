@@ -1,5 +1,6 @@
 /*jslint es5: true */
 /*global console */
+
 TrainTool.CopyAndSave = Ember.Mixin.create({
   // Return a sequence of promises to call saveModelAndChilds
   // for all childrens of this model.
@@ -41,12 +42,13 @@ TrainTool.CopyAndSave = Ember.Mixin.create({
       var modelTypeKey = parentModel.get('constructor.typeKey');
       thisCopy.set(modelTypeKey + "_id", parentModel);
     }
-
     // Save the copy of this model and add a sequence of promises to save the
     // children models when the save promise is resolved
     return thisCopy.save().catch(function(err){
       console.log('Error during the save of ' + thisTypeKey + ' with id '+ thisCopy.id + "\n" + err);
-    }).then(that.childrensSequenceSavePromises);
+    }).then(function(copy){
+      return that.childrensSequenceSavePromises(copy);
+    });
     
   },
 });
