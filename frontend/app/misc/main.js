@@ -1,1 +1,1 @@
-require('app/misc/inflector_rules')
+require('app/misc/inflector_rules');

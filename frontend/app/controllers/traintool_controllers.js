@@ -54,7 +54,7 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
     var days = this.get('days');
     var withoutName = this.get('withoutName');
     var days_length = days.get('length');
-    return withoutName || !(days_length > 0) || this.get('saving');
+    return withoutName || days_length === 0 || this.get('saving');
   }.property('days.@each', 'name', 'saving'),
 
   actions : {

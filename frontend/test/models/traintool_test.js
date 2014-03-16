@@ -312,31 +312,31 @@ test('Check if the change of exercise\'s name field make the right changes in th
 
 // Integration with the server tests
 
-module("Sever integration tests", {
-  setup: function() {
-    TrainTool.reset();
-    server = sinon.fakeServer.create();
-  },
+// module("Sever integration tests", {
+//   setup: function() {
+//     TrainTool.reset();
+//     server = sinon.fakeServer.create();
+//   },
 
-  teardown: function() {
-    server.restore();
-  }
-});
+//   teardown: function() {
+//     server.restore();
+//   }
+// });
 
-test('Test mock server', function(){
-  var fakeData = {name:'Testing', id:123123};
-  var jsonHeaders = {"Content-Type": "application/json"};
-  var dataStringified = JSON.stringify(fakeData)
-  visit('/trains/new')
-    .fillIn('#workout-name', 'Testing')
-    .click('#create-day-btn')
-    .fillIn('.day-name-input', 'Testing day name')
-    .click('.create-exercise-btn:first')
-    .then(function(){
-      click('#save_workout');
-      for(var i = 0; i < server.requests.length; i++){
-        server.requests[i].respond(200, jsonHeaders, dataStringified);
-      }
-      equal(server.requests.length, 3, '3 request were made.');
-    });
-});
+// test('Test mock server', function(){
+//   var fakeData = {name:'Testing', id:123123};
+//   var jsonHeaders = {"Content-Type": "application/json"};
+//   var dataStringified = JSON.stringify(fakeData)
+//   visit('/trains/new')
+//     .fillIn('#workout-name', 'Testing')
+//     .click('#create-day-btn')
+//     .fillIn('.day-name-input', 'Testing day name')
+//     .click('.create-exercise-btn:first')
+//     .then(function(){
+//       click('#save_workout');
+//       for(var i = 0; i < server.requests.length; i++){
+//         server.requests[i].respond(200, jsonHeaders, dataStringified);
+//       }
+//       equal(server.requests.length, 3, '3 request were made.');
+//     });
+// });

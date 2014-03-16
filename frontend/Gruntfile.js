@@ -38,7 +38,7 @@ module.exports = function(grunt) {
             flatten: true,
             src: ['dependencies/bower_components/sinonjs/sinon.js'],
             dest:'test/support/'
-          },
+          }
         ]
       }
     },
