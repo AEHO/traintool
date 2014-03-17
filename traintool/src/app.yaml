@@ -13,9 +13,10 @@ handlers:
 # for serving the entire static/assets directory rooting the assets
 # directory.
 
--   url: /.*
-    static_dir: frontend/build/assets
+-   url: /assets/.*
+    static_dir: frontend/build/assets/js
     secure: always
+
 
 # for associating specific url patterns with paths to static files
 # uploaded
