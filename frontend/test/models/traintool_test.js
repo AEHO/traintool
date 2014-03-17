@@ -1,36 +1,24 @@
 /*jshint camelcase: false */
-var workout, day, exercise, controller;
-var getRandomStr = function(){
-  return Math.random().toString(36).substring(7);
-};
+var workout, day, exercise;
+var controller;
+var server;
 
-
-// get length of the days list in the actual controller
-// {object || undefined} filterBy - {property : desiredValue, ...}
-// (e.g. {selected : true, withoutName : false})
-var getDaysLength = function(filterBy){
+// Return the length of an array property in a model, if filterBy parameter is
+// given the array is filtered using the values provided
+// @param {propertyName} the array property name.
+// @param {controller} the controller that the property is in.
+// @param {filterBy} a object with the keys as the parameters to be filtered
+// and value as the desired value for that property
+var getFilteredArrayLengthInController = function(propertyName, controller, filterBy){
   var length;
   Ember.run(function(){
-    var days = controller.get('days');
-    for(var key in filterBy){
-      days = days.filterBy(key, filterBy[key]);
-    }
-    length = days.get('length');
-  });
-  return length;
-};
+    var list = controller.get(propertyName);
 
-// get length of the exercises list in the actual controller
-// {object || undefined} filterBy - {property : desiredValue, ...}
-// (e.g. {selected : true, withoutName : false})
-var getExercisesLength = function(filterBy){
-  var length;
-  Ember.run(function(){
-    var exercises = controller.get('exercises');
     for(var key in filterBy){
-      exercises = exercises.filterBy(key, filterBy[key]);
+      list = list.filterBy(key, filterBy[key]);
     }
-    length = exercises.get('length');
+
+    length = list.get('length');
   });
   return length;
 };
@@ -66,57 +54,58 @@ test("Test displayedName property", function() {
   equal(controller.get('displayedName'), 'Testing', 'When name is defined displayedName is the name itself');
 });
 
-test("Test canBeSaved property of the workout", function() {
-  var canBeSaved;
+test("Test saveLocked property of the workout", function() {
+  var saveLocked;
   Ember.run(function(){
     workout.set('name', '');
-    canBeSaved = controller.get('canBeSaved');
+    saveLocked = controller.get('saveLocked');
   });
-  equal(canBeSaved, false, 'When workout name is null and there is no days in it, it can not be saved');
+  equal(saveLocked, true, 'When workout name is null and there is no days in it, it can not be saved');
 
   Ember.run(function(){
     workout.set('name', 'Name set');
-    canBeSaved = controller.get('canBeSaved');
+    saveLocked = controller.get('saveLocked');
   });
-  equal(canBeSaved, false, 'When workout have no days can not be saved');
+  equal(saveLocked, true, 'When workout have no days can not be saved');
 
   Ember.run(function(){
     workout.set('name', '');
     day = controller.get('store').createRecord('day');
     workout.get('days').pushObject(day);
-    canBeSaved = controller.get('canBeSaved');
+    saveLocked = controller.get('saveLocked');
   });
-  equal(canBeSaved, false, 'When workout name is null it can not be saved');
+  equal(saveLocked, true, 'When workout name is null it can not be saved');
 
   Ember.run(function(){
     workout.set('name', 'Name set');
-    canBeSaved = controller.get('canBeSaved');
+    saveLocked = controller.get('saveLocked');
   });
-  equal(canBeSaved, true, 'When workout have a day and it is named it can be saved');
+  equal(saveLocked, false, 'When workout have a day and it is named it can be saved');
 });
  
 test('Test createDay action', function(){
-  equal(getDaysLength(), 0, 'There is no days created yet');
+  equal(getFilteredArrayLengthInController('days', controller), 0, 'There is no days created yet');
   Ember.run(function(){
     controller.send('createDay');
-    day = controller.get('days').objectAt(0);
   });
-  equal(getDaysLength(), 1, 'There is one day created');
+  equal(getFilteredArrayLengthInController('days', controller), 1, 'There is one day created');
   
 });
 
 test('Test removeDay action', function(){
   Ember.run(function(){
     controller.send('createDay');
-    day = controller.get('days').objectAt(0);
+    controller.get('days').then(function(days){
+      day = days.objectAt(0);
+    });
   });
-  equal(getDaysLength(), 1, 'There is one day created');
+  equal(getFilteredArrayLengthInController('days', controller), 1, 'There is one day created');
   equal(controller.get('selectedDay'), day, 'The day created is the selectedDay');
 
   Ember.run(function(){
     controller.send('removeDay', day);
   });
-  equal(getDaysLength(), 0, 'There is no more days in the workout');
+  equal(getFilteredArrayLengthInController('days', controller), 0, 'There is no more days in the workout');
   equal(controller.get('selectedDay'), null, 'The selectedDay was unset after it was removed');
 });
 
@@ -128,25 +117,25 @@ test('Test selectDay action and selected days\' property', function(){
       controller.send('createDay');
     }
   });
-  equal(getDaysLength(), 10, 'There is 10 days created');
-  equal(getDaysLength({'selected' : true}), 1, 'Just the last created day is selected');
+  equal(getFilteredArrayLengthInController('days', controller), numberOfDays, 'There is ' + numberOfDays + ' days created');
+  equal(getFilteredArrayLengthInController('days', controller, {'selected' : true}), 1, 'Just the last created day is selected');
   Ember.run(function(){
     day = controller.get('days').objectAt(5);
     controller.send('selectDay', day);
   });
   equal(controller.get('selectedDay'), day, 'selectedDay is the day selected');
   ok(day.get('selected'), 'Selected day has selected property equal true');
-  equal(getDaysLength({'selected' : true}), 1, 'Just the selectedDay is selected');
+  equal(getFilteredArrayLengthInController('days', controller, {'selected' : true}), 1, 'Just the selectedDay is selected');
 });
 
 module("Day controller test", {
   setup: function() {
     TrainTool.reset();
-    controller = TrainTool.__container__.lookup('controller:day');
     Ember.run(function(){
+      controller = TrainTool.__container__.lookup('controller:day');
       day = controller.get('store').createRecord('day');
+      controller.set('model', day);
     });
-    controller.set('model', day);
   },
   teardown: function() {
     controller = null;
@@ -155,24 +144,26 @@ module("Day controller test", {
 });
 
 test('Test createExercise action', function(){
-  equal(getExercisesLength(), 0, 'There is no exercises before add some');
+  equal(getFilteredArrayLengthInController('exercises', controller), 0, 'There is no exercises before add some');
   Ember.run(function(){
     controller.send('createExercise');
   });
-  equal(getExercisesLength(), 1, 'There is one exercises after addition');
+  equal(getFilteredArrayLengthInController('exercises', controller), 1, 'There is one exercises after addition');
 });
 
 test('Test removeExercise action', function(){
   Ember.run(function(){
     controller.send('createExercise');
-    exercise = controller.get('exercises').objectAt(0);
+    controller.get('exercises').then(function(exercises){
+      exercise = exercises.objectAt(0);
+    });
   });
-  equal(getExercisesLength(), 1, 'There is one exercise');
+  equal(getFilteredArrayLengthInController('exercises', controller), 1, 'There is one exercise');
 
   Ember.run(function(){
     controller.send('removeExercise', exercise);
   });
-  equal(getExercisesLength(), 0, 'The exercise was removed succefully');
+  equal(getFilteredArrayLengthInController('exercises', controller), 0, 'The exercise was removed succefully');
 });
 
 test('Test valid property', function(){
@@ -206,16 +197,15 @@ test('Test valid property', function(){
 test('Test exercisesQuantity property', function(){
   var desiredExercisesQuantity = 10;
   var exercisesQuantity;
-  var i;
   Ember.run(function(){
-    for(i = 0; i < desiredExercisesQuantity; i += 1){
+    for(var i = 0; i < desiredExercisesQuantity; i += 1){
       controller.send('createExercise');
     }
-    exercisesQuantity = controller.get('exercisesQuantity');
   });
-  equal(exercisesQuantity, desiredExercisesQuantity, 'The exerciseQuantity is ok');
+  equal(controller.get('exercisesQuantity'), desiredExercisesQuantity, 'The exerciseQuantity is ok');
 });
 
+// Integration tests
 
 module("Testing workout creation page.", {
   setup: function() {
@@ -318,3 +308,35 @@ test('Check if the change of exercise\'s name field make the right changes in th
       equal(find('.exercise-title:contains("Testing day name")').length, 1, 'The default title when the exercise is without name is ok');
     });
 });
+
+
+// Integration with the server tests
+
+// module("Sever integration tests", {
+//   setup: function() {
+//     TrainTool.reset();
+//     server = sinon.fakeServer.create();
+//   },
+
+//   teardown: function() {
+//     server.restore();
+//   }
+// });
+
+// test('Test mock server', function(){
+//   var fakeData = {name:'Testing', id:123123};
+//   var jsonHeaders = {"Content-Type": "application/json"};
+//   var dataStringified = JSON.stringify(fakeData)
+//   visit('/trains/new')
+//     .fillIn('#workout-name', 'Testing')
+//     .click('#create-day-btn')
+//     .fillIn('.day-name-input', 'Testing day name')
+//     .click('.create-exercise-btn:first')
+//     .then(function(){
+//       click('#save_workout');
+//       for(var i = 0; i < server.requests.length; i++){
+//         server.requests[i].respond(200, jsonHeaders, dataStringified);
+//       }
+//       equal(server.requests.length, 3, '3 request were made.');
+//     });
+// });

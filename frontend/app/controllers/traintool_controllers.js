@@ -45,30 +45,37 @@ TrainTool.ExerciseController = Ember.ObjectController.extend({});
 
 TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   selectedDay : null,
+  saving: false,
+
   // Define if the workout can be saved,
   // to be true the workout must be named and have
   // at least one day in it.
-  canBeSaved : function(){
+  saveLocked : function(){
     var days = this.get('days');
     var withoutName = this.get('withoutName');
     var days_length = days.get('length');
-    return !withoutName && days_length > 0;
-  }.property('days.@each', 'name'),
+    return withoutName || days_length === 0 || this.get('saving');
+  }.property('days.@each', 'name', 'saving'),
 
   actions : {
     createDay : function(){
       var day = this.store.createRecord('day');
-      this.get('days').pushObject(day);
+      this.get('days').then(function(days){
+        days.pushObject(day);
+      });
       this.send('selectDay', day);
     },
 
     // Select a day to be show in details or be edited
+    // and unselect all others
     selectDay : function(day){
-      this.get('days').forEach(function(day){
-        day.set('selected', false);
+      this.get('days').then(function(days){
+        days.forEach(function(dayInWorkout){
+          dayInWorkout.set('selected', false);
+        });
+        day.set('selected', true);
       });
-
-      day.set('selected', true);
+      
       this.set('selectedDay', day);
     },
 
@@ -76,34 +83,18 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
       if(this.get('selectedDay') === day){
         this.set('selectedDay', null);
       }
-      this.get('days').removeObject(day);
-      day.deleteRecord();
+      this.get('days').then(function(days){
+        days.removeObject(day);
+        day.deleteRecord();
+      });
     },
-    // Do a copy of all models neasted in the workout and
-    // save those models and their relations. 
+    // Save those models and their childs models.
     saveWorkout : function(){
       var that = this;
-      var workour_attrs = this.get('model').toJSON();
-      var days_list = this.get('model').get('days');
-      var exercises_list;
-      var workout_copy = this.store.createRecord('workout', workour_attrs);
-      var day_copy;
-      var exercise_copy;
-      workout_copy.save().then(function(workout){
-        days_list.forEach(function(day){
-          exercises_list = day.get('exercises');
-          day_copy = that.store.createRecord('day', day.toJSON());
-          day_copy.set('workout_id', workout);
-          workout.get('days').pushObject(day_copy);
-          day_copy.save().then(function(saved_day){
-            exercises_list.forEach(function(exercise){
-              exercise_copy = that.store.createRecord('exercise', exercise.toJSON());
-              exercise_copy.set('day_id', saved_day);
-              saved_day.get('exercises').pushObject(exercise_copy);
-              exercise_copy.save();
-            });
-          });
-        });
+      this.set('saving', true);
+      var workout = this.get('model');
+      workout.saveModelAndChilds().then(function(){
+        that.set('saving', false);
       });
     }
   }
@@ -111,17 +102,17 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
 
 TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   deleteMode : false,
-  // An day is valid when it's named and there is at least
+  // A day is valid when it's named and there is at least
   // one exercise in it.
   valid : function(){
-    var exercises = this.get('exercises');
     var withoutName = this.get('withoutName');
-    var exercisesLength = exercises.get('length');
-    return !withoutName && exercisesLength > 0;
+    return !withoutName && this.get('exercisesQuantity') > 0;
   }.property('exercises.length', 'withoutName'),
 
+  // Set initialy and update exercisesQuantity when exercises.lenth
+  // changes.
   exercisesQuantity : function(){
-    return this.get('exercises').get('length');
+    return this.get('exercises.length');
   }.property('exercises.length'),
 
   actions : {
@@ -137,13 +128,18 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
       var exercise = this.store.createRecord('exercise', {
         reps : Ember.A()
       });
-      this.get('exercises').pushObject(exercise);
-      return false;
+      var that = this;
+      this.get('exercises').then(function(exercises){
+        exercises.pushObject(exercise);
+      });
     },
 
     removeExercise : function(exercise){
-      this.get('exercises').removeObject(exercise);
-      exercise.deleteRecord();
+      this.get('exercises').then(function(exercises){
+        exercises.removeObject(exercise);
+      }).then(function(){
+        exercise.deleteRecord();
+      });
     }
   }
 });
@@ -174,6 +170,7 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
         this.set('errorInReps', true);
       }
     },
+
     removeSerie : function(){
       var reps = this.get('reps');
       this.set('reps', reps.slice(0, reps.get('length')-1));
@@ -184,4 +181,7 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
     return this.get('reps').join('x');
   }.property('reps.@each')
 
+});
+
+TrainTool.TrainsTrainController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
 });
