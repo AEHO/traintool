@@ -185,3 +185,12 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
 
 TrainTool.TrainsTrainController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
 });
+
+TrainTool.DayInTrainController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
+  isEditing : false,
+  actions : {
+    edit : function(){
+      this.toggleProperty('isEditing');
+    }
+  }
+});
