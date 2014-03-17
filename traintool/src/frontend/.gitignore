@@ -19,5 +19,6 @@ build/assets
 build/application.js
 build/test_application.js
 dependencies/compiled
+dependencies/css
 test/runner.html
 .sass-cache

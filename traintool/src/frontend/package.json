@@ -23,6 +23,13 @@
     "grunt-ember-templates": "0.4.x",
     "grunt-contrib-watch": "0.4.x",
     "grunt-contrib-compass":"0.7.x",
-    "grunt-contrib-copy":"0.5.x"
+    "grunt-contrib-copy":"0.5.x",
+    "grunt-contrib-imagemin":"0.5.x",
+    "grunt-contrib-cssmin":"0.9.x",
+    "grunt-contrib-concat":"0.1.x",
+    "grunt-contrib-uglify":"0.4.x",
+    "grunt-uncss":"0.2.x",
+    "grunt-newer":"0.7.x",
+    "grunt-svgmin":"0.4.x"
   }
 }
