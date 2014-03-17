@@ -1,0 +1,436 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 9, ../sass/screen.scss */
+body {
+  height: 100%;
+  padding-top: 50px;
+}
+
+/* line 21, ../sass/screen.scss */
+body,
+input,
+button,
+select,
+textarea,
+.navbar-search
+.search-query {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+  font-size: 1.6em;
+  color: #002b36;
+}
+
+/* line 28, ../sass/screen.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  color: #002b36;
+}
+
+/* line 82, ../sass/screen.scss */
+.col-xs-1,
+.col-xs-2,
+.col-xs-3,
+.col-xs-4,
+.col-xs-5,
+.col-xs-6,
+.col-xs-7,
+.col-xs-8,
+.col-xs-9,
+.col-xs-10,
+.col-xs-11,
+.col-xs-12,
+.col-sm-1,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-lg-1,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12 {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+/* line 86, ../sass/screen.scss */
+.row {
+  margin: 0px;
+}
+
+/* line 90, ../sass/screen.scss */
+.padding-bottom {
+  padding-bottom: 15px;
+}
+
+/* line 94, ../sass/screen.scss */
+.col-lg-0 {
+  width: 0;
+  margin-left: 0;
+}
+
+/* line 99, ../sass/screen.scss */
+i.danger {
+  color: #d9534f;
+}
+
+/* line 103, ../sass/screen.scss */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+}
+/* line 110, ../sass/screen.scss */
+.navbar-wrapper .container {
+  padding-left: 0;
+  padding-right: 0;
+}
+/* line 115, ../sass/screen.scss */
+.navbar-wrapper .navbar {
+  padding-left: -15px;
+  padding-right: -15px;
+}
+
+/* line 121, ../sass/screen.scss */
+.navbar-default {
+  border: none;
+  background-color: #487395;
+}
+/* line 124, ../sass/screen.scss */
+.navbar-default .navbar-brand {
+  color: #87caff;
+  font-weight: 400;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+/* line 130, ../sass/screen.scss */
+.navbar-default .navbar-brand:hover {
+  color: #79b6e5;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* line 137, ../sass/screen.scss */
+.navbar-default .navbar-nav > li a {
+  color: #fdf6e3;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+/* line 141, ../sass/screen.scss */
+.navbar-default .navbar-nav > li a:hover {
+  color: #79b6e5;
+}
+/* line 145, ../sass/screen.scss */
+.navbar-default .navbar-nav > li a:active {
+  color: #586e75;
+}
+/* line 149, ../sass/screen.scss */
+.navbar-default .navbar-nav > li a:visited {
+  color: #fdf6e3;
+}
+
+/* line 154, ../sass/screen.scss */
+.carousel {
+  height: auto;
+  margin-bottom: 60px;
+}
+/* line 158, ../sass/screen.scss */
+.carousel .item {
+  background-color: #254966;
+  height: 100%;
+}
+/* line 161, ../sass/screen.scss */
+.carousel .item .img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}
+
+/* line 171, ../sass/screen.scss */
+.carolsel-caption {
+  z-index: 10;
+}
+
+/* line 175, ../sass/screen.scss */
+.btn-primary {
+  background-color: #0083ea;
+  color: #fdf6e3;
+  min-width: 150px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  border: none;
+}
+
+/* line 183, ../sass/screen.scss */
+.btn-primary:hover {
+  background-color: #87caff;
+  min-width: 170px;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* line 189, ../sass/screen.scss */
+.big {
+  font-size: 1.5em !important;
+}
+
+/* line 193, ../sass/screen.scss */
+.panel-primary {
+  border: none;
+}
+/* line 194, ../sass/screen.scss */
+.panel-primary .panel-heading {
+  background-color: #0083ea;
+  border: 1px solid #0083ea;
+}
+
+/* line 201, ../sass/screen.scss */
+.open-panel {
+  padding: 0px;
+  border: none;
+}
+/* line 205, ../sass/screen.scss */
+.open-panel .panel {
+  margin: 0px;
+  margin-bottom: 1px;
+  border: 1px solid #0083ea;
+}
+
+/* line 213, ../sass/screen.scss */
+.panel-title .label-primary {
+  color: #0083ea;
+  background-color: #87caff;
+  padding: 0.4em 0.6em 0.4em;
+}
+
+/* line 220, ../sass/screen.scss */
+.label {
+  margin-bottom: 50px;
+}
+
+/* line 224, ../sass/screen.scss */
+.withFooter {
+  padding-bottom: 0px !important;
+}
+
+/* line 228, ../sass/screen.scss */
+.list-group-item {
+  background-color: #bae1ff;
+  height: auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+/* line 234, ../sass/screen.scss */
+.list-group-item.active {
+  background-color: #51b2ff !important;
+}
+
+/* line 239, ../sass/screen.scss */
+.list-group-item.clickable {
+  background-color: white;
+  cursor: pointer;
+}
+
+/* line 244, ../sass/screen.scss */
+.list-group-item.clickable:hover {
+  background-color: #87caff;
+}
+
+/* line 248, ../sass/screen.scss */
+.list-group-item.clickable:active {
+  background-color: #edf7ff;
+}
+
+/* line 252, ../sass/screen.scss */
+.btnFooter {
+  display: block;
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #5e8db2;
+  color: #fdf6e3;
+}
+
+/* line 260, ../sass/screen.scss */
+.btnFooter:hover {
+  background-color: #254966;
+}
+
+/* line 264, ../sass/screen.scss */
+.nav-tabs > li > a.btn-primary:hover {
+  background-color: #87caff;
+  min-width: 170px;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* line 270, ../sass/screen.scss */
+.collapsed {
+  opacity: 0;
+  height: 0;
+}
+
+/* line 275, ../sass/screen.scss */
+.box {
+  display: block;
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+}
+
+/* line 282, ../sass/screen.scss */
+.box.blue {
+  background-color: #5e8db2;
+}
+
+/* line 286, ../sass/screen.scss */
+.box.light-blue {
+  background-color: #79b6e5;
+}
+
+/* line 296, ../sass/screen.scss */
+h1.light small,
+h2.light small,
+h3.light small,
+h4.light small,
+h5.light small,
+h6.light small {
+  color: #fdf6e3;
+}
+
+/* line 300, ../sass/screen.scss */
+.caption {
+  position: absolute;
+  bottom: 20px;
+  right: 15%;
+  left: 15%;
+  text-align: center;
+}
+
+/* line 308, ../sass/screen.scss */
+.center-image {
+  position: absolute;
+  right: 15%;
+  left: 15%;
+  top: 10%;
+  text-align: center;
+  height: 80%;
+}
+/* line 315, ../sass/screen.scss */
+.center-image img {
+  height: 100%;
+}
+
+/* line 320, ../sass/screen.scss */
+.background {
+  width: 100%;
+  height: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #bae1ff;
+}
+
+/* line 330, ../sass/screen.scss */
+.background.background-image {
+  background: url("../imgs/index-bkg2.jpg") no-repeat center center;
+}
+
+/* line 334, ../sass/screen.scss */
+.main-container {
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  /* line 339, ../sass/screen.scss */
+  .navbar-wrapper {
+    margin-top: 20px;
+  }
+  /* line 342, ../sass/screen.scss */
+  .navbar-wrapper .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  /* line 347, ../sass/screen.scss */
+  .navbar-wrapper .navbar {
+    padding-left: 0;
+    padding-right: 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+  }
+
+  /* line 354, ../sass/screen.scss */
+  .navbar-nav.navbar-right:last-child {
+    margin-right: 15px;
+  }
+
+  /* line 358, ../sass/screen.scss */
+  .navbar-form {
+    padding-right: 30px;
+  }
+
+  /* line 362, ../sass/screen.scss */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 2em;
+    line-height: 1.4;
+  }
+
+  /* line 368, ../sass/screen.scss */
+  .btnFooter {
+    max-height: 0px;
+  }
+
+  /* line 372, ../sass/screen.scss */
+  .withFooter:hover .btnFooter {
+    max-height: 50px;
+  }
+}
