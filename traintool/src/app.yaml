@@ -13,8 +13,8 @@ handlers:
 # for serving the entire static/assets directory rooting the assets
 # directory.
 
--   url: /assets/.*
-    static_dir: frontend/build/assets/js
+-   url: /assets
+    static_dir: frontend/build/assets
     secure: always
 
 
