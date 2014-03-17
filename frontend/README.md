@@ -2,12 +2,6 @@
 
 ## The files in this project
 
-### dependencies/
-The external libraries required to run the application: Ember,
-Handlebars, and jQuery. I could have used a tool like
-[Bower](http://twitter.github.com/bower/) to track and install these but am not.
-No particular reason for that.
-
 ### dependencies/bower_components
 When bower in runned the installed dependencies will be placed here.
 
@@ -29,9 +23,6 @@ don't want this file under version control.
 This is where the actual code of your browser application lives. The
 application is also heavily commented. Start reading at `app/app.js` and work
 your way through.
-
-### test/
-Er. Yes. Nothing here yet.
 
 ## Playing with this application.
 
@@ -61,8 +52,15 @@ and store them in locally in `node_modules/`. You won't need `sudo` here.
 bower install
 ```
 
-And this will install the dependencies in the `bower.json` file
+This will install the dependencies in the `bower.json` file
 and store them in `dependencies/bower_components/`.
+
+You will need ruby too, some download links and instructions
+in the [official ruby download page](https://www.ruby-lang.org/en/downloads/),
+ruby is used in this project by compass, a stylesheets compiler.
+
+Our last dependencie is the [compass](http://compass-style.org/) itself, to install it
+just run `gem install compass`.
 
 Once all the development dependencies are installed you can start the
 development tasks with
