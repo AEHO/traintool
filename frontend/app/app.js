@@ -31,6 +31,7 @@ require('dependencies/bower_components/momentjs/min/moment-with-langs');
  */
 moment.lang('pt-br');
 
+
 /*
  * Since we're precompiling our templates, we only need the
  * handlebars-runtime microlib instead of the
@@ -45,9 +46,15 @@ require('dependencies/compiled/templates');
   should manage for you.
 */
 window.TrainTool = Ember.Application.create({
-  rootElement: window.TESTING ? '#qunit-fixture':'#traintoolapp',
+  rootElement: window.TESTING ? '#ember-testing':'#traintoolapp',
   LOG_TRANSITIONS: true
 });
+
+/*
+ * Mixins to act in the application
+ */
+require('app/mixins/controllers');
+require('app/mixins/models');
 
 /* 
  * Model layer. 
@@ -91,6 +98,13 @@ require('app/adapters/traintool');
  *	Add the transformers to handle custom model attrs
  */
 require('app/adapters/transformers');
+
+/*
+ * Misc folder holds definitions that don't fit in the others
+ * project folders
+ */
+
+require('app/misc/main');
 
 /*
   this file is generated as part of the build process.

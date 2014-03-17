@@ -1,0 +1,51 @@
+<article>
+  <div class="row">
+    <div class="box blue">
+      <div class="container">
+        <div class='col-lg-12'>
+          <h1 class="light"><small>treino</small> {{displayedName}} <small> criado a {{format-date created}}</small></h1>
+        </div>
+        <div class="col-lg-6">
+          <h4 class="light">
+            <small>descrição</small> {{description}}
+          </h4>
+        </div>
+        <div class="col-lg-6">
+          <h4 class="light">
+            <small>comentário</small> {{comment}}
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      {{#each day in days}}
+        <div class="col-lg-4">
+          <h3 class="text-center">{{day.name}}</h3>
+          {{#each exercise in day.exercises itemController="ExercisesInTrain"}}
+            <li class="list-group-item clickable exercise-group-item" {{action "edit"}} {{bind-attr class="isEditing:active"}}>
+              <div class="row">
+                <div class="col-lg-10">
+                  {{exercise.name}} <small>{{joinWithX exercise.reps}}</small> 
+                </div>
+                <div class="col-lg-2">
+                  <i class="fa fa-sort-asc"></i>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item open-panel collapsed" {{bind-attr class="isEditing::collapsed"}}>
+              <div class="panel panel-primary">
+                <div class="panel-body">
+                  <small>
+                    {{exercise.body_part}}
+                    {{exercise.comment}}
+                  </small>
+                </div>
+              </div>
+            </li>
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</article>
+  

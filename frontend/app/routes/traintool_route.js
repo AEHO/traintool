@@ -21,3 +21,24 @@ TrainTool.ExerciseRoute = Ember.Route.extend({
     controller.set('model', exercise);
   }
 });
+
+TrainTool.TrainsIndexRoute = Ember.Route.extend({});
+
+TrainTool.TrainsNewRoute = Ember.Route.extend({
+  renderTemplate:function(){
+    this.render('trains/new');
+  },
+  model: function(){
+    return this.store.createRecord('workout');
+  }
+});
+
+TrainTool.TrainsTrainRoute = Ember.Route.extend({
+  renderTemplate: function(){
+    this.render('trains/train');
+  },
+  setupController: function(controller, params) {
+    var workout = this.store.find('workout', params.id);
+    controller.set('model', workout);
+  }
+});

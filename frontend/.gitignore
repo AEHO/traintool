@@ -18,5 +18,6 @@ bower_components/
 build/assets
 build/application.js
 build/test_application.js
-compiled/
+dependencies/compiled
+test/runner.html
 .sass-cache

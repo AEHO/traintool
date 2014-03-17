@@ -13,16 +13,16 @@
   "author": "Mateus Zitelli <zitellimateus@gmail.com>",
   "license": "GPLv2",
   "devDependencies": {
-    "compass":"~0.1.0",
-    "grunt": "~0.4.0",
-    "bower": "~1.2.8",
-    "grunt-neuter": "~0.6.0",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-jshint": "~0.4.0",
-    "grunt-contrib-qunit": "~0.2.0",
-    "grunt-ember-templates": "~0.4.18",
-    "grunt-contrib-watch": "~0.4.0",
-    "grunt-contrib-compass":"~0.7.1",
-    "grunt-contrib-copy":"~0.5.0"
+    "compass":"0.1.x",
+    "grunt": "0.4.x",
+    "bower": "1.2.x",
+    "grunt-neuter": "0.6.x",
+    "grunt-contrib-uglify": "0.2.x",
+    "grunt-contrib-jshint": "0.4.x",
+    "grunt-contrib-qunit": "0.2.x",
+    "grunt-ember-templates": "0.4.x",
+    "grunt-contrib-watch": "0.4.x",
+    "grunt-contrib-compass":"0.7.x",
+    "grunt-contrib-copy":"0.5.x"
   }
 }

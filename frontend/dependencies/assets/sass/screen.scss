@@ -7,7 +7,8 @@
 
 body{
 	height:100%;
-	padding-top:60px;
+	//Padding of 50px for the navigation header
+	padding-top:50px;
 }
 
 body,
@@ -15,16 +16,20 @@ input,
 button,
 select,
 textarea,
-.navbar-search .search-query {
+.navbar-search
+.search-query {
 	font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
     font-size:1.6em;
+    color:$fontBase03;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+#{headings(all)}{
 	font-family: 'Source Sans Pro', sans-serif;
     font-weight: 600;
+    color:$fontBase03;
 }
+
 
 .col-xs-1,
 .col-xs-2,
@@ -77,6 +82,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
   @include transition(all, 0.3s, ease-in-out);
 }
 
+.row{
+	margin:0px;
+}
+
 .padding-bottom{
 	padding-bottom:15px;
 }
@@ -84,6 +93,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 .col-lg-0{
 	width: 0;
     margin-left: 0;
+}
+
+i.danger{
+	color: $danger;
 }
 
 .navbar-wrapper{
@@ -211,17 +224,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 	padding-bottom: 0px !important;
 }
 
-.list-group{
-	height:400px;
-	overflow:auto;
-}
-
 .list-group-item{
 	background-color: lighten($base1, 10%);
+	height: auto;
+	@include transition(all, 0.3s, ease-in-out);
 }
 
 .list-group-item.clickable{
-	@include transition(all, 0.3s, ease-in-out);
 	background-color: white;
 	cursor:pointer;
 }
@@ -250,6 +259,26 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 	background-color:$base1;
 	min-width:170px;
 	text-shadow: 1px 2px rgba(0,0,0,0.2);
+}
+
+.collapsed{
+	opacity:0;
+	height:0;
+}
+
+.box.blue{
+	display:block;
+	background-color:$base4;
+}
+
+
+h1.light small,
+h2.light small,
+h3.light small,
+h4.light small,
+h5.light small,
+h6.light small{
+	color:$fontBase3;
 }
 
 @media (min-width: 768px) {

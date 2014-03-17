@@ -9,5 +9,9 @@ TrainTool.ArrayTransform = DS.Transform.extend({
 });
 
 Ember.Handlebars.helper('format-date', function(date){
-    return moment(date).fromNow();
+    return moment(date).fromNow(true);
   });
+
+Ember.Handlebars.helper('joinWithX', function(list){
+	return list.join('x');
+});
