@@ -10,6 +10,21 @@ handlers:
     script: main.api_application
     secure: always
 
+# for serving the entire static/assets directory rooting the assets
+# directory.
+
+-   url: /.*
+    static_dir: static/assets
+    secure: always
+
+# for associating specific url patterns with paths to static files
+# uploaded
+
+-   url: /
+    static_files: static/index.html
+    upload: index.html
+    mime_type: text/html
+    secure: always
 
 libraries:
 -   name: pycrypto
@@ -18,7 +33,7 @@ libraries:
 -   name: endpoints
     version: 1.0
 
--   name: webapp2   
+-   name: webapp2
     version: latest
 
 -   name: jinja2
