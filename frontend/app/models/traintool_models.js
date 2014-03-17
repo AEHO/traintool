@@ -7,5 +7,22 @@ TrainTool.Exercise = DS.Model.extend({
 	execution:DS.attr('string'),
 	name:DS.attr('string'),
 	reps:DS.attr('array'),
-	pageToken:DS.attr('string')
+	day_id: DS.belongsTo('day')
+});
+
+TrainTool.Day = DS.Model.extend({
+	created:DS.attr('date'),
+	description:DS.attr('string'),
+	workout_id: DS.belongsTo('workout'),
+	exercises: DS.hasMany('exercise'),
+  proper_time : DS.attr('number')
+});
+
+TrainTool.Workout = DS.Model.extend({
+  name:DS.attr('string'),
+	comment:DS.attr('string'),
+	created:DS.attr('date'),
+	description:DS.attr('string'),
+	objective:DS.attr('string'),
+	days:DS.hasMany('day')
 });

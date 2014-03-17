@@ -22,10 +22,10 @@
     "build/application.js"
   ],
   "dependencies":{
-    "handlebars":"~1.3.0",
-    "ember":"~1.4.0-beta.6",
-    "ember-data":"~1.0.0-beta.6",
-    "ember-localstorage-adapter":"~0.2.0",
-    "momentjs":"~2.5.1"
+    "handlebars":"~1.3.x",
+    "ember":"~1.4.x",
+    "ember-data":"~1.0.x",
+    "ember-localstorage-adapter":"~0.2.x",
+    "momentjs":"~2.5.x"
   }
 }
