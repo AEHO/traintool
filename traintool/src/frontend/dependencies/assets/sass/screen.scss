@@ -9,6 +9,7 @@ body{
 	height:100%;
 	//Padding of 50px for the navigation header
 	padding-top:50px;
+	background-color:lighten($base1, 10%);
 }
 
 body,
@@ -118,27 +119,27 @@ i.danger{
 }
 
 .navbar-default{
-	background-color: lighten( $base1, 20% );
-	border-color: $base0;
+	border:none;
+	background-color: darken( $base4, 10% );
 	.navbar-brand{
-		color:$base0;
+		color:$base1;
 		font-weight:400;
 		@include transition(all, 0.3s, ease-in-out);
 	}
 
 	.navbar-brand:hover{
-		color:$base1;
-		text-shadow: 1px 1px rgba(255,255,255, 0.2);
+		color:$base2;
+		text-shadow: 1px 1px rgba(0,0,0, 0.2);
 	}
 }
 
 .navbar-default .navbar-nav>li{
 	a{
-		color: $fontBase01;
-		text-shadow: 1px 1px rgba(255,255,255, 0.2);
+		color: $fontBase3;
+		text-shadow: 1px 1px rgba(0,0,0, 0.2);
 	}
 	a:hover{
-		color: $fontBase03;
+		color: $base2;
 	}
 
 	a:active{
@@ -146,7 +147,7 @@ i.danger{
 	}
 
 	a:visited{
-		color: $fontBase01;
+		color: $fontBase3;
 	}
 }
 
@@ -230,6 +231,11 @@ i.danger{
 	@include transition(all, 0.3s, ease-in-out);
 }
 
+.list-group-item.active{
+	background-color: lighten($base0, 20%) !important;
+	
+}
+
 .list-group-item.clickable{
 	background-color: white;
 	cursor:pointer;
@@ -240,7 +246,7 @@ i.danger{
 }
 
 .list-group-item.clickable:active{
-	background-color: $base0;
+	background-color: lighten($base1, 20%);
 }
 
 .btnFooter{
@@ -266,9 +272,18 @@ i.danger{
 	height:0;
 }
 
-.box.blue{
+.box{
 	display:block;
+	padding-top:0.75em;
+	padding-bottom:0.75em;
+}
+
+.box.blue{
 	background-color:$base4;
+}
+
+.box.light-blue{
+	background-color:$base2;
 }
 
 
@@ -279,6 +294,14 @@ h4.light small,
 h5.light small,
 h6.light small{
 	color:$fontBase3;
+}
+
+.caption{
+	position:absolute;
+	bottom:20px;
+	right:15%;
+	left:15%;
+	text-align: center;
 }
 
 @media (min-width: 768px) {
