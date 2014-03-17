@@ -6,9 +6,9 @@ module.exports = function(grunt) {
     uglify: {
       'build/assets/js/built.min.js': 'dependencies/assets/js/*.js'
     },
-    /*
-      Compile the sass files and generate the CSS.
-     */
+
+      // Compile the sass files and generate the CSS.
+
     compass: {
       dist: {
         options: {
@@ -17,13 +17,12 @@ module.exports = function(grunt) {
         }
       }
     },
-    /*
-      Here i'm copying hanadlebars runtime javascript
-      to the build assets folder to include it directly
-      in the html.
-      This is done because handlebars isn't exposed in
-      the global context directly until version >= 2.
-    */
+
+      // Here i'm copying hanadlebars runtime javascript to the build
+      // assets folder to include it directly in the html. This is done
+      // because handlebars isn't exposed in the global context directly
+      // until version >= 2.
+
     copy: {
       main: {
         files: [
@@ -42,41 +41,42 @@ module.exports = function(grunt) {
         ]
       }
     },
-    /* 
-       A simple ordered concatenation strategy.
-       This will start at app/app.js and begin
-       adding dependencies in the correct order
-       writing their string contents into
-       'build/application.js'
 
-       Additionally it will wrap them in evals
-       with @ sourceURL statements so errors, log
-       statements and debugging will reference
-       the source files by line number.
+       // A simple ordered concatenation strategy. This will start at
+       // app/app.js and begin adding dependencies in the correct order
+       // writing their string contents into 'build/application.js'
 
-       You would set this option to false for 
-       production.
-    */
+       // Additionally it will wrap them in evals with @ sourceURL
+       // statements so errors, log statements and debugging will
+       // reference the source files by line number.
+
+       // You would set this option to false for  production.
+
     neuter: {
       options: {
         includeSourceURL: true
-      }, 
-      'build/application.js': 'app/app.js'
+      },
+      'build/assets/application.js': 'app/app.js'
     },
 
-    /*
-      Watch files for changes.
 
-      Changes in dependencies/ember.js or application javascript
-      will trigger the neuter task.
+      // Watch files for changes.
 
-      Changes to any templates will trigger the emberTemplates
-      task (which writes a new compiled file into dependencies/)
-      and then neuter all the files again.
-    */
+      // Changes in dependencies/ember.js or application javascript will
+      // trigger the neuter task.
+
+      // Changes to any templates will trigger the emberTemplates task
+      // (which writes a new compiled file into dependencies/) and then
+      // neuter all the files again.
+
     watch: {
       application_code: {
-        files: ['dependencies/ember.js', 'app/**/*.js', 'app/dependencies/bower_components/**/*.js', 'test/**/*.js'],
+        files: [
+          'dependencies/ember.js',
+          'app/**/*.js',
+          'app/dependencies/bower_components/**/*.js',
+          'test/**/*.js'
+        ],
         tasks: ['neuter'],
         options:{
           livereload:true
@@ -101,41 +101,46 @@ module.exports = function(grunt) {
       }
     },
 
-    /* 
-      Runs all .html files found in the test/ directory through PhantomJS.
-      Prints the report in your terminal.
-    */
+
+      // Runs all .html files found in the test/ directory through
+      // PhantomJS. Prints the report in your terminal.
+
     qunit: {
       all: ['test/**/*.html']
     },
 
-    /* 
-      Reads the projects .jshintrc file and applies coding
-      standards. Doesn't lint the dependencies or test
-      support files.
-    */
+
+      // Reads the projects .jshintrc file and applies coding standards.
+      // Doesn't lint the dependencies or test support files.
+
     jshint: {
-      all: ['Gruntfile.js', 'app/**/*.js', 'test/**/*.js', '!dependencies/*.*', '!test/support/*.*'],
+      all: [
+        'Gruntfile.js',
+        'app/**/*.js',
+        'test/**/*.js',
+        '!dependencies/*.*',
+        '!test/support/*.*'
+      ],
       options: {
         jshintrc: '.jshintrc'
       }
     },
 
-    /* 
-      Finds Handlebars templates and precompiles them into functions.
-      The provides two benefits:
 
-      1. Templates render much faster
-      2. We only need to include the handlebars-runtime microlib
-         and not the entire Handlebars parser.
+      // Finds Handlebars templates and precompiles them into functions.
+      // The provides two benefits:
 
-      Files will be written out to dependencies/compiled/templates.js
-      which is required within the project files so will end up
-      as part of our application.
+      // 1. Templates render much faster 2. We only need to include the
+      // handlebars-runtime microlib    and not the entire Handlebars
+      // parser.
 
-      The compiled result will be stored in
-      Ember.TEMPLATES keyed on their file path (with the 'app/templates' stripped)
-    */
+      // Files will be written out to dependencies/compiled/templates.js
+      // which is required within the project files so will end up as
+      // part of our application.
+
+      // The compiled result will be stored in Ember.TEMPLATES keyed on
+      // their file path (with the 'app/templates' stripped)
+
     emberTemplates: {
       options: {
         templateName: function(sourceFile) {
@@ -144,17 +149,16 @@ module.exports = function(grunt) {
       },
       'dependencies/compiled/templates.js': ["app/templates/**/*.hbs"]
     },
-    /*
-      Find all the <whatever>_test.js files in the test folder.
-      These will get loaded via script tags when the task is run.
-      This gets run as part of the larger 'test' task registered
-      below.
-    */
+
+      // Find all the <whatever>_test.js files in the test folder. These
+      // will get loaded via script tags when the task is run. This gets
+      // run as part of the larger 'test' task registered below.
+
     build_test_runner_file: {
       all: ['test/**/*_test.js']
     }
   });
-  
+
   // grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -163,14 +167,15 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-ember-templates');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  
-  /*
-    A task to build the test runner html file that get place in
-    /test so it will be picked up by the qunit task. Will
-    place a single <script> tag into the body for every file passed to
-    its coniguration above in the grunt.initConfig above.
-  */
-  grunt.registerMultiTask('build_test_runner_file', 'Creates a test runner file.', function(){
+
+
+    // A task to build the test runner html file that get place in /test
+    // so it will be picked up by the qunit task. Will place a single
+    // <script> tag into the body for every file passed to its
+    // coniguration above in the grunt.initConfig above.
+
+  grunt.registerMultiTask('build_test_runner_file',
+                          'Creates a test runner file.', function(){
     var tmpl = grunt.file.read('test/support/runner.html.tmpl');
     var renderingContext = {
       data: {
@@ -179,23 +184,29 @@ module.exports = function(grunt) {
         })
       }
     };
-    grunt.file.write('test/runner.html', grunt.template.process(tmpl, renderingContext));
+    grunt.file.write('test/runner.html',
+                     grunt.template.process(tmpl, renderingContext));
   });
-  
-  /*
-    A task to run the application's unit tests via the command line.
-    It will
-      - convert all the handlebars templates into compile functions
-      - combine these files + application files in order
-      - lint the result
-      - build an html file with a script tag for each test file
-      - headlessy load this page and print the test runner results
-  */
-  grunt.registerTask('test', ['emberTemplates', 'neuter', 'copy', 'jshint', 'compass', 'build_test_runner_file', 'qunit']);
 
-  /*
-    Default task. Compiles templates, neuters application code, and begins
-    watching for changes.
-  */
-  grunt.registerTask('default', ['emberTemplates', 'neuter', 'copy', 'compass', 'watch']);
+
+    // A task to run the application's unit tests via the command line.
+    //  It will:
+    // - convert all the handlebars templates into compile functions
+    // - combine these files + application files in order
+    // - lint the result
+    // - build an html file with a script tag for each test file
+    // - headlessy load this page and print the test runner results
+
+  grunt.registerTask('test', ['emberTemplates', 'neuter', 'copy', 'jshint',
+                              'compass', 'build_test_runner_file', 'qunit']);
+
+
+  grunt.registerTask('compile',
+                     ['emberTemplates', 'neuter', 'copy', 'compass']);
+
+    // Default task. Compiles templates, neuters application code, and
+    // begins watching for changes.
+
+  grunt.registerTask('default', ['emberTemplates', 'neuter', 'copy', 'compass',
+                                 'watch']);
 };
