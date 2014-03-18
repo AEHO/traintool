@@ -47,6 +47,7 @@ TrainTool.CopyAndSave = Ember.Mixin.create({
     return thisCopy.save().catch(function(err){
       console.log('Error during the save of ' + thisTypeKey + ' with id '+ thisCopy.id + "\n" + err);
     }).then(function(copy){
+      that.set('copyId', copy.get('id'));
       return that.childrensSequenceSavePromises(copy);
     });
     

@@ -46,6 +46,8 @@ TrainTool.ExerciseController = Ember.ObjectController.extend({});
 TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   selectedDay : null,
   saving: false,
+  saved: false,
+  error: false,
 
   // Define if the workout can be saved,
   // to be true the workout must be named and have
@@ -95,6 +97,11 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
       var workout = this.get('model');
       workout.saveModelAndChilds().then(function(){
         that.set('saving', false);
+        that.set('saved', true);
+      }, function(err){
+        console.log('Error during save of workout: ' + err);
+        that.set('saving', false);
+        that.set('error', true);
       });
     }
   }

@@ -327,8 +327,27 @@ h6.light small{
 	background-color:lighten($base1, 10%);
 }
 
+.day-tab{
+	a{
+		background-color:lighten($base1, 20%);
+		@include transition(all, 0.2s, ease-in-out);
+	}
+	a:hover{
+		background-color:lighten($base1, 5%) !important;
+	}
+	&.active{
+		a{
+			background-color:lighten($base1, 10%) !important;
+		}
+	}
+}
+
 .background.background-image{
 	background:url('../imgs/index-bkg2.jpg') no-repeat center center;
+}
+
+.background.light{
+	background-color:lighten($base1, 20%);
 }
 
 .main-container{
