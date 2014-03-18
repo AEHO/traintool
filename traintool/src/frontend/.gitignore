@@ -14,11 +14,9 @@ results
 .grunt
 
 node_modules/
-bower_components/
 build/assets
 build/application.js
-build/test_application.js
 dependencies/compiled
-dependencies/css
+dependencies/bower_components
 test/runner.html
 .sass-cache

@@ -11,22 +11,6 @@
 */
 
 /*
- * These are the dependencies for an Ember application
- * and they have to be loaded before any application code.
-*/
-
-require('dependencies/bower_components/jquery/jquery');
-
-/* Added ember and ember-data */
-require('dependencies/bower_components/ember/ember');
-require('dependencies/bower_components/ember-data/ember-data');
-
-/*
- * Add moment.js to handle dates formation and operations.
- */
-
-require('dependencies/bower_components/momentjs/min/moment-with-langs');
-/*
  * Set moment language to pt-br globaly
  */
 moment.lang('pt-br');
@@ -92,7 +76,6 @@ require('app/routes/router');
  * Get the adapters. They are two, a localstorage for tests and a REST adapter modified
  * for the traintool REST Api.
  */
-require('dependencies/bower_components/ember-localstorage-adapter/localstorage_adapter');
 require('app/adapters/traintool');
 /*
  *	Add the transformers to handle custom model attrs

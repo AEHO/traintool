@@ -18,36 +18,39 @@ module.exports = function(grunt) {
       options: {
         includeSourceURL: true
       },
-      'build/assets/js/application.js': 'app/app.js'
+      'dependencies/compiled/application.js': 'app/app.js'
     },
 
     uglify: {
       application: {
         files: {
-          'build/assets/js/built.min.js': ['dependencies/bower_components/handlebars/handlebars.runtime.js','build/assets/js/application.js', 'dependencies/assets/js/*.js', 'dependencies/bower_components/bootstrap/dist/js/bootstrap.js']
+          'dependencies/compiled/application.min.js': 'dependencies/compiled/application.js'
         }
       }
     },
 
-      // Compile the sass files and generate the CSS.
+    // Compile the sass files and generate the CSS.
 
     compass: {
       dist: {
         options: {
           sassDir:"dependencies/assets/sass/",
-          cssDir:"dependencies/assets/css/"
+          cssDir:"dependencies/compiled/css/"
         }
       }
     },
 
     concat: {
       css: {
-        src: ['dependencies/bower_components/bootstrap/dist/css/bootstrap.css', 'dependencies/assets/css/*.css'],
+        src: ['dependencies/bower_components/bootstrap/dist/css/bootstrap.css', 'dependencies/compiled/css/*.css'],
         dest: 'build/assets/css/stylesheet.css'
+      },
+
+      add_js_dependencies:{
+        src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js', 'dependencies/bower_components/ember/ember.min.js', 'dependencies/bower_components/ember-data/ember-data.min.js', 'dependencies/bower_components/momentjs/min/moment-with-langs.min.js', 'dependencies/assets/js/*.js', 'dependencies/compiled/application.min.js'],
+        dest: 'build/assets/js/built.min.js'
       }
     },
-
-      //Minify and concatenate the css files
 
     cssmin: {
       minify: {
@@ -57,7 +60,7 @@ module.exports = function(grunt) {
     },
 
     imagemin: {
-      dynamic: {                         
+      dist: {                         
         files: [{
           expand: true,                  
           cwd: 'dependencies/assets/imgs',                   
@@ -115,7 +118,7 @@ module.exports = function(grunt) {
         tasks: ['compass']
       },
       css: {
-        files:['dependencies/assets/css/*.css'],
+        files:['dependencies/compiled/css/*.css'],
         tasks: ['concat', 'cssmin'],
         options:{
           livereload:true
