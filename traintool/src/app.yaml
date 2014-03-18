@@ -1,5 +1,5 @@
 application: gup-traintool
-version: 1
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -43,3 +43,8 @@ libraries:
 
 skip_files:
 -   ^lib/(.*)
+-   frontend/app/(.*)
+-   frontend/node_modules/(.*)
+-   frontend/dependencies/(.*)
+-   frontend/test/(.*)
+-   frontend/.sass-cache/(.*)
