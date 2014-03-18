@@ -17,13 +17,12 @@ handlers:
     static_dir: frontend/build/assets
     secure: always
 
-
 # for associating specific url patterns with paths to static files
 # uploaded
 
 -   url: /
     static_files: frontend/build/index.html
-    upload: index.html
+    upload: frontend/build/index.html
     mime_type: text/html
     secure: always
 
@@ -43,3 +42,8 @@ libraries:
 
 skip_files:
 -   ^lib/(.*)
+-   frontend/app/(.*)
+-   frontend/node_modules/(.*)
+-   frontend/dependencies/(.*)
+-   frontend/test/(.*)
+-   frontend/.sass-cache/(.*)
