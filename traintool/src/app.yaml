@@ -1,5 +1,5 @@
 application: gup-traintool
-version: 2
+version: 1
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -17,13 +17,12 @@ handlers:
     static_dir: frontend/build/assets
     secure: always
 
-
 # for associating specific url patterns with paths to static files
 # uploaded
 
 -   url: /
     static_files: frontend/build/index.html
-    upload: index.html
+    upload: frontend/build/index.html
     mime_type: text/html
     secure: always
 
