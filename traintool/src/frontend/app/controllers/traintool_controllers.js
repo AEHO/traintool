@@ -77,7 +77,7 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
         });
         day.set('selected', true);
       });
-      
+
       this.set('selectedDay', day);
     },
 
