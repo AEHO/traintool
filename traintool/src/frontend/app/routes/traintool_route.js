@@ -34,11 +34,19 @@ TrainTool.TrainsNewRoute = Ember.Route.extend({
 });
 
 TrainTool.TrainsTrainRoute = Ember.Route.extend({
-  renderTemplate: function(){
+  renderTemplate: function() {
     this.render('trains/train');
   },
-  setupController: function(controller, params) {
-    var workout = this.store.find('workout', params.id);
-    controller.set('model', workout);
+  model: function(params) {
+    return this.store.find('workout', params.id);;
+  },
+  actions: {
+    loading: function(transition, originRoute) {
+      console.log('inicializando');
+      return true;
+    },
+    error: function() {
+      console.log('Error');
+    }
   }
 });

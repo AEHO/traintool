@@ -46,9 +46,18 @@ module.exports = function(grunt) {
         dest: 'build/assets/css/stylesheet.css'
       },
 
-      add_js_dependencies:{
+      application: {
+        src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js', 'dependencies/bower_components/ember/ember.min.js', 'dependencies/bower_components/ember-data/ember-data.min.js', 'dependencies/bower_components/momentjs/min/moment-with-langs.min.js', 'dependencies/assets/js/*.js', 'dependencies/compiled/application.js'],
+        dest: 'build/assets/js/built.min.js'
+      },
+
+      minifiedApplication: {
         src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js', 'dependencies/bower_components/ember/ember.min.js', 'dependencies/bower_components/ember-data/ember-data.min.js', 'dependencies/bower_components/momentjs/min/moment-with-langs.min.js', 'dependencies/assets/js/*.js', 'dependencies/compiled/application.min.js'],
         dest: 'build/assets/js/built.min.js'
+      },
+
+      options: {
+        stripBanners:true
       }
     },
 
@@ -101,25 +110,25 @@ module.exports = function(grunt) {
         files: [
           'app/**/*.js',
         ],
-        tasks: ['neuter', 'uglify'],
+        tasks: ['neuter', 'concat:application'],
         options:{
           livereload:true
         }
       },
       handlebars_templates: {
         files: ['app/**/*.hbs'],
-        tasks: ['emberTemplates', 'neuter', 'uglify'],
+        tasks: ['emberTemplates', 'neuter', 'concat:application'],
         options:{
           livereload:true
         }
       },
       sass: {
-        files: ['dependencies/assets/sass/*.scss'],
+        files: ['dependencies/assets/sass/**/*.scss'],
         tasks: ['compass']
       },
       css: {
         files:['dependencies/compiled/css/*.css'],
-        tasks: ['concat', 'cssmin'],
+        tasks: ['concat:css', 'cssmin'],
         options:{
           livereload:true
         }
@@ -238,11 +247,11 @@ module.exports = function(grunt) {
 
 
   grunt.registerTask('compile',
-                     ['emberTemplates', 'neuter', 'newer:uglify:application', 'imagemin', 'svgmin', 'compass', 'concat', 'cssmin']);
+                     ['emberTemplates', 'neuter', 'newer:uglify:application', 'imagemin', 'svgmin', 'compass', 'concat:css', 'concat:minifiedApplication', 'cssmin']);
 
     // Default task. Compiles templates, neuters application code, and
     // begins watching for changes.
 
-  grunt.registerTask('default', ['emberTemplates', 'neuter', 'newer:uglify:application', 'imagemin', 'svgmin', 'compass', 'concat', 'cssmin',
+  grunt.registerTask('default', ['emberTemplates', 'neuter', 'imagemin', 'svgmin', 'compass', 'concat:application', 'concat:css', 'cssmin',
                                  'watch']);
 };

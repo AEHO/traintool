@@ -1,3 +1,9 @@
+TrainTool.ApplicationView = Ember.View.extend({
+  didInsertElement: function() {
+    $("#loading").remove();
+  }
+});
+
 TrainTool.ShowMoreButtonView = Ember.View.extend({
   tagName: 'button',
   classNames: ['btn', 'btn-default'],

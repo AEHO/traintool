@@ -90,16 +90,17 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
         day.deleteRecord();
       });
     },
+    
     // Save those models and their childs models.
     saveWorkout : function(){
       var that = this;
       this.set('saving', true);
       var workout = this.get('model');
-      workout.saveModelAndChilds().then(function(){
+      return workout.copyModelAndChildrenAndSaveRecursivelyWithPromises().then(function(copy){
+        that.set('model', copy);
         that.set('saving', false);
         that.set('saved', true);
       }, function(err){
-        console.log('Error during save of workout: ' + err);
         that.set('saving', false);
         that.set('error', true);
       });

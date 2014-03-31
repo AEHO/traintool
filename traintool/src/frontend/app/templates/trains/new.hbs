@@ -92,7 +92,7 @@
             </div>
           {{else}}
             {{#if saved}}
-              {{#link-to 'trains.train' this}}Visualizar treino!{{/link-to}}
+              {{#link-to 'trains.train' this}}Visualizar treino{{/link-to}}
             {{else}}
               <button class="btn btn-primary" {{action "saveWorkout" this}} id="save_workout">Salvar treino</button>
             {{/if}}
