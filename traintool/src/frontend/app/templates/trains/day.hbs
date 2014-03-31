@@ -59,28 +59,28 @@
                       <label>Séries</label>
                       <div class="form-group">
                         <div class="row">
-                          <div class="col-lg-7 padding-bottom">
+                          <div class="col-xs-7 padding-bottom">
                             {{#if reps}}
                               <span class="label label-primary">
                                 {{displReps}}
                               </span>
                             {{/if}}
                           </div>
-                          <div class="col-lg-5">
+                          <div class="col-xs-5">
                             {{#if reps}}
                               <button type="button" class="btn btn-danger" {{action 'removeSerie'}}>- série</button>
                             {{else}}
                               <br>
                             {{/if}}
                           </div>
-                          <div class="col-lg-7">
+                          <div class="col-xs-7">
                             {{input type="integer" class="form-control input-sm" placeholder="Repetições" valueBinding="repetitions" action='addRepetition'}}
                             {{#if errorInReps}}
                               <br>
                               <span class="label label-danger">Ops, só são aceitos algarísmos numéricos como número de repetições de uma série.</label>
                             {{/if}}
                           </div>
-                          <div class="col-lg-5">
+                          <div class="col-xs-5">
                             <button type="button" class="btn btn-default" {{action 'newSerie'}}>+ série</button>
                           </div>
                         </div>

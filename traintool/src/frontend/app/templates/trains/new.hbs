@@ -1,29 +1,22 @@
-<article>
   <div class="background light">
     <div class="container">
       <div class="row">
-        <div class='col-lg-12'>
+        <div class='col-md-12'>
           <h2><small>Definição do treino</small> {{displayedName}}</h2>
         </div>
-        <div class="col-lg-2">
+        <div class="col-md-3 col-xs-6">
           <label>Nome</label>
           {{input type="text" id="workout-name" value=name placeholder="Nome do Treino" class="form-control"}}
         </div>
-        <div class="col-lg-2">
+        <div class="col-md-4 col-xs-6">
           <label>Objetivo</label>
           {{input type="text" value=objective placeholder="Hipertrofia, emagrecimento, resistência..." class="form-control"}}
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-5 col-xs-12">
           <label>Descrição</label>
           {{textarea type="text" value=description placeholder="A quem se destina, detalhes..." class="form-control"}}
         </div>
-        <div class="col-lg-4">
-          <label>Comentários</label>
-          {{textarea type="text" value=comment placeholder="Relatos, dicas, seu contato..." class="form-control"}}
-        </div>
-        <div class="col-lg-4 text-center">
-        </div>
-        <div class="col-lg-12" id="daysDiv">
+        <div class="col-md-12" id="daysDiv">
           <h2>Dias de Treino</h2>
           <ul class="nav nav-tabs">
             {{#each days itemController="Day"}}
@@ -97,7 +90,7 @@
               <button class="btn btn-primary" {{action "saveWorkout" this}} id="save_workout">Salvar treino</button>
             {{/if}}
           {{/if}}
-        </div> <!-- col-lg-12 -->
+        </div> <!-- col-md-12 -->
       </div><!-- row -->
     </div>
   </div>
