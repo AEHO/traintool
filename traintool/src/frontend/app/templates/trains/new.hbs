@@ -1,4 +1,3 @@
-  <div class="background light">
     <div class="container">
       <div class="row">
         <div class='col-md-12'>
@@ -16,6 +15,8 @@
           <label>Descrição</label>
           {{textarea type="text" value=description placeholder="A quem se destina, detalhes..." class="form-control"}}
         </div>
+      </div>
+      <div class="row">
         <div class="col-md-12" id="daysDiv">
           <h2>Dias de Treino</h2>
           <ul class="nav nav-tabs">
@@ -67,8 +68,8 @@
               {{/if}}
             {{/each}}
           </div>
+          <div class="row">
           {{#if saveLocked}}
-             <div class="row">
               {{#if withoutName}}
                 <div class="hint--right" data-hint="Nomeie o treino para salvar.">
                   <button class="btn btn-primary" disabled="disabled">Salvar treino</button>
@@ -82,16 +83,14 @@
                   </div>
                 {{/if}}
               {{/if}}
-            </div>
           {{else}}
             {{#if saved}}
-              {{#link-to 'trains.train' this}}Visualizar treino{{/link-to}}
+              {{#link-to 'trains.train' copy}}Visualizar treino{{/link-to}}
             {{else}}
               <button class="btn btn-primary" {{action "saveWorkout" this}} id="save_workout">Salvar treino</button>
             {{/if}}
           {{/if}}
+          </div>
         </div> <!-- col-md-12 -->
       </div><!-- row -->
     </div>
-  </div>
-</article>

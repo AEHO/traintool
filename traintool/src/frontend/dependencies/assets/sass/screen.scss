@@ -10,6 +10,7 @@ body{
 	height:100%;
 	//Padding on top to the page header menu
 	padding-top:50px;
+	background-color:lighten($base1, 20%);
 }
 
 body,
@@ -204,24 +205,33 @@ i.danger{
 	padding-bottom: 0px !important;
 }
 
+
 .list-group-item{
 	background-color: lighten($base1, 10%);
 	height: auto;
+	border: none;
+	border-radius: 4px;
 	@include transition(all, 0.3s, ease-in-out);
 }
 
+.list-group-item:first-child{
+	border-top-left-radius:0px !important;
+}
+
 .list-group-item.active{
-	background-color: lighten($base0, 20%) !important;
+	background-color: lighten($base3, 20%) !important;
+	text-shadow: 1px 1px rgba(255,255,255, 0.1);
 	
 }
 
 .list-group-item.clickable{
-	background-color: white;
+	background-color:white;
 	cursor:pointer;
 }
 
 .list-group-item.clickable:hover {
 	background-color: $base1;
+	text-shadow: 1px 1px rgba(0,0,0, 0.2);
 }
 
 .list-group-item.clickable:active{
@@ -240,13 +250,17 @@ i.danger{
 	background-color: $base3;
 }
 
-.nav-tabs > li > a.btn-primary:hover{
-	background-color:$base1;
-	min-width:170px;
-	text-shadow: 1px 2px rgba(0,0,0,0.2);
+.nav-tabs{
+	border-bottom:none;
+
+	li > a.btn-primary:hover{
+		background-color:$base1;
+		min-width:170px;
+		text-shadow: 1px 2px rgba(0,0,0,0.2);
+	}
 }
 
-.collapsed{
+li.collapsed{
 	opacity:0;
 	height:0;
 }
@@ -284,21 +298,29 @@ h6.light small{
 	text-align: center;
 }
 
-.center-image{
-	position:absolute;
-	right:15%;
-	left:15%;
-	top:10%;
-	text-align: center;
-	height:80%;
-	img{
-		height:100%;
-	}
+img.centered-image{
+	position: absolute;
+	max-width: 80%;
+	max-height:90%;
+	top: 10%;
+	left: 10%;
+	border-radius: 3px;
+}
+
+img.centered-image:empty
+{
+	top: 53%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 }
 
 .background{
 	width:100%;
-	height:100%;
+	min-height:100%;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -324,6 +346,7 @@ h6.light small{
 
 .background.background-image{
 	background:url('../imgs/index-bkg.jpg') no-repeat center center;
+	height:100%;
 }
 
 .background.light{

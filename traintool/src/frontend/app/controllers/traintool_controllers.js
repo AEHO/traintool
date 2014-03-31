@@ -97,7 +97,7 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
       this.set('saving', true);
       var workout = this.get('model');
       return workout.copyModelAndChildrenAndSaveRecursivelyWithPromises().then(function(copy){
-        that.set('model', copy);
+        that.set('copy', copy);
         that.set('saving', false);
         that.set('saved', true);
       }, function(err){

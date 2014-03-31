@@ -13,5 +13,9 @@ Ember.Handlebars.helper('format-date', function(date){
   });
 
 Ember.Handlebars.helper('joinWithX', function(list){
-	return list.join('x');
+	try{
+		return list.join('x');
+	}catch(err){
+		return ''
+	}
 });

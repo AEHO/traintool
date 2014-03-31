@@ -47,12 +47,23 @@ module.exports = function(grunt) {
       },
 
       application: {
-        src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js', 'dependencies/bower_components/ember/ember.min.js', 'dependencies/bower_components/ember-data/ember-data.min.js', 'dependencies/bower_components/momentjs/min/moment-with-langs.min.js', 'dependencies/assets/js/*.js', 'dependencies/compiled/application.js'],
+        src:[
+          'dependencies/bower_components/handlebars/handlebars.runtime.min.js',
+          'dependencies/bower_components/ember/ember.min.js',
+          'dependencies/bower_components/ember-data/ember-data.min.js',
+          'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
+          'dependencies/assets/js/*.js',
+          'dependencies/compiled/application.js'],
         dest: 'build/assets/js/built.min.js'
       },
 
       minifiedApplication: {
-        src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js', 'dependencies/bower_components/ember/ember.min.js', 'dependencies/bower_components/ember-data/ember-data.min.js', 'dependencies/bower_components/momentjs/min/moment-with-langs.min.js', 'dependencies/assets/js/*.js', 'dependencies/compiled/application.min.js'],
+        src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js',
+             'dependencies/bower_components/ember/ember.min.js',
+             'dependencies/bower_components/ember-data/ember-data.min.js',
+             'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
+             'dependencies/assets/js/*.js',
+             'dependencies/compiled/application.min.js'],
         dest: 'build/assets/js/built.min.js'
       },
 

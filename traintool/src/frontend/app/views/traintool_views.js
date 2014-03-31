@@ -45,7 +45,7 @@ TrainTool.DayContentView = Ember.View.extend({
     var numberDays = this.get('controller.workout_id.days.length');
     if(numberDays > 1){
       el.hide()
-        .delay(this.delay)
+        .delay(this.delay-1)
         .fadeIn(this.delay);
     } else {
       el.hide()
