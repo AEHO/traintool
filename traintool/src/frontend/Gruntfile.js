@@ -42,12 +42,22 @@ module.exports = function(grunt) {
 
     concat: {
       css: {
-        src: ['dependencies/bower_components/bootstrap/dist/css/bootstrap.css', 'dependencies/compiled/css/*.css'],
+        src: [
+          'dependencies/bower_components/bootstrap/dist/css/bootstrap.css',
+          'dependencies/compiled/css/*.css'
+        ],
         dest: 'build/assets/css/stylesheet.css'
       },
 
       add_js_dependencies:{
-        src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js', 'dependencies/bower_components/ember/ember.min.js', 'dependencies/bower_components/ember-data/ember-data.min.js', 'dependencies/bower_components/momentjs/min/moment-with-langs.min.js', 'dependencies/assets/js/*.js', 'dependencies/compiled/application.min.js'],
+        src:[
+          'dependencies/bower_components/handlebars/handlebars.runtime.min.js',
+          'dependencies/bower_components/ember/ember.min.js',
+          'dependencies/bower_components/ember-data/ember-data.min.js',
+          'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
+          'dependencies/assets/js/*.js',
+          'dependencies/compiled/application.min.js'
+        ],
         dest: 'build/assets/js/built.min.js'
       }
     },
@@ -147,7 +157,6 @@ module.exports = function(grunt) {
 
     jshint: {
       all: [
-        'Gruntfile.js',
         'app/**/*.js',
         'test/**/*.js',
         '!dependencies/*.*',
@@ -234,6 +243,8 @@ module.exports = function(grunt) {
     // - headlessy load this page and print the test runner results
 
   grunt.registerTask('test', ['jshint', 'build_test_runner_file', 'qunit']);
+
+  grunt.registerTask('lint', ['jshint']);
 
 
   grunt.registerTask('compile', ['emberTemplates', 'neuter',

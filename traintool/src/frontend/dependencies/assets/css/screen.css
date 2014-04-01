@@ -449,7 +449,7 @@ h6.light small {
 
   /* line 387, ../sass/screen.scss */
   .btnFooter {
-    max-height: 0px;
+    max-height: 0;
   }
 
   /* line 391, ../sass/screen.scss */

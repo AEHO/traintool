@@ -17,7 +17,7 @@ handlers:
     static_dir: frontend/build/assets
     http_headers:
         Vary: Accept-Encoding
-    secure: always
+    secure: optional
 
 # for associating specific url patterns with paths to static files
 # uploaded
@@ -26,7 +26,15 @@ handlers:
     static_files: frontend/build/index.html
     upload: frontend/build/index.html
     mime_type: text/html; charset=UTF-8
-    secure: always
+    secure: optional
+
+# Handles what it isn't handled :)
+
+-   url: /.*
+    static_files: frontend/build/404.html
+    upload: frontend/build/404.html
+    mime_type: text/html; charset=UTF-8
+    secure: optional
 
 
 libraries:
