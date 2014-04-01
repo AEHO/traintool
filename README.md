@@ -1,6 +1,4 @@
-# TrainTool
-
-![Imgur](http://i.imgur.com/qnDCHEs.png)
+# [TrainTool](https://gup-traintool.appspot.com/) ![Imgur](http://i.imgur.com/qnDCHEs.png)
 
 > Web tool to create, manage and share yours workouts.
 
