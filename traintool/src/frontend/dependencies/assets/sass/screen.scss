@@ -186,7 +186,6 @@ i.danger{
 	.panel{
 		margin: 0px;
 		margin-bottom:1px;
-		border: 1px solid $base0;
 	}
 }
 
@@ -210,18 +209,16 @@ i.danger{
 .list-group-item{
 	background-color: lighten($base1, 10%);
 	height: auto;
-	border: none;
 	border-radius: 4px;
+	margin-bottom: 0px;
+	border: 1px solid $base1;
+	margin:0px;
 	@include transition(all, 0.3s, ease-in-out);
 }
 
-.list-group-item:first-child{
-	border-top-left-radius:0px !important;
-}
-
 .list-group-item.active{
-	background-color: lighten($base3, 20%) !important;
-	text-shadow: 1px 1px rgba(255,255,255, 0.1);
+	background-color: $base1 !important;
+	text-shadow: 1px 1px rgba(255,255,255, 0.2);
 }
 
 .list-group-item.clickable{
@@ -230,12 +227,16 @@ i.danger{
 }
 
 .list-group-item.clickable:hover {
-	background-color: $base1;
-	text-shadow: 1px 1px rgba(0,0,0, 0.2);
+	background-color: lighten($base0, 40%);
+	text-shadow: 1px 1px rgba(255,255,255, 0.2);
 }
 
 .list-group-item.clickable:active{
 	background-color: lighten($base1, 20%);
+}
+
+.list-group-item.open-panel{
+	border: none;
 }
 
 .btnFooter{
@@ -278,6 +279,10 @@ li.collapsed{
 
 .box.light-blue{
 	background-color:$base2;
+}
+
+.box.lightest-blue{
+	background-color:lighten($base1, 10%);
 }
 
 
