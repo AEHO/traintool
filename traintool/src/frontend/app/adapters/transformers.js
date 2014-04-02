@@ -8,14 +8,18 @@ TrainTool.ArrayTransform = DS.Transform.extend({
   }
 });
 
-Ember.Handlebars.helper('format-date', function(date){
-    return moment(date).fromNow(true);
-  });
+TrainTool.DateTransform = DS.DateTransform.extend({
+  deserialize: function(serialized) {
+    var type = typeof serialized;
 
-Ember.Handlebars.helper('joinWithX', function(list){
-	try{
-		return list.join('x');
-	}catch(err){
-		return '';
-	}
+    if (type === "string" || type === "number") {
+      return moment.utc(serialized);
+    } else if (serialized === null || serialized === undefined) {
+      // if the value is not present in the data,
+      // return undefined, not null.
+      return serialized;
+    } else {
+      return null;
+    }
+  },
 });

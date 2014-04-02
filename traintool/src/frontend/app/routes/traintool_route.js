@@ -30,7 +30,12 @@ TrainTool.TrainsNewRoute = Ember.Route.extend({
   },
   model: function(){
     return this.store.createRecord('workout');
-  }
+  },
+  actions: {
+    viewTrain: function(Train){
+       this.transitionTo('trains.train', Train);
+    }
+  } 
 });
 
 TrainTool.TrainsTrainRoute = Ember.Route.extend({
