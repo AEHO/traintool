@@ -34,6 +34,7 @@ window.TrainTool = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
 
+console.log(TrainTool);
 /*
  * Mixins to act in the application
  */

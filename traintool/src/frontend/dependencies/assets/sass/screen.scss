@@ -6,6 +6,7 @@
 @import "modules/_all.scss";
 @import "custom_elements/loading.scss";
 
+
 body{
 	height:100%;
 	//Padding on top to the page header menu
@@ -221,7 +222,6 @@ i.danger{
 .list-group-item.active{
 	background-color: lighten($base3, 20%) !important;
 	text-shadow: 1px 1px rgba(255,255,255, 0.1);
-	
 }
 
 .list-group-item.clickable{

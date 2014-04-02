@@ -38,7 +38,7 @@ TrainTool.TrainsTrainRoute = Ember.Route.extend({
     this.render('trains/train');
   },
   model: function(params) {
-    return this.store.find('workout', params.id);;
+    return this.store.find('workout', params.id);
   },
   actions: {
     loading: function(transition, originRoute) {

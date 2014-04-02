@@ -28,6 +28,8 @@
     "find":true,
     "module":true,
     "andThen":true,
-    "moment":true
+    "moment":true,
+    "console":true,
+    "$":true
   }
 }

@@ -42,24 +42,26 @@ module.exports = function(grunt) {
 
     concat: {
       css: {
-        src: ['dependencies/bower_components/bootstrap/dist/css/bootstrap.css', 'dependencies/compiled/css/*.css'],
+        src: ['dependencies/bower_components/bootstrap/dist/css/bootstrap.css',
+              'dependencies/compiled/css/*.css'],
         dest: 'build/assets/css/stylesheet.css'
       },
 
       application: {
         src:[
           'dependencies/bower_components/handlebars/handlebars.runtime.min.js',
-          'dependencies/bower_components/ember/ember.min.js',
+          'dependencies/bower_components/ember/ember.js',
           'dependencies/bower_components/ember-data/ember-data.min.js',
           'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
           'dependencies/assets/js/*.js',
-          'dependencies/compiled/application.js'],
+          'dependencies/compiled/application.js'
+        ],
         dest: 'build/assets/js/built.min.js'
       },
 
       minifiedApplication: {
         src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js',
-             'dependencies/bower_components/ember/ember.min.js',
+             'dependencies/bower_components/ember/ember.js',
              'dependencies/bower_components/ember-data/ember-data.min.js',
              'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
              'dependencies/assets/js/*.js',
@@ -91,13 +93,13 @@ module.exports = function(grunt) {
     },
 
     svgmin: {
-      options: {                                      // Configuration that will be passed directly to SVGO
-          plugins: [
-            { removeViewBox: false },
-            { removeUselessStrokeAndFill: false }
-          ]
+      options: {
+        plugins: [
+          { removeViewBox: false },
+          { removeUselessStrokeAndFill: false }
+        ]
       },
-      dist: {                                         // Target
+      dist: {
         files: [{
           expand: true,                  
           cwd: 'dependencies/assets/imgs',                   
@@ -119,7 +121,7 @@ module.exports = function(grunt) {
     watch: {
       application_code: {
         files: [
-          'app/**/*.js',
+          'app/**/*.js'
         ],
         tasks: ['neuter', 'concat:application'],
         options:{
@@ -253,16 +255,21 @@ module.exports = function(grunt) {
     // - build an html file with a script tag for each test file
     // - headlessy load this page and print the test runner results
 
-  grunt.registerTask('test', ['emberTemplates', 'neuter', 'newer:uglify:application', 'jshint',
-                              'compass', 'concat', 'cssmin', 'build_test_runner_file', 'qunit']);
+  grunt.registerTask('test', ['emberTemplates', 'neuter', 'imagemin', 'svgmin',
+                              'compass', 'concat:application', 'concat:css',
+                              'cssmin', 'jshint','build_test_runner_file',
+                              'qunit']);
 
 
   grunt.registerTask('compile',
-                     ['emberTemplates', 'neuter', 'newer:uglify:application', 'imagemin', 'svgmin', 'compass', 'concat:css', 'concat:minifiedApplication', 'cssmin']);
+                     ['emberTemplates', 'neuter', 'newer:uglify:application',
+                     'imagemin', 'svgmin', 'compass', 'concat:css',
+                     'concat:minifiedApplication', 'cssmin']);
 
     // Default task. Compiles templates, neuters application code, and
     // begins watching for changes.
 
-  grunt.registerTask('default', ['emberTemplates', 'neuter', 'imagemin', 'svgmin', 'compass', 'concat:application', 'concat:css', 'cssmin',
-                                 'watch']);
+  grunt.registerTask('default', ['emberTemplates', 'neuter', 'imagemin',
+                                'svgmin', 'compass', 'concat:application',
+                                'concat:css', 'cssmin', 'watch']);
 };

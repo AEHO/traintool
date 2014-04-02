@@ -16,6 +16,6 @@ Ember.Handlebars.helper('joinWithX', function(list){
 	try{
 		return list.join('x');
 	}catch(err){
-		return ''
+		return '';
 	}
 });

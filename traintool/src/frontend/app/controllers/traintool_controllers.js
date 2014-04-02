@@ -90,7 +90,7 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
         day.deleteRecord();
       });
     },
-    
+
     // Save those models and their childs models.
     saveWorkout : function(){
       var that = this;

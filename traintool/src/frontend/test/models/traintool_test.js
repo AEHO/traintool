@@ -3,6 +3,9 @@ var workout, day, exercise;
 var controller;
 var server;
 
+TrainTool.setupForTesting();
+TrainTool.injectTestHelpers();
+
 // Return the length of an array property in a model, if filterBy parameter is
 // given the array is filtered using the values provided
 // @param {propertyName} the array property name.
@@ -22,9 +25,6 @@ var getFilteredArrayLengthInController = function(propertyName, controller, filt
   });
   return length;
 };
-
-TrainTool.setupForTesting();
-TrainTool.injectTestHelpers();
 
 // Unit tests of the controllers
 
