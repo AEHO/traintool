@@ -153,11 +153,12 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
         url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises/all?limit=300',
         filter: function(list) {
           var data = $.map(list.items, function(exercise){
-            if(exercise.name !== undefined){
-              return {name : exercise.name};
-            }else{
-              return {name : ''}
-            }
+            return {
+              id: exercise.id,
+              name: exercise.name ? exercise.name : '',
+              comment: exercise.comment ? exercise.comment : '' ,
+              execution: exercise.execution ? exercise.execution : ''
+            };
           });
           return data;
         }

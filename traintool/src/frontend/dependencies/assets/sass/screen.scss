@@ -393,7 +393,7 @@ img.centered-image:empty
 	width:100%;
 }
 
-.tt-hint{
+.tt-hint .tt-query{
 	color: $fontBase1;
 }
 
@@ -404,6 +404,8 @@ img.centered-image:empty
 	border: 1px solid $base1;
 	border-top: none;
 	border-radius: 4px;
+	max-height: 150px;
+	overflow-y:auto;
 }
 
 .tt-suggestion{
