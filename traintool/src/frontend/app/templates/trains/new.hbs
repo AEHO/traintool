@@ -28,7 +28,7 @@
                     {{#if valid}}
                       <span class="badge">{{exercisesQuantity}}</span>
                     {{else}}
-                      <span class="hint--top" data-hint="O dia está sem nome ou sem exercícios.">
+                      <span class="hint--top" {{bind-attr data-hint='error'}}>
                         <i class="fa fa-exclamation-circle danger"></i>
                       </span>
                     {{/if}}
