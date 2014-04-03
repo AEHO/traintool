@@ -31,6 +31,17 @@ class GupApi(remote.Service):
         """Queries the entire DB for retrieving the Exercises."""
         return query
 
+    @Exercise.query_method(query_fields=('limit', 'order', 'name', 'body_part',
+                                         'equipment', 'created',),
+                           path="exercises/all",
+                           http_method="GET",
+                           limit_max="300",
+                           name="exercises.list.all")
+    def ExercisesListAll(self, query):
+        """Queries over the entire DB."""
+        return query
+
+
     @ExerciseCollection.method(path='exercises', http_method='POST',
                                name='exercises.listpost')
     def ExercisesListPost(self, exercises_collection):
