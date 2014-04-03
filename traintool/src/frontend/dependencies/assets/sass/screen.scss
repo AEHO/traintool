@@ -389,6 +389,38 @@ img.centered-image:empty
 	}
 }
 
+.twitter-typeahead{
+	width:100%;
+}
+
+.tt-hint{
+	color: $fontBase1;
+}
+
+.tt-dropdown-menu{
+	width:100%;
+	padding: 4px;
+	background-color: white;
+	border: 1px solid $base1;
+	border-top: none;
+	border-radius: 4px;
+}
+
+.tt-suggestion{
+	padding-left: 1em;
+	border-radius: 4px;
+	@include transition(all, 0.1s, ease-in-out);
+}
+
+.tt-suggestion:hover{
+	background-color:$base1;
+}
+
+.tt-suggestion.tt-cursor{
+	background-color:$base1;
+	margin:0px !important;
+}
+
 @media (min-width: 768px) {
 	.navbar-wrapper{
 		margin-top: 20px;

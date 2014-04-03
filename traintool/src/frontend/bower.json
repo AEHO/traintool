@@ -29,6 +29,7 @@
     "momentjs":"~2.5.x",
     "moment-timezone":"~0.0.x",
     "sinonjs":"1.9.x",
-    "bootstrap":"3.1.x"
+    "bootstrap":"3.1.x",
+    "typeahead.js":"0.10.x"
   }
 }
