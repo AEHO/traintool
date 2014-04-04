@@ -75,7 +75,7 @@ TrainTool.TextFieldTypeahead = Ember.TextField.extend({
     didInsertElement : function(){
       var dataType = this.get('data-type');
       var data = this.get('data-source');
-      var that = this;
+      var model = this.get('model');
       this.$().typeahead(null, {
         name: dataType,
         displayKey: 'name',
@@ -83,8 +83,9 @@ TrainTool.TextFieldTypeahead = Ember.TextField.extend({
       });
 
       this.$().bind('typeahead:selected', function(obj, datum, name) { 
-        that.set('comment', datum.comment);
-        that.set('execution', datum.execution);
+        for(key in datum){
+          model.set(key, datum[key]);
+        }
       });
     }
 });

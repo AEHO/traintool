@@ -36,11 +36,11 @@
           <li class="list-group-item clickable open-panel">
             <div class="panel panel-primary">
                <div class="panel-body">
-                <div class="row"
+                <div class="row">
                   <form>
                     <div class="col-lg-4">
                       <label>Nome</label>
-                      {{view TrainTool.TextFieldTypeahead type='text' data-source=day.allExercisesList data-type="exercises" class="form-control exercise-name-input" placeholder="Nome do exercício"}}
+                      {{view TrainTool.TextFieldTypeahead type='text' data-source=day.allExercisesList data-type="exercises" class="form-control exercise-name-input" placeholder="Nome do exercício" model=this}}
                     </div>
                     <div class="col-lg-4">
                       <label>Equipamento</label>
