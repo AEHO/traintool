@@ -23,13 +23,24 @@ class GupApi(remote.Service):
 
     @Exercise.query_method(query_fields=('limit', 'pageToken', 'order',
                                          'name', 'body_part', 'equipment',
-                                         'created',),
+                                         'created', 'suggested',),
                            path='exercises',
                            http_method="GET",
                            name='exercises.list')
     def ExercisesList(self, query):
         """Queries the entire DB for retrieving the Exercises."""
         return query
+
+    @Exercise.query_method(query_fields=('limit', 'pageToken', 'order',
+                                         'name', 'body_part', 'equipment',
+                                         'created',),
+                           path='exercises/suggested',
+                           limit_max="300",
+                           http_method="GET",
+                           name='exercises.list.suggested')
+    def ExercisesListSuggested(self, query):
+        """Retrieves the suggested exercises."""
+        return query.filter(Exercise.suggested == True)
 
     @Exercise.query_method(query_fields=('limit', 'order', 'name', 'body_part',
                                          'equipment', 'created',),
