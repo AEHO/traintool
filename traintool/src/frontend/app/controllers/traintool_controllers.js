@@ -157,7 +157,8 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
               id: exercise.id,
               name: exercise.name ? exercise.name : '',
               comment: exercise.comment ? exercise.comment : '' ,
-              execution: exercise.execution ? exercise.execution : ''
+              execution: exercise.execution ? exercise.execution : '',
+              equipment: exercise.equipment ? exercise.equipment : ''
             };
           });
           return data;

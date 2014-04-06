@@ -3,7 +3,7 @@ TrainTool.Exercise = DS.Model.extend(TrainTool.CopyAndSave, {
   body_part:DS.attr('string'),
   comment:DS.attr('string'),
   created:DS.attr('date'),
-  equipament:DS.attr('string'),
+  equipment:DS.attr('string'),
   execution:DS.attr('string'),
   name:DS.attr('string'),
   reps:DS.attr('array'),

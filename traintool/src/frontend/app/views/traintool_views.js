@@ -84,12 +84,14 @@ TrainTool.TextFieldTypeahead = Ember.TextField.extend({
 
       this.$().bind('typeahead:selected', function(obj, datum, name) { 
         for(key in datum){
+          console.log(key)
           model.set(key, datum[key]);
         }
       });
 
       this.$().bind('typeahead:cursorchanged', function(obj, datum, name) { 
         for(key in datum){
+          console.log(key)
           model.set(key, datum[key]);
         }
       });
