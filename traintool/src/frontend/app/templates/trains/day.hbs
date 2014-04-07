@@ -9,7 +9,7 @@
           </div>
           <div class="col-lg-3">
             <label>Tempo apropiado</label>
-            {{input value=proper_time placeholder="Tempo apropriado de treino em minutos." class="form-control"}}
+            {{input value=unsparsed_proper_time placeholder="Tempo apropriado de treino em minutos." class="form-control"}}
           </div>
           <div class="col-lg-3">
             <label>Descrição</label>
@@ -22,7 +22,7 @@
       {{#each exercises itemController="ExercisesInTrain"}}
         <li class="list-group-item clickable exercise-group-item" {{action "edit"}} {{bind-attr class="isEditing:active"}}>
           <h4><span class="exercise-title">{{displayedName}} <i class="fa fa-trash-o danger remove-icon remove-exercise" {{action "removeExercise" this}}></i></span>
-            <small>{{displReps}}<br>
+            <small>{{displReps}}{{#if equipment}} - {{equipment}}{{/if}}<br>
               {{#unless isEditing}}
                 {{#if comment}}
                   <hr>
@@ -40,11 +40,11 @@
                   <form>
                     <div class="col-lg-4">
                       <label>Nome</label>
-                      {{input type='text' placeholder="Nome do exercício" value=name class="form-control exercise-name-input"}}
+                      {{view TrainTool.TextFieldTypeahead type='text' data-source=day.allExercisesList data-type="exercises" class="form-control exercise-name-input" placeholder="Nome do exercício" model=this}}
                     </div>
                     <div class="col-lg-4">
-                      <label>Equipamento</label>
-                      {{input type='text' placeholder="Equipamento utilizado" value=equipament class="form-control"}}
+                      <label>Equipmento</label>
+                      {{input type='text' placeholder="Equipmento utilizado" value=equipment class="form-control"}}
                     </div>
                     <div class="col-lg-4">
                       <label>Comentário</label>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-lg-4">
                       <label>Execução</label>
-                      {{textarea placeholder="Intrução de execução" value=execution class="form-control"}}
+                      {{textarea placeholder="Instrução de execução" value=execution class="form-control"}}
                     </div>
                   </form>
                   <div class="col-lg-4">

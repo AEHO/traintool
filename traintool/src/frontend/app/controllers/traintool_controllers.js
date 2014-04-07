@@ -109,20 +109,80 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
   }
 });
 
-TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
+TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesProperties,{
   deleteMode : false,
-  // A day is valid when it's named and there is at least
-  // one exercise in it.
+  unsparsed_proper_time:'',
+  // A day is valid when it's named, the proper time of it is seted and there
+  // is at least one exercise in it.
   valid : function(){
+    var proper_time = this.get('proper_time')
     var withoutName = this.get('withoutName');
-    return !withoutName && this.get('exercisesQuantity') > 0;
-  }.property('exercises.length', 'withoutName'),
+
+    return proper_time && !withoutName && this.get('exercisesQuantity') > 0;
+  }.property('exercises.length', 'withoutName', 'proper_time'),
+
+  error: function(){
+    var proper_time = this.get('proper_time')
+    var withoutName = this.get('withoutName');
+    
+    if(withoutName){
+      return 'O dia deve ser nomeado.'
+    }
+    if(proper_time === undefined){
+      return 'O tempo apropriado deve ser em minutos. Ex.: 10.'
+    }
+    if(this.get('exercisesQuantity') === 0){
+      return 'Deve haver exercícios adicionados ao dia.'
+    }
+  }.property('exercises.length', 'withoutName', 'proper_time'),
 
   // Set initialy and update exercisesQuantity when exercises.lenth
   // changes.
   exercisesQuantity : function(){
     return this.get('exercises.length');
   }.property('exercises.length'),
+
+  allExercisesList: function(){
+    var exercises = new Bloodhound({
+      datumTokenizer: function(d){
+        return Bloodhound.tokenizers.whitespace(d.name);
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      limit:10,
+      prefetch:{
+        url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises/all?limit=300',
+        filter: function(list) {
+          var data = $.map(list.items, function(exercise){
+            return {
+              id: exercise.id,
+              name: exercise.name ? exercise.name : '',
+              comment: exercise.comment ? exercise.comment : '' ,
+              execution: exercise.execution ? exercise.execution : '',
+              equipment: exercise.equipment ? exercise.equipment : ''
+            };
+          });
+          return data;
+        }
+      },
+    });
+
+    exercises.initialize();
+    return exercises;
+  }.property(),
+
+  // Parse and validade the proper time field
+  // to just accept minutes.
+  updateProperTime: function(){
+    var raw = this.get('unsparsed_proper_time');
+    var minutes = raw.match(/(\d+)\s*(m.*)?$/);
+
+    if(minutes !== null){
+      this.set('proper_time', minutes[1]);
+    }else{
+      this.set('proper_time', undefined);
+    }
+
+  }.observes('unsparsed_proper_time'),
 
   actions : {
     enterDeleteMode : function(){

@@ -70,3 +70,30 @@ TrainTool.TabNav = Ember.CollectionView.extend({
     templateName: 'reusable/itemTab'
   })
 });
+
+TrainTool.TextFieldTypeahead = Ember.TextField.extend({
+    didInsertElement : function(){
+      var dataType = this.get('data-type');
+      var data = this.get('data-source');
+      var model = this.get('model');
+      this.$().typeahead(null, {
+        name: dataType,
+        displayKey: 'name',
+        source: data.ttAdapter()
+      });
+
+      this.$().bind('typeahead:selected', function(obj, datum, name) { 
+        for(key in datum){
+          console.log(key)
+          model.set(key, datum[key]);
+        }
+      });
+
+      this.$().bind('typeahead:cursorchanged', function(obj, datum, name) { 
+        for(key in datum){
+          console.log(key)
+          model.set(key, datum[key]);
+        }
+      });
+    }
+});

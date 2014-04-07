@@ -54,6 +54,7 @@ module.exports = function(grunt) {
           'dependencies/bower_components/ember-data/ember-data.min.js',
           'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
           'dependencies/assets/js/*.js',
+          'dependencies/bower_components/typeahead.js/dist/typeahead.bundle.js',
           'dependencies/compiled/application.js'
         ],
         dest: 'build/assets/js/built.min.js'
@@ -65,6 +66,7 @@ module.exports = function(grunt) {
              'dependencies/bower_components/ember-data/ember-data.min.js',
              'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
              'dependencies/assets/js/*.js',
+             'dependencies/bower_components/typeahead.js/dist/typeahead.bundle.js',
              'dependencies/compiled/application.min.js'],
         dest: 'build/assets/js/built.min.js'
       },

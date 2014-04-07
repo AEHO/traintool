@@ -25,12 +25,14 @@ class Exercise(EndpointsModel):
             that composes a day
         day - the day that this exericse is listed to. If not specified
             then it is not an exercise of a day
+        suggested - if this is a suggested exercise or not.
 
     """
 
     _message_fields_schema = (
         'id', 'name', 'body_part', 'equipment',
         'execution', 'reps', 'comment', 'created', 'sequency', 'day_id',
+        'suggested',
     )
 
     name = ndb.StringProperty(indexed=True)
@@ -41,6 +43,7 @@ class Exercise(EndpointsModel):
     comment = ndb.TextProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     sequency = ndb.IntegerProperty(indexed=True)
+    suggested = ndb.BooleanProperty(indexed=True)
 
     day = ndb.KeyProperty(kind='Day')  # just used internaly
 

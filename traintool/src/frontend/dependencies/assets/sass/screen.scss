@@ -412,6 +412,7 @@ img.centered-image:empty
 	@include transition(all, 0.1s, ease-in-out);
 }
 
+<<<<<<< HEAD
 .tt-suggestion{
 	&:hover{
 		background-color:$base1;
@@ -420,6 +421,10 @@ img.centered-image:empty
 	&:active{
 		background-color:$base1;
 	}
+=======
+.tt-suggestion:hover{
+	background-color:$base1;
+>>>>>>> master
 }
 
 .tt-suggestion.tt-cursor{
