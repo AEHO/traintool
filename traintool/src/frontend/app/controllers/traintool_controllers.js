@@ -148,7 +148,7 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
         return Bloodhound.tokenizers.whitespace(d.name);
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit:10,
+      limit:5,
       prefetch:{
         url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises/all?limit=300',
         filter: function(list) {
