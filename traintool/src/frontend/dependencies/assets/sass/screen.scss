@@ -163,7 +163,6 @@ i.danger{
 
 .btn-primary:hover{
 	background-color:$base1;
-	min-width:170px;
 	text-shadow: 1px 2px rgba(0,0,0,0.2);
 }
 
@@ -186,7 +185,6 @@ i.danger{
 	.panel{
 		margin: 0px;
 		margin-bottom:1px;
-		border: 1px solid $base0;
 	}
 }
 
@@ -210,18 +208,16 @@ i.danger{
 .list-group-item{
 	background-color: lighten($base1, 10%);
 	height: auto;
-	border: none;
 	border-radius: 4px;
+	margin-bottom: 0px;
+	border: 1px solid $base1;
+	margin:0px;
 	@include transition(all, 0.3s, ease-in-out);
 }
 
-.list-group-item:first-child{
-	border-top-left-radius:0px !important;
-}
-
 .list-group-item.active{
-	background-color: lighten($base3, 20%) !important;
-	text-shadow: 1px 1px rgba(255,255,255, 0.1);
+	background-color: $base1 !important;
+	text-shadow: 1px 1px rgba(255,255,255, 0.2);
 }
 
 .list-group-item.clickable{
@@ -230,12 +226,16 @@ i.danger{
 }
 
 .list-group-item.clickable:hover {
-	background-color: $base1;
-	text-shadow: 1px 1px rgba(0,0,0, 0.2);
+	background-color: lighten($base0, 40%);
+	text-shadow: 1px 1px rgba(255,255,255, 0.2);
 }
 
 .list-group-item.clickable:active{
 	background-color: lighten($base1, 20%);
+}
+
+.list-group-item.open-panel{
+	border: none;
 }
 
 .btnFooter{
@@ -255,7 +255,6 @@ i.danger{
 
 	li > a.btn-primary:hover{
 		background-color:$base1;
-		min-width:170px;
 		text-shadow: 1px 2px rgba(0,0,0,0.2);
 	}
 }
@@ -278,6 +277,10 @@ li.collapsed{
 
 .box.light-blue{
 	background-color:$base2;
+}
+
+.box.lightest-blue{
+	background-color:lighten($base1, 10%);
 }
 
 
@@ -384,7 +387,57 @@ img.centered-image:empty
 	}
 }
 
+.twitter-typeahead{
+	width:100%;
+}
+
+.tt-hint .tt-query{
+	color: $fontBase1;
+}
+
+.tt-dropdown-menu{
+	width:100%;
+	padding: 4px;
+	background-color: white;
+	border: 1px solid $base1;
+	border-top: none;
+	border-radius: 4px;
+	max-height: 150px;
+	overflow-y:auto;
+}
+
+.tt-suggestion{
+	padding-left: 1em;
+	border-radius: 4px;
+	@include transition(all, 0.1s, ease-in-out);
+}
+
+.tt-suggestion{
+	&:hover{
+		background-color:$base1;
+	}
+
+	&:active{
+		background-color:$base1;
+	}
+}
+
+.tt-suggestion.tt-cursor{
+	background-color:$base1;
+	margin:0px !important;
+}
+
 @media (min-width: 768px) {
+
+	.btn-primary:hover{
+		min-width:170px;
+	}
+
+	.nav-tabs > li > a.btn-primary:hover{
+		min-width:170px;
+	}
+
+
 	.navbar-wrapper{
 		margin-top: 20px;
 
