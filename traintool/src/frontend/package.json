@@ -4,7 +4,8 @@
   "description": "A simple website to create, manage and share your workouts made with ember.js, fully opensoursed and created for fun and leaning propouses.",
   "main": "Gruntfile.js",
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
