@@ -64,7 +64,7 @@
           <div>
             {{#each day in days itemController="Day"}}
               {{#if selected}}
-                {{view TrainTool.DayContentView valueBinding='day'}}
+                {{view TrainTool.DayContentView valueBinding='day' exercisesTypeaheadOptions=parentController.exercisesTypeaheadOptions}}
               {{/if}}
             {{/each}}
           </div>

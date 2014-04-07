@@ -7,7 +7,8 @@ TrainTool.Exercise = DS.Model.extend(TrainTool.CopyAndSave, {
   execution:DS.attr('string'),
   name:DS.attr('string'),
   reps:DS.attr('array'),
-  day_id: DS.belongsTo('day')
+  day_id: DS.belongsTo('day'),
+  suggested: DS.attr('boolean', {defaultValue: false})
 });
 
 TrainTool.Day = DS.Model.extend(TrainTool.CopyAndSave, {

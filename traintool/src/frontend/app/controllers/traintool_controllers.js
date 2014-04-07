@@ -62,6 +62,7 @@ TrainTool.TrainsNewController = Ember.ObjectController.extend(TrainTool.NamesPro
   actions : {
     createDay : function(){
       var day = this.store.createRecord('day');
+      day.set('train', this.get('model'));
       this.get('days').then(function(days){
         days.pushObject(day);
       });
@@ -142,34 +143,6 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
     return this.get('exercises.length');
   }.property('exercises.length'),
 
-  allExercisesList: function(){
-    var exercises = new Bloodhound({
-      datumTokenizer: function(d){
-        return Bloodhound.tokenizers.whitespace(d.name);
-      },
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit:5,
-      prefetch:{
-        url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises/all?limit=300',
-        filter: function(list) {
-          var data = $.map(list.items, function(exercise){
-            return {
-              id: exercise.id,
-              name: exercise.name ? exercise.name : '',
-              comment: exercise.comment ? exercise.comment : '' ,
-              execution: exercise.execution ? exercise.execution : '',
-              equipment: exercise.equipment ? exercise.equipment : ''
-            };
-          });
-          return data;
-        }
-      },
-    });
-
-    exercises.initialize();
-    return exercises;
-  }.property(),
-
   // Parse and validade the proper time field
   // to just accept minutes.
   updateProperTime: function(){
@@ -216,6 +189,86 @@ TrainTool.DayController = Ember.ObjectController.extend(TrainTool.NamesPropertie
 TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
   isEditing : false,
   errorInReps : false,
+
+  // Return the exercises indexed by the Bloodhound
+  exercisesIndexes: function(){
+    var exerciseFieldsExtractor = function(list) {
+      var data = $.map(list.items, function(exercise){
+        return {
+          id: exercise.id,
+          name: exercise.name ? exercise.name : '',
+          comment: exercise.comment ? exercise.comment : '' ,
+          execution: exercise.execution ? exercise.execution : '',
+          equipment: exercise.equipment ? exercise.equipment : ''
+        };
+      });
+      return data;
+    }
+
+    var system_exercises = new Bloodhound({
+      datumTokenizer: function(d){
+        return Bloodhound.tokenizers.whitespace(d.name);
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      limit:4,
+      prefetch:{
+        url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises/all?suggested=true&limit=300',
+        filter: exerciseFieldsExtractor
+      },
+      templates:{
+        header: '<h3 class=type-suggestions>Exercícios do GymUP</h3>'
+      }
+    });
+
+    var users_exercises = new Bloodhound({
+      datumTokenizer: function(d){
+        return Bloodhound.tokenizers.whitespace(d.name);
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      limit:2,
+      prefetch:{
+        url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises/all?suggested=false&limit=300',
+        filter: exerciseFieldsExtractor
+      }
+    });
+
+    system_exercises.initialize();
+    users_exercises.initialize();
+    return {
+      'system_exercises': system_exercises,
+      'users_exercises': users_exercises
+    };
+  }.property(),
+
+
+  //Return the option object to the typeahead
+  typeaheadOptions: function(){
+    var exericisesIndexes = this.get('exercisesIndexes');
+    var options = [{highlight: true}];
+    
+    for(key_index in exericisesIndexes){
+      var exercisesIndex = exericisesIndexes[key_index];
+      option = {
+        displayKey: 'name',
+        name:key_index,
+        source: exercisesIndex.ttAdapter()
+      }
+
+      // Add new header templates for the differents
+      // suggestion types
+      if(key_index === 'system_exercises'){
+        option.templates = {};
+        option.templates.header = '<h4 class=suggestion-header>Exercícios do GymUP</h4>'
+      }else if(key_index === 'users_exercises'){
+        option.templates = {};
+        option.templates.header = '<h4 class=suggestion-header>Exercícios dos usuários</h4>'
+      }
+
+      options.push(option);
+    }
+    return options;
+  }.property(),
+
   actions : {
     edit : function(){
       this.toggleProperty('isEditing');
@@ -251,6 +304,7 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
   }.property('reps.@each')
 
 });
+
 
 TrainTool.TrainsTrainController = Ember.ObjectController.extend(TrainTool.NamesProperties, {
 });

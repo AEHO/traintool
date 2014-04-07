@@ -73,27 +73,19 @@ TrainTool.TabNav = Ember.CollectionView.extend({
 
 TrainTool.TextFieldTypeahead = Ember.TextField.extend({
     didInsertElement : function(){
-      var dataType = this.get('data-type');
-      var data = this.get('data-source');
       var model = this.get('model');
-      this.$().typeahead(null, {
-        name: dataType,
-        displayKey: 'name',
-        source: data.ttAdapter()
-      });
+      var typeaheadOptions = this.get('targetObject.typeaheadOptions');
 
-      this.$().bind('typeahead:selected', function(obj, datum, name) { 
+      var updateFields = function(obj, datum, name){
         for(key in datum){
-          console.log(key)
           model.set(key, datum[key]);
         }
-      });
+      }
 
-      this.$().bind('typeahead:cursorchanged', function(obj, datum, name) { 
-        for(key in datum){
-          console.log(key)
-          model.set(key, datum[key]);
-        }
-      });
+      this.$().typeahead.apply(this.$(), typeaheadOptions);
+
+      this.$().bind('typeahead:selected', updateFields);
+
+      this.$().bind('typeahead:cursorchanged', updateFields);
     }
 });
