@@ -212,7 +212,7 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit:4,
       prefetch:{
-        url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises/all?suggested=true&limit=300',
+        url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises?suggested=true&limit=300',
         filter: exerciseFieldsExtractor
       },
       templates:{
@@ -227,7 +227,7 @@ TrainTool.ExercisesInTrainController = Ember.ObjectController.extend(TrainTool.N
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit:2,
       prefetch:{
-        url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises/all?suggested=false&limit=300',
+        url:'https://gup-traintool.appspot.com/_ah/api/gupapi/v1/exercises?suggested=false&limit=300',
         filter: exerciseFieldsExtractor
       }
     });
