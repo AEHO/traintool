@@ -31,10 +31,9 @@ require('dependencies/compiled/templates');
 */
 window.TrainTool = Ember.Application.create({
   rootElement: window.TESTING ? '#ember-testing':'#traintoolapp',
-  LOG_TRANSITIONS: true
+  DEBUG: true
 });
 
-console.log(TrainTool);
 /*
  * Mixins to act in the application
  */
