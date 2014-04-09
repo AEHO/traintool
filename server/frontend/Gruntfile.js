@@ -62,7 +62,7 @@ module.exports = function(grunt) {
 
       minifiedApplication: {
         src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js',
-             'dependencies/bower_components/ember/ember.js',
+             'dependencies/bower_components/ember/ember.min.js',
              'dependencies/bower_components/ember-data/ember-data.min.js',
              'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
              'dependencies/assets/js/*.js',
