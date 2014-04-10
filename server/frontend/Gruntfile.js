@@ -22,9 +22,9 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      application: {
+      built_application: {
         files: {
-          'dependencies/compiled/application.min.js': 'dependencies/compiled/application.js'
+          'build/assets/js/built.min.js': 'dependencies/compiled/built.js'
         }
       }
     },
@@ -57,18 +57,20 @@ module.exports = function(grunt) {
           'dependencies/bower_components/typeahead.js/dist/typeahead.bundle.js',
           'dependencies/compiled/application.js'
         ],
-        dest: 'build/assets/js/built.min.js'
+        dest: 'dependencies/compiled/built.js'
       },
 
-      minifiedApplication: {
-        src:['dependencies/bower_components/handlebars/handlebars.runtime.min.js',
-             'dependencies/bower_components/ember/ember.min.js',
-             'dependencies/bower_components/ember-data/ember-data.min.js',
-             'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
-             'dependencies/assets/js/*.js',
-             'dependencies/bower_components/typeahead.js/dist/typeahead.bundle.js',
-             'dependencies/compiled/application.min.js'],
-        dest: 'build/assets/js/built.min.js'
+      productionApplication: {
+        src:[
+          'dependencies/bower_components/handlebars/handlebars.runtime.min.js',
+          'dependencies/bower_components/ember/ember.min.js',
+          'dependencies/bower_components/ember-data/ember-data.min.js',
+          'dependencies/bower_components/momentjs/min/moment-with-langs.min.js',
+          'dependencies/assets/js/*.js',
+          'dependencies/bower_components/typeahead.js/dist/typeahead.bundle.min.js',
+          'dependencies/compiled/application.js'
+        ],
+        dest: 'dependencies/compiled/built.js'
       },
 
       options: {
@@ -263,15 +265,20 @@ module.exports = function(grunt) {
                               'qunit']);
 
 
-  grunt.registerTask('compile',
-                     ['emberTemplates', 'neuter', 'newer:uglify:application',
-                     'imagemin', 'svgmin', 'compass', 'concat:css',
-                     'concat:minifiedApplication', 'cssmin']);
-
     // Default task. Compiles templates, neuters application code, and
     // begins watching for changes.
 
   grunt.registerTask('default', ['emberTemplates', 'neuter', 'imagemin',
                                 'svgmin', 'compass', 'concat:application',
                                 'concat:css', 'cssmin', 'watch']);
+
+  grunt.registerTask('compile', ['emberTemplates', 'neuter', 'imagemin',
+                                'svgmin', 'compass', 'concat:application',
+                                'concat:css', 'cssmin']);
+
+  grunt.registerTask('compile-for-production', 
+                   ['emberTemplates', 'neuter', 'imagemin', 'svgmin',
+                   'compass', 'concat:css', 'concat:productionApplication',
+                   'uglify', 'cssmin']);
+
 };
